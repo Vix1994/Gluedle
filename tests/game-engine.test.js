@@ -17,11 +17,11 @@ import {
 
 function song(overrides = {}) {
   return {
-    songId: "target",
+    id: "target",
     title: "目标歌",
     aliases: ["Target Song"],
-    year: 2024,
-    durationSeconds: 210,
+    releaseYear: 2024,
+    durationSec: 210,
     project: { title: "Project A", type: "album" },
     languages: ["中文", "English"],
     performanceType: "solo",
@@ -33,30 +33,30 @@ function song(overrides = {}) {
 const catalog = [
   song(),
   song({
-    songId: "one",
+    id: "one",
     title: "First Light",
     aliases: ["第一束光", "Light No. 1"],
-    year: 2022,
-    durationSeconds: 195,
+    releaseYear: 2022,
+    durationSec: 195,
     project: { title: "Project B", type: "album" },
     languages: ["English"],
     curleyCredits: { lyrics: true, composition: false },
   }),
   song({
-    songId: "two",
+    id: "two",
     title: "Second Wind",
     aliases: ["第二阵风"],
-    year: 2019,
-    durationSeconds: 250,
+    releaseYear: 2019,
+    durationSec: 250,
     project: { title: "Single Two", type: "single" },
     languages: ["日本語"],
     performanceType: "duet",
     curleyCredits: { lyrics: false, composition: false },
   }),
-  song({ songId: "three", title: "Third", aliases: [] }),
-  song({ songId: "four", title: "Fourth", aliases: [] }),
-  song({ songId: "five", title: "Fifth", aliases: [] }),
-  song({ songId: "six", title: "Sixth", aliases: [] }),
+  song({ id: "three", title: "Third", aliases: [] }),
+  song({ id: "four", title: "Fourth", aliases: [] }),
+  song({ id: "five", title: "Fifth", aliases: [] }),
+  song({ id: "six", title: "Sixth", aliases: [] }),
 ];
 
 test("normalizeSearchText normalizes case, width, whitespace, and Chinese/English punctuation", () => {
@@ -66,14 +66,15 @@ test("normalizeSearchText normalizes case, width, whitespace, and Chinese/Englis
 });
 
 test("formatDuration renders minutes and zero-padded seconds", () => {
-  assert.equal(formatDuration(125), "2:05");
+  assert.equal(formatDuration(125), "02:05");
+  assert.equal(formatDuration(228), "03:48");
   assert.equal(formatDuration(null), "待核验");
 });
 
 test("findSongMatches searches aliases, normalizes queries, ranks title matches, and limits results", () => {
-  assert.deepEqual(findSongMatches(" 第一 束光！ ", catalog).map(({ songId }) => songId), ["one"]);
-  assert.deepEqual(findSongMatches("light", catalog).map(({ songId }) => songId), ["one"]);
-  assert.deepEqual(findSongMatches("t", catalog, 2).map(({ songId }) => songId), ["three", "target"]);
+  assert.deepEqual(findSongMatches(" 第一 束光！ ", catalog).map(({ id }) => id), ["one"]);
+  assert.deepEqual(findSongMatches("light", catalog).map(({ id }) => id), ["one"]);
+  assert.deepEqual(findSongMatches("t", catalog, 2).map(({ id }) => id), ["three", "target"]);
   assert.deepEqual(findSongMatches("   ", catalog), []);
 });
 
@@ -81,23 +82,48 @@ test("selectDailyAnswer is deterministic for a day and independent of catalog or
   const date = new Date("2026-08-01T18:30:00.000Z");
   const first = selectDailyAnswer(catalog, date);
   const second = selectDailyAnswer([...catalog].reverse(), date);
-  assert.equal(first.songId, second.songId);
+  assert.equal(first.id, second.id);
   assert.equal(selectDailyAnswer(catalog, date), first);
   assert.throws(() => selectDailyAnswer([], date), { code: "EMPTY_CATALOG" });
+});
+
+test("canonical metadata fields take precedence while legacy fields remain supported", () => {
+  const canonicalGuess = song({
+    id: "canonical-id",
+    songId: "legacy-id",
+    releaseYear: 2022,
+    year: 1990,
+    durationSec: 195,
+    durationSeconds: 20,
+  });
+  const comparison = compareSongs(canonicalGuess, song());
+  assert.deepEqual(comparison.year, { value: 2022, status: "near", direction: "up" });
+  assert.deepEqual(comparison.duration, { value: "03:15", status: "near", direction: "up" });
+
+  const submitted = submitGuess(createInitialState("target"), "canonical-id", [song(), canonicalGuess]);
+  assert.equal(submitted.attempts[0].songId, "canonical-id");
+  assert.throws(
+    () => submitGuess(createInitialState("target"), "legacy-id", [song(), canonicalGuess]),
+    { code: "UNKNOWN_SONG" },
+  );
+
+  const legacySong = song({ id: undefined, songId: "legacy-only", releaseYear: undefined, year: 2023 });
+  assert.equal(selectDailyAnswer([legacySong], new Date("2026-08-01")).songId, "legacy-only");
+  assert.equal(compareSongs(legacySong, song()).year.value, 2023);
 });
 
 test("compareSongs applies year and duration match/near/miss thresholds and directions", () => {
   const exact = compareSongs(song(), song());
   assert.deepEqual(exact.year, { value: 2024, status: "match", direction: null });
-  assert.deepEqual(exact.duration, { value: "3:30", status: "match", direction: null });
+  assert.deepEqual(exact.duration, { value: "03:30", status: "match", direction: null });
 
-  const nearUp = compareSongs(song({ year: 2022, durationSeconds: 195 }), song());
+  const nearUp = compareSongs(song({ releaseYear: 2022, durationSec: 195 }), song());
   assert.deepEqual(nearUp.year, { value: 2022, status: "near", direction: "up" });
-  assert.deepEqual(nearUp.duration, { value: "3:15", status: "near", direction: "up" });
+  assert.deepEqual(nearUp.duration, { value: "03:15", status: "near", direction: "up" });
 
-  const missDown = compareSongs(song({ year: 2027, durationSeconds: 226 }), song());
+  const missDown = compareSongs(song({ releaseYear: 2027, durationSec: 226 }), song());
   assert.deepEqual(missDown.year, { value: 2027, status: "miss", direction: "down" });
-  assert.deepEqual(missDown.duration, { value: "3:46", status: "miss", direction: "down" });
+  assert.deepEqual(missDown.duration, { value: "03:46", status: "miss", direction: "down" });
 });
 
 test("compareSongs applies project, language, performance, and credits rules", () => {
@@ -166,6 +192,7 @@ test("submitGuess updates state immutably and wins immediately", () => {
   assert.notEqual(afterMiss, initial);
   assert.notEqual(afterMiss.attempts, initial.attempts);
   assert.equal(afterMiss.status, "playing");
+  assert.equal(afterMiss.attempts[0].songId, "one");
   assert.equal(won.status, "won");
   assert.equal(won.attempts.length, 2);
   assert.equal(won.maxAttempts, MAX_ATTEMPTS);

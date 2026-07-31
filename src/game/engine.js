@@ -38,7 +38,7 @@ export function formatDuration(seconds) {
   }
 
   const rounded = Math.round(duration);
-  const minutes = Math.floor(rounded / 60);
+  const minutes = String(Math.floor(rounded / 60)).padStart(2, "0");
   const remainder = String(rounded % 60).padStart(2, "0");
   return `${minutes}:${remainder}`;
 }
@@ -69,7 +69,7 @@ export function selectDailyAnswer(catalog, date = new Date()) {
 
   const day = toDayKey(date);
   const orderedSongs = [...songs].sort((left, right) =>
-    String(left.songId).localeCompare(String(right.songId), "en"),
+    readSongId(left).localeCompare(readSongId(right), "en"),
   );
   return orderedSongs[stableHash(day) % orderedSongs.length];
 }
@@ -78,8 +78,8 @@ export function compareSongs(guess, target) {
   assertSong(guess, "INVALID_GUESS");
   assertSong(target, "INVALID_TARGET");
 
-  const guessYear = toFiniteNumber(guess.year);
-  const targetYear = toFiniteNumber(target.year);
+  const guessYear = readReleaseYear(guess);
+  const targetYear = readReleaseYear(target);
   const guessDuration = readDuration(guess);
   const targetDuration = readDuration(target);
   const guessProject = readProject(guess);
@@ -132,12 +132,12 @@ export function submitGuess(state, guessId, catalog) {
   }
 
   const songs = validateCatalog(catalog);
-  const guess = songs.find((song) => song.songId === guessId);
+  const guess = songs.find((song) => readSongId(song) === guessId);
   if (!guess) {
     throw new GameEngineError("UNKNOWN_SONG", "The guessed song is not in the catalog.");
   }
 
-  const target = songs.find((song) => song.songId === state.answerId);
+  const target = songs.find((song) => readSongId(song) === state.answerId);
   if (!target) {
     throw new GameEngineError("ANSWER_NOT_FOUND", "The answer is not in the catalog.");
   }
@@ -145,7 +145,7 @@ export function submitGuess(state, guessId, catalog) {
   const attempts = [
     ...state.attempts,
     {
-      songId: guessId,
+      songId: readSongId(guess),
       comparison: compareSongs(guess, target),
     },
   ];
@@ -307,7 +307,15 @@ function displayCredits(credits) {
 }
 
 function readDuration(song) {
-  return toFiniteNumber(song.durationSeconds ?? song.duration);
+  return toFiniteNumber(song.durationSec ?? song.durationSeconds ?? song.duration);
+}
+
+function readReleaseYear(song) {
+  return toFiniteNumber(song.releaseYear ?? song.year);
+}
+
+function readSongId(song) {
+  return song.id ?? song.songId;
 }
 
 function readProject(song) {
@@ -381,17 +389,19 @@ function validateCatalog(catalog) {
   const seen = new Set();
   for (const song of catalog) {
     assertSong(song, "INVALID_CATALOG");
-    if (seen.has(song.songId)) {
-      throw new GameEngineError("INVALID_CATALOG", "catalog songId values must be unique.");
+    const songId = readSongId(song);
+    if (seen.has(songId)) {
+      throw new GameEngineError("INVALID_CATALOG", "catalog song IDs must be unique.");
     }
-    seen.add(song.songId);
+    seen.add(songId);
   }
   return catalog;
 }
 
 function assertSong(song, code) {
-  if (!song || typeof song !== "object" || typeof song.songId !== "string" || !song.songId) {
-    throw new GameEngineError(code, "A song must have a non-empty songId.");
+  const songId = song && typeof song === "object" ? readSongId(song) : null;
+  if (typeof songId !== "string" || !songId) {
+    throw new GameEngineError(code, "A song must have a non-empty id.");
   }
 }
 
