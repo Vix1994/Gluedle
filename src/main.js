@@ -390,12 +390,10 @@ function openResultDialog() {
     : siteContent.game.failureTitle;
   elements.resultSummary.replaceChildren();
   const outcome = document.createElement("p");
-  const detail = document.createElement("p");
   outcome.textContent = state.status === "won"
     ? `你用 ${state.attempts.length} / ${MAX_ATTEMPTS} 次选择找到了「${answer.title}」。`
     : `今日答案是「${answer.title}」。`;
-  detail.textContent = "结果只包含元数据比较，不包含歌曲音频或歌词。";
-  elements.resultSummary.append(outcome, detail);
+  elements.resultSummary.append(outcome);
   openDialog(elements.resultDialog);
 }
 
