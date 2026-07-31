@@ -1,0 +1,20 @@
+{
+  "name": "gluedle",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A daily Curley G song-guessing web game prototype.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "npm run build"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "vite": "8.2.0"
+  }
+}

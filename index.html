@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0d1a18" />
+    <meta name="description" content="Gluedle 是一个从短音频片段开始的每日猜歌网页游戏原型。" />
+    <title>Gluedle — Curley G Edition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --ink: #10201d;
+        --ink-soft: #29413c;
+        --paper: #eef0e8;
+        --paper-warm: #f7f5ed;
+        --moss: #a9d49e;
+        --mint: #c5e6bd;
+        --lake: #85cbd2;
+        --blue: #5f9fbb;
+        --line: rgba(16, 32, 29, 0.14);
+        --shadow: 0 28px 80px rgba(10, 30, 27, 0.18);
+        --radius-xl: 28px;
+        --radius-md: 16px;
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body { min-height: 100%; }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 6% 7%, rgba(169, 212, 158, 0.35), transparent 27%),
+          radial-gradient(circle at 96% 92%, rgba(133, 203, 210, 0.32), transparent 31%),
+          var(--paper);
+        font-family: "Manrope", "Noto Sans SC", sans-serif;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        content: "";
+        opacity: 0.22;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
+        mix-blend-mode: multiply;
+      }
+
+      .page {
+        position: relative;
+        width: min(1320px, calc(100% - 64px));
+        min-height: 100vh;
+        margin: 0 auto;
+        padding: 20px 0 20px;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 28px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        letter-spacing: 0.05em;
+      }
+
+      .brand-mark {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border: 1px solid rgba(16, 32, 29, 0.65);
+        border-radius: 50%;
+        color: var(--paper-warm);
+        background: var(--ink);
+        font-size: 15px;
+        font-weight: 800;
+      }
+
+      .brand-name {
+        display: block;
+        font-size: 13px;
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: 0.18em;
+      }
+
+      .brand-sub {
+        display: block;
+        margin-top: 5px;
+        color: rgba(16, 32, 29, 0.55);
+        font-family: "DM Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.1em;
+      }
+
+      .top-actions { display: flex; align-items: center; gap: 10px; }
+
+      .quiet-label {
+        color: rgba(16, 32, 29, 0.5);
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .icon-button {
+        display: grid;
+        width: 44px;
+        height: 44px;
+        place-items: center;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        color: var(--ink);
+        background: rgba(247, 245, 237, 0.45);
+        font-size: 14px;
+        cursor: pointer;
+        transition: transform 180ms ease, background 180ms ease;
+      }
+
+      .icon-button:hover { transform: rotate(8deg); background: var(--paper-warm); }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.84fr) minmax(520px, 1.16fr);
+        align-items: center;
+        gap: clamp(54px, 8vw, 130px);
+        min-height: calc(100vh - 138px);
+      }
+
+      .hero { position: relative; padding: 22px 0 40px; }
+
+      .hero::before {
+        position: absolute;
+        top: -48px;
+        left: -80px;
+        width: 220px;
+        height: 220px;
+        content: "";
+        border: 1px solid rgba(95, 159, 187, 0.24);
+        border-radius: 50%;
+        box-shadow: 0 0 0 28px rgba(95, 159, 187, 0.06), 0 0 0 58px rgba(95, 159, 187, 0.04);
+      }
+
+      .eyebrow {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: rgba(16, 32, 29, 0.56);
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        width: 7px;
+        height: 7px;
+        content: "";
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--moss), var(--blue));
+      }
+
+      h1 {
+        position: relative;
+        max-width: 600px;
+        margin: 24px 0 22px;
+        font-size: clamp(48px, 6.4vw, 92px);
+        font-weight: 700;
+        line-height: 0.98;
+        letter-spacing: -0.07em;
+        text-wrap: balance;
+      }
+
+      h1 em {
+        color: var(--blue);
+        font-style: normal;
+      }
+
+      .hero-copy {
+        max-width: 380px;
+        margin: 0;
+        color: rgba(16, 32, 29, 0.62);
+        font-size: 15px;
+        line-height: 1.8;
+        text-wrap: pretty;
+      }
+
+      .concept-note {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        margin-top: 54px;
+        color: rgba(16, 32, 29, 0.53);
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .concept-line {
+        width: 74px;
+        height: 1px;
+        background: linear-gradient(90deg, var(--moss), var(--blue));
+      }
+
+      .game-shell { position: relative; }
+
+      .game-card {
+        position: relative;
+        overflow: hidden;
+        padding: 22px;
+        border: 1px solid rgba(247, 245, 237, 0.6);
+        border-radius: var(--radius-xl);
+        background: rgba(247, 245, 237, 0.62);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(22px);
+      }
+
+      .game-card::before {
+        position: absolute;
+        right: -70px;
+        top: -86px;
+        width: 270px;
+        height: 270px;
+        content: "";
+        border-radius: 43% 57% 64% 36% / 38% 35% 65% 62%;
+        background: linear-gradient(135deg, rgba(169, 212, 158, 0.7), rgba(133, 203, 210, 0.32));
+        filter: blur(1px);
+        transform: rotate(22deg);
+      }
+
+      .card-head, .audio-stage, .guess-form, .guess-grid { position: relative; z-index: 1; }
+
+      .card-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding-bottom: 21px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .micro-label {
+        color: rgba(16, 32, 29, 0.48);
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .song-state {
+        margin-top: 7px;
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+      }
+
+      .attempts {
+        color: var(--ink);
+        font-family: "DM Mono", monospace;
+        font-size: 25px;
+        font-weight: 500;
+        letter-spacing: -0.08em;
+      }
+
+      .attempts span { color: rgba(16, 32, 29, 0.32); font-size: 12px; letter-spacing: 0; }
+
+      .audio-stage {
+        display: grid;
+        grid-template-columns: 118px 1fr;
+        align-items: center;
+        gap: 28px;
+        min-height: 190px;
+        padding: 24px 6px 20px;
+      }
+
+      .orb-wrap { position: relative; width: 108px; height: 108px; }
+
+      .orb-wrap::before, .orb-wrap::after {
+        position: absolute;
+        inset: -17px;
+        content: "";
+        border: 1px solid rgba(95, 159, 187, 0.22);
+        border-radius: 46% 54% 64% 36% / 53% 41% 59% 47%;
+        pointer-events: none;
+        transform: rotate(-22deg);
+      }
+
+      .orb-wrap::after {
+        inset: -30px;
+        border-color: rgba(169, 212, 158, 0.28);
+        transform: rotate(33deg);
+      }
+
+      .orb {
+        display: grid;
+        width: 108px;
+        height: 108px;
+        place-items: center;
+        border: 1px solid rgba(247, 245, 237, 0.8);
+        border-radius: 48% 52% 63% 37% / 57% 40% 60% 43%;
+        background:
+          radial-gradient(circle at 28% 24%, rgba(247, 245, 237, 0.72), transparent 24%),
+          linear-gradient(140deg, var(--moss), var(--lake));
+        box-shadow: inset -15px -18px 28px rgba(48, 105, 101, 0.16), 0 14px 24px rgba(74, 130, 128, 0.2);
+        transform: rotate(10deg);
+        transition: transform 320ms ease, filter 320ms ease;
+      }
+
+      .orb.playing { transform: rotate(-7deg) scale(1.04); filter: saturate(1.13); }
+
+      .play-button {
+        display: grid;
+        width: 48px;
+        height: 48px;
+        place-items: center;
+        border: 1px solid rgba(247, 245, 237, 0.68);
+        border-radius: 50%;
+        color: var(--paper-warm);
+        background: rgba(16, 32, 29, 0.77);
+        font-size: 13px;
+        cursor: pointer;
+        transform: rotate(-10deg);
+        transition: transform 180ms ease, background 180ms ease;
+      }
+
+      .play-button:hover { transform: rotate(-10deg) scale(1.08); background: var(--ink); }
+
+      .audio-copy { min-width: 0; }
+
+      .audio-copy h2 {
+        margin: 0 0 10px;
+        font-size: 28px;
+        letter-spacing: -0.06em;
+      }
+
+      .audio-copy p {
+        max-width: 255px;
+        margin: 0;
+        color: rgba(16, 32, 29, 0.55);
+        font-size: 12px;
+        line-height: 1.65;
+      }
+
+      .waveform {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        height: 28px;
+        margin-top: 18px;
+      }
+
+      .waveform i {
+        display: block;
+        width: 3px;
+        height: var(--h);
+        border-radius: 4px;
+        background: linear-gradient(to top, var(--moss), var(--blue));
+        opacity: 0.76;
+        transform-origin: center;
+      }
+
+      .playing .waveform i { animation: pulse 700ms ease-in-out infinite alternate; animation-delay: var(--d); }
+
+      @keyframes pulse { to { transform: scaleY(0.55); opacity: 0.42; } }
+
+      .audio-meta {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 7px;
+        color: rgba(16, 32, 29, 0.42);
+        font-family: "DM Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .guess-form { display: flex; gap: 8px; }
+
+      .guess-form input {
+        min-width: 0;
+        flex: 1;
+        height: 48px;
+        padding: 0 15px;
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        outline: none;
+        color: var(--ink);
+        background: rgba(255, 255, 255, 0.38);
+        font: inherit;
+        font-size: 13px;
+        transition: border-color 180ms ease, box-shadow 180ms ease;
+      }
+
+      .guess-form input::placeholder { color: rgba(16, 32, 29, 0.4); }
+      .guess-form input:focus { border-color: rgba(95, 159, 187, 0.78); box-shadow: 0 0 0 4px rgba(95, 159, 187, 0.12); }
+
+      .guess-button {
+        height: 48px;
+        padding: 0 19px;
+        border: 0;
+        border-radius: 13px;
+        color: var(--paper-warm);
+        background: var(--ink);
+        font: inherit;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 180ms ease, background 180ms ease;
+      }
+
+      .guess-button:hover { background: #21423a; transform: translateY(-1px); }
+
+      button:focus-visible,
+      input:focus-visible {
+        outline: 3px solid rgba(95, 159, 187, 0.5);
+        outline-offset: 3px;
+      }
+
+      .guess-hint {
+        min-height: 18px;
+        margin: 8px 2px 15px;
+        color: rgba(16, 32, 29, 0.42);
+        font-family: "DM Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.04em;
+      }
+
+      .guess-grid {
+        display: grid;
+        gap: 7px;
+        padding-top: 14px;
+        border-top: 1px solid var(--line);
+      }
+
+      .guess-row {
+        display: grid;
+        grid-template-columns: 26px 1fr auto;
+        align-items: center;
+        gap: 10px;
+        min-height: 25px;
+        color: rgba(16, 32, 29, 0.25);
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+      }
+
+      .guess-row.is-filled { color: var(--ink-soft); }
+
+      .guess-index { color: rgba(16, 32, 29, 0.4); }
+
+      .guess-bar {
+        height: 7px;
+        border-radius: 8px;
+        background: rgba(16, 32, 29, 0.08);
+      }
+
+      .guess-row.is-filled .guess-bar { background: linear-gradient(90deg, var(--moss), var(--lake)); }
+
+      .guess-status { width: 7px; height: 7px; border-radius: 50%; background: rgba(16, 32, 29, 0.13); }
+      .guess-row.is-filled .guess-status { background: var(--lake); box-shadow: 0 0 0 4px rgba(133, 203, 210, 0.16); }
+
+      .card-foot {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 19px;
+        color: rgba(16, 32, 29, 0.44);
+        font-family: "DM Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .gradient-word { color: var(--blue); }
+
+      .side-note {
+        position: absolute;
+        right: -58px;
+        top: 50%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: rgba(16, 32, 29, 0.4);
+        font-family: "DM Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        transform: rotate(90deg) translateX(50%);
+        transform-origin: right center;
+      }
+
+      .side-note::before { width: 35px; height: 1px; content: ""; background: linear-gradient(90deg, var(--moss), var(--blue)); }
+
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: 26px;
+        z-index: 3;
+        padding: 10px 14px;
+        border: 1px solid rgba(247, 245, 237, 0.5);
+        border-radius: 999px;
+        color: var(--paper-warm);
+        background: rgba(16, 32, 29, 0.88);
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+        opacity: 0;
+        pointer-events: none;
+        transform: translate(-50%, 8px);
+        transition: opacity 180ms ease, transform 180ms ease;
+      }
+
+      .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+      @media (max-width: 980px) {
+        .page { width: min(700px, calc(100% - 40px)); }
+        .layout { grid-template-columns: 1fr; gap: 28px; min-height: auto; }
+        .hero { padding: 10px 0 0; }
+        h1 { font-size: clamp(54px, 13vw, 90px); }
+        .concept-note { margin-top: 30px; }
+        .side-note { display: none; }
+      }
+
+      @media (max-width: 560px) {
+        .page { width: min(100% - 28px, 460px); padding-top: 20px; }
+        header { padding-bottom: 28px; }
+        .quiet-label { display: none; }
+        h1 { margin-top: 18px; font-size: clamp(45px, 15vw, 68px); }
+        .hero-copy { font-size: 13px; }
+        .game-card { padding: 18px; border-radius: 22px; }
+        .audio-stage { grid-template-columns: 92px 1fr; gap: 18px; min-height: 182px; padding-left: 0; padding-right: 0; }
+        .orb-wrap, .orb { width: 84px; height: 84px; }
+        .orb-wrap::before { inset: -12px; }
+        .orb-wrap::after { inset: -22px; }
+        .play-button { width: 44px; height: 44px; }
+        .audio-copy h2 { font-size: 22px; }
+        .guess-button { padding: 0 14px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <div class="brand" aria-label="Gluedle Curley G Edition">
+          <span class="brand-mark">G</span>
+          <span>
+            <span class="brand-name">GLUEDLE</span>
+            <span class="brand-sub">CURLEY G EDITION</span>
+          </span>
+        </div>
+        <div class="top-actions">
+          <span class="quiet-label">A daily song connection</span>
+          <button class="icon-button" id="helpButton" type="button" aria-label="查看玩法">?</button>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="hero" aria-labelledby="heroTitle">
+          <div class="eyebrow">DAILY SONG GUESS · 01 AUG 2026</div>
+          <h1 id="heroTitle">Every note leaves<br /><em>a trace.</em></h1>
+          <p class="hero-copy">从一秒前奏开始，猜出属于 Curley G 的那一首。越早认出，留下的颜色越完整。</p>
+          <div class="concept-note"><span class="concept-line"></span><span>green to blue / stay connected</span></div>
+        </section>
+
+        <section class="game-shell" aria-label="今日猜歌">
+          <div class="game-card">
+            <div class="card-head">
+              <div>
+                <div class="micro-label">TODAY'S SIGNAL</div>
+                <div class="song-state">Unknown Curley G song</div>
+              </div>
+              <div class="attempts">0<span>/06</span></div>
+            </div>
+
+            <div class="audio-stage" id="audioStage">
+              <div class="orb-wrap">
+                <div class="orb" id="orb">
+                  <button class="play-button" id="playButton" type="button" aria-label="播放预览" aria-pressed="false">▶</button>
+                </div>
+              </div>
+              <div class="audio-copy">
+                <div class="micro-label">LISTEN CLOSELY</div>
+                <h2>First drop</h2>
+                <p id="audioCaption">只给你一小圈声音。跳过后，下一圈会更长。</p>
+                <div class="waveform" aria-hidden="true">
+                  <i style="--h: 11px; --d: 20ms"></i><i style="--h: 24px; --d: 120ms"></i><i style="--h: 16px; --d: 40ms"></i><i style="--h: 28px; --d: 160ms"></i><i style="--h: 19px; --d: 90ms"></i><i style="--h: 12px; --d: 220ms"></i><i style="--h: 25px; --d: 100ms"></i><i style="--h: 15px; --d: 30ms"></i><i style="--h: 22px; --d: 190ms"></i><i style="--h: 13px; --d: 140ms"></i><i style="--h: 26px; --d: 60ms"></i><i style="--h: 17px; --d: 170ms"></i><i style="--h: 23px; --d: 80ms"></i><i style="--h: 10px; --d: 230ms"></i><i style="--h: 20px; --d: 110ms"></i><i style="--h: 14px; --d: 50ms"></i><i style="--h: 27px; --d: 200ms"></i><i style="--h: 16px; --d: 130ms"></i><i style="--h: 21px; --d: 70ms"></i><i style="--h: 12px; --d: 180ms"></i>
+                </div>
+                <div class="audio-meta"><span>0.0 sec preview</span><span>sound hidden</span></div>
+              </div>
+            </div>
+
+            <form class="guess-form" id="guessForm">
+              <input id="guessInput" type="text" autocomplete="off" placeholder="输入歌名，开始连接" aria-label="输入歌名" />
+              <button class="guess-button" type="submit">GUESS</button>
+            </form>
+            <div class="guess-hint" id="guessHint">可输入中文歌名、英文歌名或常用别名</div>
+
+            <div class="guess-grid" aria-label="猜测次数">
+              <div class="guess-row"><span class="guess-index">01</span><span class="guess-bar"></span><span class="guess-status"></span></div>
+              <div class="guess-row"><span class="guess-index">02</span><span class="guess-bar"></span><span class="guess-status"></span></div>
+              <div class="guess-row"><span class="guess-index">03</span><span class="guess-bar"></span><span class="guess-status"></span></div>
+              <div class="guess-row"><span class="guess-index">04</span><span class="guess-bar"></span><span class="guess-status"></span></div>
+              <div class="guess-row"><span class="guess-index">05</span><span class="guess-bar"></span><span class="guess-status"></span></div>
+              <div class="guess-row"><span class="guess-index">06</span><span class="guess-bar"></span><span class="guess-status"></span></div>
+            </div>
+
+            <div class="card-foot"><span>GLUEDLE / 001</span><span><span class="gradient-word">green</span> → <span class="gradient-word">blue</span></span></div>
+          </div>
+          <div class="side-note"><span>the song is still listening</span></div>
+        </section>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status">这里会播放今日歌曲预览</div>
+
+    <script>
+      const playButton = document.getElementById('playButton');
+      const orb = document.getElementById('orb');
+      const audioStage = document.getElementById('audioStage');
+      const audioCaption = document.getElementById('audioCaption');
+      const toast = document.getElementById('toast');
+      const guessForm = document.getElementById('guessForm');
+      const guessInput = document.getElementById('guessInput');
+      const guessHint = document.getElementById('guessHint');
+      let toastTimer;
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add('show');
+        window.clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(() => toast.classList.remove('show'), 2100);
+      }
+
+      playButton.addEventListener('click', () => {
+        const isPlaying = audioStage.classList.toggle('playing');
+        orb.classList.toggle('playing', isPlaying);
+        playButton.textContent = isPlaying ? 'Ⅱ' : '▶';
+        playButton.setAttribute('aria-label', isPlaying ? '暂停预览' : '播放预览');
+        playButton.setAttribute('aria-pressed', String(isPlaying));
+        audioCaption.textContent = isPlaying ? '试听状态：视觉波形正在呼吸。' : '只给你一小圈声音。跳过后，下一圈会更长。';
+        showToast(isPlaying ? '试听预览已开始' : '试听预览已暂停');
+      });
+
+      document.getElementById('helpButton').addEventListener('click', () => {
+        showToast('听一秒 · 猜一首 · 留下一圈颜色');
+      });
+
+      guessForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        if (!guessInput.value.trim()) {
+          guessHint.textContent = '先写下你的第一个猜测';
+          guessInput.focus();
+          return;
+        }
+        guessHint.textContent = '这是视觉预览；正式版会在这里返回歌曲线索。';
+        showToast('猜测已记录，线索会在这里展开');
+        guessInput.value = '';
+      });
+    </script>
+  </body>
+</html>
