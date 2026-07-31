@@ -31,10 +31,23 @@ export const siteContent = {
     ],
     motifs: ["颗粒", "涟漪", "轨道", "曝光", "编辑式拼贴"],
   },
+  release: {
+    label: "已公开曲目",
+    countLabel: "01 RELEASED TRACK",
+    tracks: [
+      {
+        position: "01",
+        title: "Glue",
+        status: "已公开",
+        note: "目前唯一公开曲目",
+      },
+    ],
+    notice: "当前只展示已经公开的《Glue》；其余曲目以之后的正式公布为准。",
+  },
   story: {
     eyebrow: "02 / MUSIC & MAKING",
     title: "把线索留在声音之外",
-    intro: "不播放歌曲，也可以从发行时间、项目类型、合作关系与现场版本读出一条创作路径。",
+    intro: "当前只呈现已经公开的《Glue》。影像从一首歌出发，不把 Gluedle 的游戏题库误写成专辑曲目。",
     chapters: [
       {
         index: "01",
@@ -69,13 +82,15 @@ export const siteContent = {
     successTitle: "连接成功",
     failureTitle: "这次让答案浮出水面",
     noAudioNotice: "本原型仅使用元数据，不提供或托管歌曲音频。",
+    libraryLabel: "希林娜依高过往作品题库",
+    libraryNotice: "仅用于 Gluedle 每日猜歌，不代表本专辑已公布曲目。",
   },
   credits: {
     eyebrow: "04 / CREDITS",
     title: "Credits & Data",
     items: [
       "项目：Gluedle 独立无音频猜歌原型",
-      "曲目对象：希林娜依高公开发行作品",
+      "游戏题库：希林娜依高过往公开发行作品，不等同于本专辑曲目",
       "数据校验：Apple Music 曲目页与 Apple iTunes Search API",
       "视觉素材：用户提供的项目素材，授权状态待确认",
     ],
@@ -285,4 +300,4 @@ export const songs = [
 ];
 
 export const dataNotice =
-  "本目录仅供 Gluedle 原型使用；日期、时长、项目归属、版本、合作艺人与创作署名在正式发布前均须再次对照官方物料复核，当前无法由可靠来源确认的字段保留为 null。";
+  "本目录是 Gluedle 游戏使用的过往作品题库，不是当前专辑的曲目表；日期、时长、项目归属、版本、合作艺人与创作署名在正式发布前均须再次对照官方物料复核，当前无法由可靠来源确认的字段保留为 null。";
