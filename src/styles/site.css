@@ -1268,6 +1268,22 @@ a.track-title:hover {
   .credits { grid-template-columns: 1fr; min-height: auto; }
 }
 
+@media (min-width: 761px) and (max-width: 1020px) {
+  .hero-intro {
+    width: min(46%, 360px);
+    margin: 34px 0 22px 50%;
+    padding: 22px 24px;
+    color: var(--white);
+    border: 1px solid rgb(244 243 237 / 18%);
+    background: rgb(5 5 5 / 92%);
+    box-shadow: 20px 24px 56px rgb(5 5 5 / 24%);
+  }
+
+  .hero-intro + .text-link {
+    margin-left: 50%;
+  }
+}
+
 @media (max-width: 760px) {
   :root { --header-height: 64px; }
   .site-header { grid-template-columns: 1fr auto; }

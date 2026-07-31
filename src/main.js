@@ -41,8 +41,9 @@ const elements = {
 
 const guessableSongs = songs.filter((song) => song.guessable !== false);
 const today = new Date();
-const dayKey = today.toISOString().slice(0, 10);
-const answer = selectDailyAnswer(guessableSongs, today);
+const dayKey = createLocalDayKey(today);
+const displayDate = dateFromLocalDayKey(dayKey);
+const answer = selectDailyAnswer(guessableSongs, dayKey);
 const storageKey = `gluedle:daily:${dayKey}:${answer.id}`;
 
 let state = restoreGameState(readStoredState(), answer.id, guessableSongs);
@@ -83,8 +84,8 @@ function hydrateContent() {
     day: "2-digit",
     month: "short",
     year: "numeric",
-  }).format(today).toUpperCase();
-  document.querySelector("[data-current-year]").textContent = String(today.getFullYear());
+  }).format(displayDate).toUpperCase();
+  document.querySelector("[data-current-year]").textContent = dayKey.slice(0, 4);
 
   elements.notice.replaceChildren();
   const noticeBlocks = [
@@ -308,8 +309,10 @@ function renderGame() {
 
   if (state.status === "won") {
     elements.gameStatus.textContent = `连接成功 · ${answer.title}`;
+    setFeedback("今日连接完成，可以复制结果或重新开始。");
   } else if (state.status === "lost") {
     elements.gameStatus.textContent = `本轮结束 · ${answer.title}`;
+    setFeedback(`今日答案是「${answer.title}」，可以复制结果或重新开始。`);
   } else if (state.attempts.length) {
     elements.gameStatus.textContent = `已连接 ${state.attempts.length} 次，继续推理`;
   } else {
@@ -483,11 +486,23 @@ function openDialog(dialog) {
 
 function closeDialog(dialog) {
   if (!dialog) return;
+  const previousTrigger = lastDialogTrigger;
+  lastDialogTrigger = null;
   if (typeof dialog.close === "function") dialog.close();
   else dialog.removeAttribute("open");
   document.body.classList.remove("dialog-open");
-  if (lastDialogTrigger instanceof HTMLElement) lastDialogTrigger.focus();
-  lastDialogTrigger = null;
+  const focusTarget = canReceiveFocus(previousTrigger)
+    ? previousTrigger
+    : [elements.share, elements.reset].find(canReceiveFocus);
+  focusTarget?.focus({ preventScroll: true });
+}
+
+function canReceiveFocus(element) {
+  return element instanceof HTMLElement
+    && element.isConnected
+    && element.tabIndex >= 0
+    && !element.hasAttribute("disabled")
+    && element.getAttribute("aria-disabled") !== "true";
 }
 
 function setupPageMotion() {
@@ -575,4 +590,16 @@ function removeStoredState() {
 function setText(selector, value) {
   const element = document.querySelector(selector);
   if (element && value) element.textContent = value;
+}
+
+function createLocalDayKey(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function dateFromLocalDayKey(key) {
+  const [year, month, day] = key.split("-").map(Number);
+  return new Date(year, month - 1, day);
 }

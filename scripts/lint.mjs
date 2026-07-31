@@ -64,6 +64,18 @@ if (!main.includes("import './styles/site.css';")) {
 if (main.includes("scrollInto" + "View")) {
   errors.push("src/main.js: prohibited scrolling API found");
 }
+if (main.includes("toISOString")) {
+  errors.push("src/main.js: daily keys must use the visitor's local calendar date");
+}
+if (
+  !main.includes("const dayKey = createLocalDayKey(today);")
+  || !main.includes("const displayDate = dateFromLocalDayKey(dayKey);")
+  || !main.includes("selectDailyAnswer(guessableSongs, dayKey)")
+  || !main.includes('const storageKey = `gluedle:daily:${dayKey}:${answer.id}`;')
+  || !main.includes('const lines = [`GLUEDLE ${dayKey} ${outcome}`];')
+) {
+  errors.push("src/main.js: display, answer selection, storage, and sharing must share one local day key");
+}
 
 if (errors.length) {
   console.error(errors.join("\n\n"));
