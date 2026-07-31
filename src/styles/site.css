@@ -1005,7 +1005,7 @@ input:focus-visible,
 
 #guess-board {
   width: 100%;
-  min-width: 720px;
+  min-width: 820px;
   border-collapse: collapse;
   table-layout: fixed;
 }
@@ -1350,7 +1350,7 @@ input:focus-visible,
   .game { padding-right: 0; padding-left: 0; }
   .game-intro { padding-right: var(--page-pad); padding-left: var(--page-pad); }
   .game-panel { border-right: 0; border-left: 0; }
-  #guess-board { min-width: 790px; }
+  #guess-board { min-width: 880px; }
   .credits-grid { grid-template-columns: 1fr; }
   .credits-grid section:nth-child(odd) { border-right: 0; }
   .credits-grid section:nth-child(even) { padding-left: 0; }

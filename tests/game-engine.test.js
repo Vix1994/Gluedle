@@ -207,6 +207,11 @@ test("submitGuess updates state immutably and wins immediately", () => {
   assert.notEqual(afterMiss.attempts, initial.attempts);
   assert.equal(afterMiss.status, "playing");
   assert.equal(afterMiss.attempts[0].songId, "one");
+  assert.deepEqual(afterMiss.attempts[0].comparison.live, {
+    value: false,
+    status: COMPARISON_STATUS.MATCH,
+    direction: null,
+  });
   assert.equal(won.status, "won");
   assert.equal(won.attempts.length, 2);
   assert.equal(won.maxAttempts, MAX_ATTEMPTS);

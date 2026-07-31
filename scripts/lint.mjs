@@ -48,6 +48,7 @@ const releaseBoundaryMarkers = [
   ['data-release-title', "published Glue track"],
   ['data-game-song-count', "separate game library count"],
   ['data-content="gameLibraryNotice"', "game library boundary notice"],
+  ['data-live-column', "Live comparison column"],
 ];
 
 for (const [marker, label] of releaseBoundaryMarkers) {
@@ -56,6 +57,10 @@ for (const [marker, label] of releaseBoundaryMarkers) {
 
 if (html.includes("data-track-list") || main.includes("function renderCatalog")) {
   errors.push("album story must not render the guessing catalog as a track list");
+}
+
+if (!main.includes('attempt.comparison.live, "live"') || !main.includes('"language", "live", "performance"')) {
+  errors.push("src/main.js: Live comparison must render and be included in shared results");
 }
 
 const htmlForbidden = [

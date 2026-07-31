@@ -24,4 +24,8 @@ test("every guessing entry declares whether it is a live recording", () => {
     songs.filter((song) => song.isLive).map((song) => song.id),
     ["xi-huan-ni-live"],
   );
+  assert.equal(
+    songs.find((song) => song.id === "xi-huan-ni-live").performanceType,
+    "solo",
+  );
 });

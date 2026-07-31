@@ -297,7 +297,7 @@ function renderGame() {
     const row = document.createElement("tr");
     const cell = document.createElement("td");
     row.className = "empty-row";
-    cell.colSpan = 7;
+    cell.colSpan = 8;
     cell.textContent = "尚未提交选择";
     row.append(cell);
     elements.board.append(row);
@@ -318,6 +318,7 @@ function renderGame() {
     appendComparisonCell(row, attempt.comparison.duration, "duration");
     appendComparisonCell(row, attempt.comparison.project, "project");
     appendComparisonCell(row, attempt.comparison.language, "language");
+    appendComparisonCell(row, attempt.comparison.live, "live");
     appendComparisonCell(row, attempt.comparison.performance, "performance");
     appendComparisonCell(row, attempt.comparison.credits, "credits");
     elements.board.append(row);
@@ -340,6 +341,11 @@ function appendComparisonCell(row, comparison, field) {
 
 function formatCellValue(value, field) {
   if (Array.isArray(value)) return value.length ? value.join(" / ") : "待核验";
+  if (field === "live") {
+    if (value === true) return "是";
+    if (value === false) return "否";
+    return "待核验";
+  }
   if (field === "performance") {
     const labels = {
       solo: "独唱",
@@ -409,7 +415,7 @@ function buildShareText() {
     ? `${state.attempts.length}/${MAX_ATTEMPTS}`
     : state.status === "lost" ? `X/${MAX_ATTEMPTS}` : `${state.attempts.length}/…`;
   const lines = [`GLUEDLE ${dayKey} ${outcome}`];
-  const fields = ["year", "duration", "project", "language", "performance", "credits"];
+  const fields = ["year", "duration", "project", "language", "live", "performance", "credits"];
   const marks = { match: "●", near: "◐", partial: "◐", miss: "○", unknown: "·" };
   for (const attempt of state.attempts) {
     lines.push(fields.map((field) => marks[attempt.comparison[field].status] ?? "·").join(" "));

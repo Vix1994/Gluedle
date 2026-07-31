@@ -2,6 +2,8 @@
  * Prototype copy and song metadata for the audio-free Gluedle experience.
  * Release metadata was checked against the linked Apple Music track pages and
  * Apple iTunes Search API records on 2026-08-01. Unknown credits stay null.
+ * `isLive` describes whether the sourced release version is explicitly marked
+ * as Live; it is not a claim about otherwise undocumented recording conditions.
  */
 
 export const siteContent = {
@@ -154,7 +156,7 @@ export const songs = [
     version: "Live",
     isLive: true,
     languages: null,
-    performanceType: "live solo",
+    performanceType: "solo",
     featuredArtists: [],
     curleyCredits: { lyrics: null, composition: null },
     guessable: true,
@@ -309,4 +311,4 @@ export const songs = [
 ];
 
 export const dataNotice =
-  "本目录是 Gluedle 游戏使用的过往作品题库，不是当前专辑的曲目表；日期、时长、项目归属、是否 Live、版本、合作艺人与创作署名在正式发布前均须再次对照官方物料复核，当前无法由可靠来源确认的字段保留为 null。";
+  "本目录是 Gluedle 游戏使用的过往作品题库，不是当前专辑的曲目表；“是否 Live”仅表示来源是否明确将该发行版本标为 Live，不推断未公开的录音方式。日期、时长、项目归属、版本、合作艺人与创作署名在正式发布前均须再次对照官方物料复核，当前无法由可靠来源确认的字段保留为 null。";
