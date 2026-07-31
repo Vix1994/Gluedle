@@ -17,3 +17,11 @@ test("the guessing catalog is explicitly described as a separate game library", 
   assert.match(siteContent.game.libraryLabel, /过往作品题库/);
   assert.match(siteContent.game.libraryNotice, /不代表本专辑已公布曲目/);
 });
+
+test("every guessing entry declares whether it is a live recording", () => {
+  assert.ok(songs.every((song) => typeof song.isLive === "boolean"));
+  assert.deepEqual(
+    songs.filter((song) => song.isLive).map((song) => song.id),
+    ["xi-huan-ni-live"],
+  );
+});

@@ -24,6 +24,7 @@ function song(overrides = {}) {
     durationSec: 210,
     project: { title: "Project A", type: "album" },
     languages: ["中文", "English"],
+    isLive: false,
     performanceType: "solo",
     curleyCredits: { lyrics: true, composition: true },
     ...overrides,
@@ -126,11 +127,12 @@ test("compareSongs applies year and duration match/near/miss thresholds and dire
   assert.deepEqual(missDown.duration, { value: "03:46", status: "miss", direction: "down" });
 });
 
-test("compareSongs applies project, language, performance, and credits rules", () => {
+test("compareSongs applies project, language, live, performance, and credits rules", () => {
   const comparison = compareSongs(
     song({
       project: { title: "Other Album", type: "album" },
       languages: ["English", "Français"],
+      isLive: true,
       performanceType: "duet",
       curleyCredits: { lyrics: true, composition: false },
     }),
@@ -145,6 +147,11 @@ test("compareSongs applies project, language, performance, and credits rules", (
   assert.deepEqual(comparison.language, {
     value: ["English", "Français"],
     status: COMPARISON_STATUS.PARTIAL,
+    direction: null,
+  });
+  assert.deepEqual(comparison.live, {
+    value: true,
+    status: COMPARISON_STATUS.MISS,
     direction: null,
   });
   assert.equal(comparison.performance.status, COMPARISON_STATUS.MISS);
@@ -164,6 +171,13 @@ test("compareSongs applies project, language, performance, and credits rules", (
 
   const reorderedLanguages = compareSongs(song({ languages: ["English", "中文"] }), song());
   assert.equal(reorderedLanguages.language.status, COMPARISON_STATUS.MATCH);
+
+  const unknownLive = compareSongs(song({ isLive: null }), song());
+  assert.deepEqual(unknownLive.live, {
+    value: "待核验",
+    status: COMPARISON_STATUS.UNKNOWN,
+    direction: null,
+  });
 });
 
 test("null credits remain unknown and display pending verification instead of false", () => {

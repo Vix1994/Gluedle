@@ -69,7 +69,7 @@ export const siteContent = {
   game: {
     eyebrow: "03 / GLUEDLE",
     title: "不用听，也能猜到吗？",
-    description: "从发行年份、项目、版本与合作艺人等元数据逐步缩小答案范围。这里没有歌曲音频、试听链接或歌词摘录。",
+    description: "从发行年份、项目、是否 Live、版本与合作艺人等元数据逐步缩小答案范围。这里没有歌曲音频、试听链接或歌词摘录。",
     instructions: [
       "查看本轮公开的元数据线索。",
       "输入歌名或可接受的别名。",
@@ -108,6 +108,7 @@ export const songs = [
     durationSec: 269,
     project: { title: "颗粒季 - Single", type: "single" },
     version: null,
+    isLive: false,
     languages: null,
     performanceType: "solo",
     featuredArtists: [],
@@ -129,6 +130,7 @@ export const songs = [
     durationSec: 245,
     project: { title: "U - Single", type: "single" },
     version: null,
+    isLive: false,
     languages: null,
     performanceType: "collaboration",
     featuredArtists: ["Sugar"],
@@ -150,6 +152,7 @@ export const songs = [
     durationSec: 77,
     project: { title: "创造营2020第1期 (Live)", type: "live episode" },
     version: "Live",
+    isLive: true,
     languages: null,
     performanceType: "live solo",
     featuredArtists: [],
@@ -171,6 +174,7 @@ export const songs = [
     durationSec: 255,
     project: { title: "怎么会忘记你 - Single", type: "single" },
     version: null,
+    isLive: false,
     languages: null,
     performanceType: "collaboration",
     featuredArtists: ["王赫野"],
@@ -192,6 +196,7 @@ export const songs = [
     durationSec: 229,
     project: { title: "这,就是爱 - Single", type: "single" },
     version: null,
+    isLive: false,
     languages: null,
     performanceType: "solo",
     featuredArtists: [],
@@ -216,6 +221,7 @@ export const songs = [
       type: "soundtrack single",
     },
     version: null,
+    isLive: false,
     languages: null,
     performanceType: "solo",
     featuredArtists: [],
@@ -240,6 +246,7 @@ export const songs = [
       type: "soundtrack single",
     },
     version: null,
+    isLive: false,
     languages: null,
     performanceType: "solo",
     featuredArtists: [],
@@ -261,6 +268,7 @@ export const songs = [
     durationSec: 202,
     project: { title: "其时 - Single", type: "single" },
     version: null,
+    isLive: false,
     languages: null,
     performanceType: "solo",
     featuredArtists: [],
@@ -285,6 +293,7 @@ export const songs = [
       type: "soundtrack single",
     },
     version: null,
+    isLive: false,
     languages: null,
     performanceType: "solo",
     featuredArtists: [],
@@ -300,4 +309,4 @@ export const songs = [
 ];
 
 export const dataNotice =
-  "本目录是 Gluedle 游戏使用的过往作品题库，不是当前专辑的曲目表；日期、时长、项目归属、版本、合作艺人与创作署名在正式发布前均须再次对照官方物料复核，当前无法由可靠来源确认的字段保留为 null。";
+  "本目录是 Gluedle 游戏使用的过往作品题库，不是当前专辑的曲目表；日期、时长、项目归属、是否 Live、版本、合作艺人与创作署名在正式发布前均须再次对照官方物料复核，当前无法由可靠来源确认的字段保留为 null。";

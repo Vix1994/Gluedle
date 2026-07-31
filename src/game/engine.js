@@ -86,6 +86,8 @@ export function compareSongs(guess, target) {
   const targetProject = readProject(target);
   const guessLanguages = readLanguages(guess);
   const targetLanguages = readLanguages(target);
+  const guessLive = readLiveStatus(guess);
+  const targetLive = readLiveStatus(target);
   const guessPerformance = guess.performanceType ?? null;
   const targetPerformance = target.performanceType ?? null;
 
@@ -99,6 +101,7 @@ export function compareSongs(guess, target) {
     ),
     project: projectComparison(guessProject, targetProject),
     language: languageComparison(guessLanguages, targetLanguages),
+    live: equalityComparison(guessLive, targetLive),
     performance: equalityComparison(guessPerformance, targetPerformance),
     credits: creditsComparison(guess.curleyCredits ?? null, target.curleyCredits ?? null),
   };
@@ -336,6 +339,10 @@ function readLanguages(song) {
     return null;
   }
   return song.languages.filter((language) => language !== null && language !== undefined);
+}
+
+function readLiveStatus(song) {
+  return typeof song.isLive === "boolean" ? song.isLive : null;
 }
 
 function normalizedSet(values) {
