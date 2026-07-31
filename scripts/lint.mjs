@@ -63,6 +63,17 @@ if (!main.includes('attempt.comparison.live, "live"') || !main.includes('"langua
   errors.push("src/main.js: Live comparison must render and be included in shared results");
 }
 
+const suggestionsStart = main.indexOf("function showSuggestions");
+const suggestionsEnd = main.indexOf("function updateActiveSuggestion");
+const suggestionsSource = main.slice(suggestionsStart, suggestionsEnd);
+if (
+  suggestionsStart < 0
+  || suggestionsEnd <= suggestionsStart
+  || /releaseYear|durationSec|formatDuration/.test(suggestionsSource)
+) {
+  errors.push("src/main.js: search suggestions must reveal song titles only");
+}
+
 const htmlForbidden = [
   [/<audio\b/i, "audio elements are not allowed"],
   [/播放|试听/, "audio playback language is not allowed"],

@@ -881,9 +881,8 @@ input:focus-visible,
 }
 
 .suggestion-option {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 18px;
+  display: flex;
+  align-items: center;
   min-height: 52px;
   padding: 12px 14px;
   border-bottom: 1px solid rgb(244 243 237 / 12%);
@@ -899,13 +898,6 @@ input:focus-visible,
 .suggestion-option[aria-selected="true"] {
   color: var(--black);
   background: var(--lake);
-}
-
-.suggestion-option small {
-  color: inherit;
-  font-family: var(--font-mono);
-  font-size: 0.63rem;
-  opacity: 0.72;
 }
 
 .primary-button,

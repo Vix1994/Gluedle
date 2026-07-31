@@ -3,7 +3,6 @@ import './styles/site.css';
 import { siteContent, songs, dataNotice } from "./data/catalog.js";
 import {
   MAX_ATTEMPTS,
-  formatDuration,
   findSongMatches,
   selectDailyAnswer,
   createInitialState,
@@ -174,15 +173,13 @@ function showSuggestions(query) {
   suggestionSongs.forEach((song, index) => {
     const option = document.createElement("li");
     const title = document.createElement("span");
-    const meta = document.createElement("small");
     option.id = `song-option-${song.id}`;
     option.className = "suggestion-option";
     option.role = "option";
     option.ariaSelected = "false";
     option.dataset.index = String(index);
     title.textContent = song.title;
-    meta.textContent = `${song.releaseYear ?? "待核验"} / ${formatDuration(song.durationSec)}`;
-    option.append(title, meta);
+    option.append(title);
     option.addEventListener("pointerdown", (event) => event.preventDefault());
     option.addEventListener("click", () => selectSuggestion(song));
     elements.suggestions.append(option);
