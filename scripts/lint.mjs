@@ -44,6 +44,20 @@ for (const id of requiredIds) {
   if (!html.includes(`id="${id}"`)) errors.push(`index.html: missing required #${id}`);
 }
 
+const releaseBoundaryMarkers = [
+  ['data-release-title', "published Glue track"],
+  ['data-game-song-count', "separate game library count"],
+  ['data-content="gameLibraryNotice"', "game library boundary notice"],
+];
+
+for (const [marker, label] of releaseBoundaryMarkers) {
+  if (!html.includes(marker)) errors.push(`index.html: missing ${label}`);
+}
+
+if (html.includes("data-track-list") || main.includes("function renderCatalog")) {
+  errors.push("album story must not render the guessing catalog as a track list");
+}
+
 const htmlForbidden = [
   [/<audio\b/i, "audio elements are not allowed"],
   [/播放|试听/, "audio playback language is not allowed"],

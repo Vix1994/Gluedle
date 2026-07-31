@@ -8,7 +8,7 @@ export const siteContent = {
   navigation: [
     { label: "首页", href: "#home" },
     { label: "Green to Blue", href: "#concept" },
-    { label: "音乐与故事", href: "#story" },
+    { label: "Glue", href: "#story" },
     { label: "Gluedle", href: "#game" },
     { label: "Credits", href: "#credits" },
   ],
@@ -46,23 +46,23 @@ export const siteContent = {
   },
   story: {
     eyebrow: "02 / MUSIC & MAKING",
-    title: "把线索留在声音之外",
+    title: "只围绕一首歌",
     intro: "当前只呈现已经公开的《Glue》。影像从一首歌出发，不把 Gluedle 的游戏题库误写成专辑曲目。",
     chapters: [
       {
         index: "01",
-        title: "生长",
-        body: "早期作品与舞台版本留下不同的时间刻度；目录只呈现能够被来源支持的元数据。",
+        title: "公开",
+        body: "目前唯一公开的曲目是《Glue》，首页不推测或预填尚未公布的歌名。",
       },
       {
         index: "02",
-        title: "连接",
-        body: "独唱、合作与影视项目构成彼此交叠的轨道，让猜测来自关系，而不是音频片段。",
+        title: "影像",
+        body: "曝光、涟漪与拼贴都从这一首歌展开，保持视觉叙事和发行信息的一致。",
       },
       {
         index: "03",
-        title: "回看",
-        body: "未知创作署名不会被补写。留白也是资料的一部分，等待正式来源完成它。",
+        title: "留白",
+        body: "尚未公开的曲目继续留白，等待正式发布信息完成这张地图。",
       },
     ],
   },

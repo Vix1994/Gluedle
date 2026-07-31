@@ -18,8 +18,7 @@ const elements = {
   header: document.querySelector("[data-header]"),
   progress: document.querySelector("[data-scroll-progress]"),
   nav: document.querySelector(".site-nav"),
-  songCount: document.querySelector("[data-song-count]"),
-  trackList: document.querySelector("[data-track-list]"),
+  gameSongCount: document.querySelector("[data-game-song-count]"),
   notice: document.querySelector("[data-notice]"),
   gameDate: document.querySelector("#game-date"),
   gameStatus: document.querySelector("#game-status"),
@@ -54,7 +53,6 @@ let toastTimer;
 let lastDialogTrigger = null;
 
 hydrateContent();
-renderCatalog();
 renderGame();
 bindSearch();
 bindGameActions();
@@ -77,6 +75,17 @@ function hydrateContent() {
     siteContent.concept.paragraphs.slice(1).join("\n"),
   );
   setText("[data-content='storyIntro']", siteContent.story.intro);
+  const releasedTrack = siteContent.release.tracks[0];
+  setText("[data-release-label]", siteContent.release.label);
+  setText("[data-release-count]", siteContent.release.countLabel);
+  setText("[data-release-position]", releasedTrack.position);
+  setText("[data-release-title]", releasedTrack.title);
+  setText("[data-release-status]", releasedTrack.status);
+  setText("[data-release-note]", releasedTrack.note);
+  setText("[data-release-notice]", siteContent.release.notice);
+  setText("[data-content='gameLibraryLabel']", siteContent.game.libraryLabel);
+  setText("[data-content='gameLibraryNotice']", siteContent.game.libraryNotice);
+  elements.gameSongCount.textContent = String(guessableSongs.length).padStart(2, "0");
   setText("#game-title", siteContent.game.title);
   setText("#credits-title", siteContent.credits.title);
 
@@ -104,42 +113,6 @@ function hydrateContent() {
     section.append(heading, paragraph);
     elements.notice.append(section);
   }
-}
-
-function renderCatalog() {
-  elements.songCount.textContent = String(guessableSongs.length).padStart(2, "0");
-  elements.trackList.replaceChildren();
-
-  guessableSongs.forEach((song, index) => {
-    const item = document.createElement("li");
-    item.className = "track-item";
-
-    const number = document.createElement("span");
-    number.className = "track-number";
-    number.textContent = String(index + 1).padStart(2, "0");
-
-    const source = song.sources?.[0];
-    const title = source ? document.createElement("a") : document.createElement("span");
-    title.className = "track-title";
-    title.textContent = song.title;
-    if (source) {
-      title.href = source.url;
-      title.target = "_blank";
-      title.rel = "noreferrer";
-      title.ariaLabel = `${song.title} 的资料来源（新窗口）`;
-    }
-
-    const meta = document.createElement("span");
-    meta.className = "track-meta";
-    meta.textContent = `${song.releaseYear ?? "待核验"} / ${song.project?.type ?? "待核验"}`;
-
-    const duration = document.createElement("span");
-    duration.className = "track-duration";
-    duration.textContent = formatDuration(song.durationSec);
-
-    item.append(number, title, meta, duration);
-    elements.trackList.append(item);
-  });
 }
 
 function bindSearch() {

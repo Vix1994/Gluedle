@@ -24,7 +24,7 @@
       <a class="wordmark" href="#home" aria-label="GLUEDLE 首页">GLUEDLE</a>
       <nav class="site-nav" aria-label="主要导航">
         <a href="#concept">概念</a>
-        <a href="#story">曲目</a>
+        <a href="#story">Glue</a>
         <a href="#gluedle">游戏</a>
         <a href="#credits">声明</a>
       </nav>
@@ -76,12 +76,12 @@
       </section>
 
       <section class="story chapter chapter--paper" id="story" aria-labelledby="story-title">
-        <div class="section-index" aria-hidden="true"><span>02</span><span>IMAGE / TRACK DATA</span></div>
+        <div class="section-index" aria-hidden="true"><span>02</span><span>IMAGE / RELEASED TRACK</span></div>
         <div class="story-heading reveal">
-          <p class="kicker">GLUE / GREEN TO BLUE</p>
-          <h2 id="story-title">一组影像，<br />一张资料地图。</h2>
+          <p class="kicker">GLUE / THE RELEASED TRACK</p>
+          <h2 id="story-title">一组影像，<br />只围绕一首歌。</h2>
           <p data-content="storyIntro">
-            图像保留触感，曲目资料保持准确。所有可推理歌曲都直接来自项目曲库。
+            当前只呈现已经公开的《Glue》。尚未公布的曲目继续留白。
           </p>
         </div>
         <div class="collage" aria-label="GLUE 概念影像拼贴">
@@ -97,14 +97,23 @@
           <div class="collage-blue" aria-hidden="true"><span>GREEN</span><span>TO</span><span>BLUE</span></div>
         </div>
 
-        <div class="catalog" aria-labelledby="catalog-title">
-          <div class="catalog-head">
-            <h3 id="catalog-title">曲目资料入口</h3>
-            <p><span data-song-count>—</span> TRACKS / SOURCE CATALOG</p>
+        <div class="release" aria-labelledby="release-title">
+          <div class="release-head">
+            <h3 id="release-title" data-release-label>已公开曲目</h3>
+            <p data-release-count>01 RELEASED TRACK</p>
           </div>
-          <ol class="track-list" data-track-list>
-            <li class="track-loading">曲库接入中</li>
-          </ol>
+          <article class="released-track">
+            <span class="released-track-number" data-release-position>01</span>
+            <div class="released-track-identity">
+              <p>PUBLIC TRACK / 001</p>
+              <h4 data-release-title>Glue</h4>
+            </div>
+            <p class="released-track-status" data-release-status>已公开</p>
+            <p class="released-track-note" data-release-note>目前唯一公开曲目</p>
+          </article>
+          <p class="release-notice" data-release-notice>
+            当前只展示已经公开的《Glue》；其余曲目以之后的正式公布为准。
+          </p>
         </div>
       </section>
 
@@ -116,7 +125,12 @@
           <div class="section-index"><span>03</span><span>DAILY GLUEDLE</span></div>
           <p class="kicker" id="game-date">TODAY / —</p>
           <h2 id="game-title">从资料的偏差，<br />推回那一首歌。</h2>
-          <p>每天一题，六次选择。方向与颜色会告诉你下一步该往哪里找。</p>
+          <p>每天从过往作品题库中抽取一题，六次选择。方向与颜色会告诉你下一步该往哪里找。</p>
+          <div class="game-library-note" aria-label="游戏题库说明">
+            <span class="meta-label">GLUEDLE GAME LIBRARY</span>
+            <strong><span data-game-song-count>—</span> 首 · <span data-content="gameLibraryLabel">希林娜依高过往作品题库</span></strong>
+            <p data-content="gameLibraryNotice">仅用于 Gluedle 每日猜歌，不代表本专辑已公布曲目。</p>
+          </div>
           <button class="inline-control" type="button" data-open-dialog="help-dialog">阅读玩法</button>
         </div>
 
@@ -131,7 +145,7 @@
 
           <form id="guess-form" class="guess-form" novalidate>
             <div class="search-field">
-              <label for="song-input">选择一首歌曲</label>
+              <label for="song-input">从过往作品题库中选择</label>
               <input
                 id="song-input"
                 name="song"
@@ -148,7 +162,7 @@
             <button id="guess-submit" class="primary-button" type="submit" disabled>提交选择</button>
           </form>
           <p id="guess-feedback" class="form-feedback" aria-live="polite">
-            从曲库搜索并选择一首歌。
+            从过往作品题库搜索并选择一首歌。
           </p>
 
           <div class="legend" aria-label="反馈状态说明">
@@ -212,7 +226,7 @@
         <p class="kicker">HOW TO PLAY</p>
         <h2 id="help-title">六次连接，找到答案。</h2>
         <ol>
-          <li>搜索曲库并选择一首歌曲。</li>
+          <li>从希林娜依高过往作品题库中搜索并选择一首歌曲。</li>
           <li>比较年份、时长、所属项目、语言、演唱与创作资料。</li>
           <li>颜色表示匹配程度；箭头与文字表示答案的方向。</li>
           <li>每天的题目单独保存，重新开始只会清除当前题目。</li>
