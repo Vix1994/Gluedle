@@ -13,9 +13,11 @@ test("home links to the standalone game without embedding game controls", () => 
   assert.ok((homeHtml.match(/href="\/gluedle\.html"/g) ?? []).length >= 2);
   assert.doesNotMatch(homeHtml, /id="(?:guess-form|song-input|guess-board|result-dialog)"/);
   assert.doesNotMatch(homeMain, /bindGameActions|submitGuess|selectDailyAnswer/);
-  for (const id of ["home", "concept", "story", "credits"]) {
+  for (const id of ["home", "concept", "story"]) {
     assert.match(homeHtml, new RegExp(`id="${id}"`));
   }
+  assert.doesNotMatch(homeHtml, /当前只|其余曲目|页面边界|项目声明|不宣称/);
+  assert.doesNotMatch(gameHtml, /不代表《Glue》所在专辑已公布曲目|DATA BOUNDARY/);
 });
 
 test("home exposes the verified artist destinations safely", () => {

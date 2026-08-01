@@ -12,66 +12,62 @@ export const siteContent = {
     { label: "Green to Blue", href: "#concept" },
     { label: "Glue", href: "#story" },
     { label: "Gluedle", href: "/gluedle.html" },
-    { label: "Credits", href: "#credits" },
   ],
   hero: {
     eyebrow: "GLUEDLE / PROJECT CONCEPT",
     title: "Green to Blue",
     subtitle: "让颜色成为一条听见彼此的路径。",
-    body: "这是一组围绕“Glue”展开的项目概念文案：从绿色的生长感出发，经过水、颗粒与回声，抵达更深的蓝。它不代表官方专辑叙事，2026 年相关信息仍待正式物料复核。",
+    body: "这是一组围绕“Glue”展开的视觉叙事：从绿色的生长感出发，经过水、颗粒与回声，抵达更深的蓝。",
     primaryAction: "进入概念",
     secondaryAction: "开始猜歌",
   },
   concept: {
     eyebrow: "01 / CONCEPT",
     title: "Green to Blue",
-    status: "项目概念文案 · 2026 信息待核验",
+    status: "GREEN TO BLUE / VISUAL STUDY",
     paragraphs: [
       "绿色像尚未说完的开头，带着呼吸、摩擦和正在生成的边缘。",
       "蓝色不是终点，而是关系变深之后留下的空间：水面扩散，声音退去，连接仍然存在。",
-      "Glue 是两种颜色之间的动作。这里用涟漪、轨道与拼贴表达靠近，不把概念包装成未经证实的发行事实。",
+      "Glue 是两种颜色之间的动作。涟漪、轨道与拼贴把靠近的过程留了下来。",
     ],
     motifs: ["颗粒", "涟漪", "轨道", "曝光", "编辑式拼贴"],
   },
   release: {
-    label: "已公开曲目",
-    countLabel: "01 RELEASED TRACK",
+    label: "GLUE",
+    countLabel: "01 / SINGLE",
     tracks: [
       {
         position: "01",
         title: "Glue",
-        status: "已公开",
-        note: "目前唯一公开曲目",
       },
     ],
-    notice: "当前只展示已经公开的《Glue》；其余曲目以之后的正式公布为准。",
   },
   story: {
     eyebrow: "02 / MUSIC & MAKING",
     title: "只围绕一首歌",
-    intro: "当前只呈现已经公开的《Glue》。影像从一首歌出发，不把 Gluedle 的游戏题库误写成专辑曲目。",
+    intro: "《Glue》从一滴涟漪开始，在曝光、颗粒与蓝色轨道之间扩散。",
     chapters: [
       {
         index: "01",
-        title: "公开",
-        body: "目前唯一公开的曲目是《Glue》，首页不推测或预填尚未公布的歌名。",
+        title: "涟漪",
+        body: "指尖与水面接触，第一圈回声由此展开。",
       },
       {
         index: "02",
         title: "影像",
-        body: "曝光、涟漪与拼贴都从这一首歌展开，保持视觉叙事和发行信息的一致。",
+        body: "曝光、涟漪与拼贴沿着这一首歌继续生长。",
       },
       {
         index: "03",
-        title: "留白",
-        body: "尚未公开的曲目继续留白，等待正式发布信息完成这张地图。",
+        title: "深蓝",
+        body: "颜色逐渐沉入深蓝，连接仍停留在水面之上。",
       },
     ],
   },
   game: {
     eyebrow: "03 / GLUEDLE",
     title: "不用听，也能猜到吗？",
-    description: "从发行年份、项目、是否 Live、版本与合作艺人等元数据逐步缩小答案范围。这里没有歌曲音频、试听链接或歌词摘录。",
+    description: "从发行年份、项目、是否 Live、版本与合作艺人等资料逐步缩小答案范围。",
     instructions: [
       "查看本轮公开的元数据线索。",
       "输入歌名或可接受的别名。",
@@ -85,18 +81,6 @@ export const siteContent = {
     failureTitle: "这次让答案浮出水面",
     noAudioNotice: "本原型仅使用元数据，不提供或托管歌曲音频。",
     libraryLabel: "希林娜依高过往作品题库",
-    libraryNotice: "仅用于 Gluedle 每日猜歌，不代表本专辑已公布曲目。",
-  },
-  credits: {
-    eyebrow: "04 / CREDITS",
-    title: "Credits & Data",
-    items: [
-      "项目：Gluedle 独立无音频猜歌原型",
-      "游戏题库：希林娜依高过往公开发行作品，不等同于本专辑曲目",
-      "数据校验：Apple Music 曲目页与 Apple iTunes Search API",
-      "视觉素材：用户提供的项目素材，授权状态待确认",
-    ],
-    disclaimer: "本项目不宣称获得艺人、唱片公司、平台或素材权利人的官方授权或背书。",
   },
 };
 

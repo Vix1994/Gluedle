@@ -55,12 +55,18 @@ for (const id of requiredIds) {
 const releaseBoundaryMarkers = [
   [homeHtml, "index.html", "data-release-title", "published Glue track"],
   [gameHtml, "gluedle.html", "data-game-song-count", "separate game library count"],
-  [gameHtml, "gluedle.html", "不代表《Glue》所在专辑已公布曲目", "game library boundary notice"],
   [gameHtml, "gluedle.html", "data-live-column", "Live comparison column"],
 ];
 
 for (const [source, file, marker, label] of releaseBoundaryMarkers) {
   if (!source.includes(marker)) errors.push(`${file}: missing ${label}`);
+}
+
+for (const [source, file, pattern] of [
+  [homeHtml, "index.html", /当前只|其余曲目|页面边界|项目声明|不宣称/],
+  [gameHtml, "gluedle.html", /不代表《Glue》所在专辑已公布曲目|DATA BOUNDARY/],
+]) {
+  if (pattern.test(source)) errors.push(`${file}: explanatory disclaimer copy must stay out of the visible experience`);
 }
 
 if (homeHtml.includes("data-track-list") || homeMain.includes("function renderCatalog")) {

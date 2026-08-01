@@ -211,13 +211,6 @@ a {
   font-size: 16px;
 }
 
-.library-note p {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.55;
-  color: var(--muted);
-}
-
 .game-panel {
   width: min(100%, 960px);
   margin: 0 auto;

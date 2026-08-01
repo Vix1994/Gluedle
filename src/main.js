@@ -26,10 +26,6 @@ function hydrateContent() {
   setText("[data-release-count]", siteContent.release.countLabel);
   setText("[data-release-position]", releasedTrack.position);
   setText("[data-release-title]", releasedTrack.title);
-  setText("[data-release-status]", releasedTrack.status);
-  setText("[data-release-note]", releasedTrack.note);
-  setText("[data-release-notice]", siteContent.release.notice);
-  setText("#credits-title", siteContent.credits.title);
   setText("[data-current-year]", String(new Date().getFullYear()));
 }
 
