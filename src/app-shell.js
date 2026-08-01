@@ -171,7 +171,16 @@ function headerMarkup() {
     <header class="app-header" data-app-header-element>
       <a class="app-wordmark" href="/" aria-label="GLUE 首页">GLUE</a>
       <nav class="app-nav" aria-label="专辑页面">${links}</nav>
-      <button class="app-header-action" type="button" data-app-action></button>
+      <div class="app-header-actions">
+        <a
+          class="app-listen-action"
+          href="https://y.qq.com/n/ryqq/songDetail/000Q9lzD0ag0YJ"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="在 QQ 音乐收听《Glue》（新窗口）"
+        >立即收听 <span aria-hidden="true">↗</span></a>
+        <button class="app-header-action" type="button" data-app-action></button>
+      </div>
       <div class="app-progress" aria-hidden="true"><span data-app-progress></span></div>
     </header>
   `;

@@ -324,11 +324,9 @@ a:focus-visible {
 .listen-link {
   display: grid;
   grid-template-columns: 1fr auto;
-  grid-template-areas:
-    "label arrow"
-    "platform arrow";
+  grid-template-areas: "label arrow";
   align-items: center;
-  gap: 1px 28px;
+  gap: 28px;
   min-width: 194px;
   min-height: 58px;
   padding: 9px 16px;
@@ -349,14 +347,6 @@ a:focus-visible {
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.08em;
-}
-
-.listen-link-platform {
-  grid-area: platform;
-  font-size: 0.58rem;
-  letter-spacing: 0.06em;
-  opacity: 0.62;
-  text-transform: uppercase;
 }
 
 .listen-link-arrow {

@@ -30,6 +30,8 @@ const gameStyles = gameStyleFiles.map(({ source }) => source).join("\n");
 const editorialStyles = readFileSync(new URL("../src/styles/editorial.css", import.meta.url), "utf8");
 const transitionStyles = readFileSync(new URL("../src/styles/transitions.css", import.meta.url), "utf8");
 const shareCardSource = readFileSync(new URL("../src/share/share-card.js", import.meta.url), "utf8");
+const songCatalogLoader = readFileSync(new URL("../src/data/song-catalog.js", import.meta.url), "utf8");
+const songCatalogJson = readFileSync(new URL("../public/data/gluedle-songs.json", import.meta.url), "utf8");
 const viteConfig = readFileSync(new URL("../vite.config.js", import.meta.url), "utf8");
 
 function extractFunction(source, name) {
@@ -214,7 +216,14 @@ test("home hero links directly to the verified Glue song on QQ Music", () => {
     /class="listen-link"[\s\S]*?href="https:\/\/y\.qq\.com\/n\/ryqq\/songDetail\/000Q9lzD0ag0YJ"[\s\S]*?target="_blank"[\s\S]*?rel="noopener noreferrer"/,
   );
   assert.match(homeHtml, /<span class="listen-link-label">立即收听<\/span>/);
-  assert.match(homeHtml, /<span class="listen-link-platform">QQ音乐<\/span>/);
+  assert.doesNotMatch(homeHtml, /listen-link-platform|>QQ音乐<\/span>/);
+  assert.match(
+    appShell,
+    /class="app-listen-action"[\s\S]*?href="https:\/\/y\.qq\.com\/n\/ryqq\/songDetail\/000Q9lzD0ag0YJ"[\s\S]*?target="_blank"[\s\S]*?rel="noopener noreferrer"/,
+  );
+  assert.match(appShell, /立即收听 <span aria-hidden="true">↗<\/span>/);
+  assert.match(appShellStyles, /\.app-listen-action,\s*\.app-header-action\s*\{[\s\S]*?min-width:\s*132px[\s\S]*?border:\s*1px solid currentColor/);
+  assert.match(appShellStyles, /@media \(max-width:\s*760px\)[\s\S]*?\.app-listen-action,\s*\.app-header-action\s*\{[\s\S]*?min-height:\s*44px/);
 });
 
 test("standalone game keeps title-only suggestions, Live clues, and image sharing", () => {
@@ -256,12 +265,11 @@ test("the standalone shell exposes accessible dynamic-game integration points", 
   assert.match(gameHtml, /\bdata-app-boot\b[^>]*\brole="status"/);
   assert.match(gameHtml, /<noscript>/);
   assert.equal((gameHtml.match(/\bdata-attempt-marker\b/g) ?? []).length, 6);
-  assert.match(gameHtml, /class="game-signal"[^>]*\baria-hidden="true"/);
-  assert.equal((gameHtml.match(/class="signal-ring"/g) ?? []).length, 6);
   assert.match(gameHtml, /<th\b[^>]*\bdata-live-column[^>]*>Live<\/th>/);
+  assert.doesNotMatch(gameHtml, />语言<\/th>/);
 });
 
-test("game entry synchronizes visible progress, day rollover, reset failure, and boot state", () => {
+test("game entry synchronizes progress, reloads JSON data, and randomizes each round", () => {
   assert.match(gameMain, /document\.body\.dataset\.gameState\s*=\s*state\.status/);
   assert.match(gameMain, /document\.body\.dataset\.attempts\s*=\s*String\(/);
   assert.match(
@@ -270,18 +278,13 @@ test("game entry synchronizes visible progress, day rollover, reset failure, and
   );
   assert.match(gameMain, /querySelectorAll\(\s*["']\[data-attempt-marker\]["']\s*\)/);
 
-  assert.match(gameMain, /addEventListener\(\s*["']visibilitychange["']/);
-  const dayCheckSource = extractFunction(gameMain, "checkForNewDay");
-  assert.match(dayCheckSource, /createLocalDayKey\(new Date\(/);
-  assert.match(dayCheckSource, /dayKey/);
-  assert.match(dayCheckSource, /location\.reload\(\)/);
-
-  const resetResult = /const\s+([A-Za-z_$][\w$]*)\s*=\s*removeStoredState\(\)/.exec(gameMain);
-  assert.ok(resetResult, "reset must retain the storage removal result");
-  assert.match(gameMain, new RegExp(`if\\s*\\(\\s*${resetResult[1]}\\s*\\)`));
-  const removeStoredStateSource = extractFunction(gameMain, "removeStoredState");
-  assert.match(removeStoredStateSource, /return\s+true\s*;/);
-  assert.match(removeStoredStateSource, /return\s+false\s*;/);
+  assert.match(songCatalogLoader, /SONG_CATALOG_URL\s*=\s*["']\/data\/gluedle-songs\.json["']/);
+  assert.match(gameMain, /loadSongCatalog\(\{ signal \}\)/);
+  assert.match(gameMain, /selectRandomAnswer\(choices\)/);
+  assert.doesNotMatch(gameMain, /selectDailyAnswer|gluedle:daily|checkForNewDay/);
+  const parsedCatalog = JSON.parse(songCatalogJson);
+  assert.ok(parsedCatalog.every((song) => !("language" in song) && !("languages" in song)));
+  assert.ok(parsedCatalog.every((song) => song.project.type !== "single" || song.project.title === "单曲"));
 
   assert.match(gameMain, /activeSuggestion\s*===\s*-1/);
   assert.match(
@@ -289,13 +292,19 @@ test("game entry synchronizes visible progress, day rollover, reset failure, and
     /event\.key\s*===\s*["']ArrowDown["']\s*\?\s*0\s*:\s*suggestionSongs\.length\s*-\s*1/,
   );
   const suggestionsSource = extractFunction(gameMain, "showSuggestions");
-  assert.match(
-    suggestionsSource,
-    /guessableSongs\.filter\([\s\S]*?!guessedIds\.has\(song\.id\)[\s\S]*?\)\.slice\(0,\s*8\)/,
-  );
+  assert.match(suggestionsSource, /songs\.filter\([\s\S]*?!guessedIds\.has\(song\.id\)/);
 
   const finishBootSource = extractFunction(gameMain, "finishBoot");
   assert.match(finishBootSource, /appBoot\?\.remove\(\)/);
+});
+
+test("responsive game ledger exposes every field without horizontal scrolling", () => {
+  assert.doesNotMatch(gameStyles, /overflow-x:\s*auto/);
+  assert.doesNotMatch(gameStyles, /#guess-board\s*\{[^}]*min-width:\s*8\d{2}px/s);
+  assert.match(gameStyles, /grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/);
+  for (const field of ["song", "year", "duration", "project", "live", "performance", "credits"]) {
+    assert.match(gameMain, new RegExp(`, "${field}",`));
+  }
 });
 
 test("result states use high-contrast colors plus non-color marks", () => {

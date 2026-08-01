@@ -70,9 +70,11 @@ const gameStyleFiles = gameStyleFileNames.map((name) => ({
 const gameStyleEntry = gameStyleFiles.find(({ name }) => name === "gluedle.css")?.source ?? "";
 const gameStyles = gameStyleFiles.map(({ source }) => source).join("\n");
 const shareCardSource = readFileSync(join(root, "src", "share", "share-card.js"), "utf8");
+const songCatalogSource = readFileSync(join(root, "src", "data", "song-catalog.js"), "utf8");
+const songCatalogJson = readFileSync(join(root, "public", "data", "gluedle-songs.json"), "utf8");
 const viteConfig = readFileSync(join(root, "vite.config.js"), "utf8");
 const requiredIds = [
-  "game-date",
+  "game-round",
   "game-status",
   "guess-form",
   "song-input",
@@ -115,7 +117,7 @@ if (homeHtml.includes("data-track-list") || homeMain.includes("function renderCa
 
 if (
   !gameMain.includes('attempt.comparison.live, "live"')
-  || !shareCardSource.includes('SHARE_FIELDS = ["year", "duration", "project", "language", "live"')
+  || !shareCardSource.includes('SHARE_FIELDS = ["year", "duration", "project", "live"')
 ) {
   errors.push("standalone Gluedle: Live comparison must render and be included in shared results");
 }
@@ -133,7 +135,7 @@ if (
 
 if (
   !suggestionsSource
-  || !/guessableSongs\.filter\([\s\S]*?!guessedIds\.has\(song\.id\)[\s\S]*?\)\.slice\(0,\s*8\)/
+  || !/songs\.filter\([\s\S]*?!guessedIds\.has\(song\.id\)[\s\S]*?\)/
     .test(suggestionsSource)
 ) {
   errors.push("src/gluedle.js: empty-query suggestions must exclude guessed songs before limiting results");
@@ -309,16 +311,15 @@ for (const file of sourceJavaScriptFiles) {
     errors.push(`${relative(root, file)}: prohibited scrolling API found`);
   }
 }
-if (gameMain.includes("toISOString")) {
-  errors.push("src/gluedle.js: daily keys must use the visitor's local calendar date");
-}
+const parsedSongCatalog = JSON.parse(songCatalogJson);
 if (
-  !gameMain.includes("const dayKey = createLocalDayKey(new Date());")
-  || !gameMain.includes("const displayDate = dateFromLocalDayKey(dayKey);")
-  || !gameMain.includes("selectDailyAnswer(guessableSongs, dayKey)")
-  || !gameMain.includes('const storageKey = `gluedle:daily:${dayKey}:${answer.id}`;')
+  !songCatalogSource.includes('SONG_CATALOG_URL = "/data/gluedle-songs.json"')
+  || !gameMain.includes("loadSongCatalog({ signal })")
+  || !Array.isArray(parsedSongCatalog)
+  || parsedSongCatalog.some((song) => "language" in song || "languages" in song)
+  || parsedSongCatalog.some((song) => song.project?.type === "single" && song.project?.title !== "单曲")
 ) {
-  errors.push("src/gluedle.js: display, answer selection, and storage must share one local day key");
+  errors.push("Gluedle must load the language-free JSON catalog and normalize independent releases to 单曲");
 }
 
 const inputTag = /<input\b[^>]*\bid="song-input"[^>]*>/i.exec(gameHtml)?.[0] ?? "";
@@ -343,31 +344,19 @@ if (
 
 if (
   (gameHtml.match(/\bdata-attempt-marker\b/g) ?? []).length !== 6
-  || !/class="game-signal"[^>]*\baria-hidden="true"/.test(gameHtml)
-  || (gameHtml.match(/class="signal-ring"/g) ?? []).length !== 6
 ) {
-  errors.push(`${gameHtmlLabel}: game must expose six attempt markers and six decorative signal rings`);
+  errors.push(`${gameHtmlLabel}: game must expose six attempt markers`);
 }
 
-const removeStoredStateSource = extractFunction(gameMain, "removeStoredState") ?? "";
-const resetResult = /const\s+([A-Za-z_$][\w$]*)\s*=\s*removeStoredState\(\)/.exec(gameMain);
 if (
-  !resetResult
-  || !new RegExp(`if\\s*\\(\\s*${resetResult?.[1] ?? "__missing__"}\\s*\\)`).test(gameMain)
-  || !/return\s+true\s*;/.test(removeStoredStateSource)
-  || !/return\s+false\s*;/.test(removeStoredStateSource)
+  !gameMain.includes("selectRandomAnswer(choices)")
+  || /selectDailyAnswer|gluedle:daily|checkForNewDay/.test(gameMain)
 ) {
-  errors.push("src/gluedle.js: reset must branch on whether current-day storage was removed");
+  errors.push("src/gluedle.js: each new round must select a random answer without daily state");
 }
 
-const dayCheckSource = extractFunction(gameMain, "checkForNewDay") ?? "";
-if (
-  !/addEventListener\(\s*["']visibilitychange["']/.test(gameMain)
-  || !/createLocalDayKey\(new Date\(/.test(dayCheckSource)
-  || !/dayKey/.test(dayCheckSource)
-  || !/location\.reload\(\)/.test(dayCheckSource)
-) {
-  errors.push("src/gluedle.js: visible pages must detect a local-calendar rollover and reload");
+if (/overflow-x:\s*auto|min-width:\s*8\d{2}px/.test(gameStyles)) {
+  errors.push("src/styles/gluedle.css: the deduction ledger must not require horizontal scrolling");
 }
 
 if (
@@ -414,9 +403,13 @@ if (
 if (
   !/class="listen-link"[\s\S]*?href="https:\/\/y\.qq\.com\/n\/ryqq\/songDetail\/000Q9lzD0ag0YJ"[\s\S]*?target="_blank"[\s\S]*?rel="noopener noreferrer"/.test(homeHtml)
   || !/<span class="listen-link-label">立即收听<\/span>/.test(homeHtml)
-  || !/<span class="listen-link-platform">QQ音乐<\/span>/.test(homeHtml)
+  || /listen-link-platform|>QQ音乐<\/span>/.test(homeHtml)
+  || !/class="app-listen-action"[\s\S]*?href="https:\/\/y\.qq\.com\/n\/ryqq\/songDetail\/000Q9lzD0ag0YJ"[\s\S]*?target="_blank"[\s\S]*?rel="noopener noreferrer"/.test(appShell)
+  || !/立即收听 <span aria-hidden="true">↗<\/span>/.test(appShell)
+  || !/\.app-listen-action,\s*\.app-header-action\s*\{[\s\S]*?min-width:\s*132px[\s\S]*?border:\s*1px solid currentColor/.test(appShellStyles)
+  || !/@media \(max-width:\s*760px\)[\s\S]*?\.app-listen-action,\s*\.app-header-action\s*\{[\s\S]*?min-height:\s*44px/.test(appShellStyles)
 ) {
-  errors.push("index.html: hero must expose the verified Glue QQ Music song link as its primary listen action");
+  errors.push("site shell and home hero must expose the verified Glue QQ Music song link safely");
 }
 
 if (
