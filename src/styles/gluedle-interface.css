@@ -13,11 +13,12 @@
   text-align: left;
 }
 #guess-board th:nth-child(1) { width: 18%; }
-#guess-board th:nth-child(2) { width: 14%; }
-#guess-board th:nth-child(3) { width: 10%; }
-#guess-board th:nth-child(4) { width: 16%; }
-#guess-board th:nth-child(5) { width: 12%; }
-#guess-board th:nth-child(6) { width: 30%; }
+#guess-board th:nth-child(2) { width: 12%; }
+#guess-board th:nth-child(3) { width: 9%; }
+#guess-board th:nth-child(4) { width: 10%; }
+#guess-board th:nth-child(5) { width: 16%; }
+#guess-board th:nth-child(6) { width: 12%; }
+#guess-board th:nth-child(7) { width: 23%; }
 
 .guess-row {
   border-bottom: 6px solid var(--black);
@@ -134,8 +135,9 @@ button:disabled { cursor: not-allowed; opacity: 0.38; }
 .search-field input:focus { border-color: var(--lake); box-shadow: inset 0 0 0 1px var(--lake); }
 .suggestions {
   position: absolute;
+  top: calc(100% + 7px);
   right: 0;
-  bottom: calc(100% + 8px);
+  bottom: auto;
   left: 0;
   z-index: 30;
   max-height: min(360px, 52vh);
@@ -219,54 +221,61 @@ button:disabled { cursor: not-allowed; opacity: 0.38; }
   .guess-form .primary-button { width: auto; min-width: 150px; }
   .form-feedback { grid-column: 1; margin-bottom: 0; }
   .help-button { grid-column: 2; grid-row: 1 / span 2; align-self: center; margin: 0; }
-  .suggestions { top: calc(100% + 7px); bottom: auto; max-height: 230px; }
+  .suggestions { max-height: 230px; }
 }
 
 @media (max-width: 720px) {
-  #guess-board thead { display: none; }
-  #guess-board,
-  #guess-board tbody { display: block; width: 100%; }
-  #guess-board tbody { padding: 8px; }
-  #guess-board .guess-row {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    margin-bottom: 7px;
-    border: 1px solid var(--line-light);
-  }
-  #guess-board .guess-row:last-child { margin-bottom: 0; }
+  #guess-board { table-layout: fixed; }
+  #guess-board th { height: 25px; padding: 3px 2px; font-size: 0.42rem; text-align: center; }
+  #guess-board th:nth-child(1) { width: 22%; }
+  #guess-board th:nth-child(2) { width: 14%; }
+  #guess-board th:nth-child(3) { width: 9%; }
+  #guess-board th:nth-child(4) { width: 10%; }
+  #guess-board th:nth-child(5) { width: 13%; }
+  #guess-board th:nth-child(6) { width: 10%; }
+  #guess-board th:nth-child(7) { width: 22%; }
+  #guess-board .guess-row { border-bottom: 4px solid var(--black); }
   .comparison-cell {
-    display: block;
-    width: auto !important;
-    height: 62px;
-    padding: 20px 7px 6px;
+    height: 56px;
+    padding: 5px 3px;
+    vertical-align: middle;
   }
-  .comparison-cell::before {
+  .cell-value { font-size: 0.58rem; line-height: 1.05; }
+  .cell-direction { margin-top: 3px; font-size: 0.38rem; line-height: 1.05; white-space: nowrap; }
+  .comparison-cell[data-field="song"] .cell-value { font-size: 0.63rem; }
+  .comparison-cell[data-field="year"] .cell-value { font-size: 0.48rem; white-space: nowrap; }
+  .comparison-cell[data-field="language"] .cell-value { font-size: 0.46rem; }
+  .comparison-cell[data-field="credits"] .cell-value { font-size: 0.47rem; }
+  .empty-row td { height: 72px; }
+  body[data-game-state="playing"] .ledger-actions,
+  body[data-game-state="loading"] .ledger-actions { display: none; }
+  .guess-desk .desk-head,
+  .guess-desk .help-button { display: none; }
+  .guess-form { display: block; margin: 0; }
+  .search-field label { display: none; }
+  .search-field input { min-height: 46px; padding: 0 12px; }
+  .suggestions {
+    top: auto;
+    right: 0;
+    bottom: calc(100% + 6px);
+    left: 0;
+    max-height: min(208px, 42dvh);
+    margin: 0;
+  }
+  .suggestion-option { min-height: 42px; padding: 8px 12px; }
+  .form-feedback {
     position: absolute;
-    top: 5px;
-    left: 7px;
-    content: attr(data-label);
-    font: 500 0.45rem/1 var(--font-mono);
-    opacity: 0.68;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
   }
-  .comparison-cell[data-field="song"] { grid-column: span 2; }
-  .comparison-cell[data-field="credits"] { grid-column: span 2; }
-  .cell-value { font-size: 0.61rem; line-height: 1.2; }
-  .cell-direction { margin-top: 3px; font-size: 0.45rem; }
-  .empty-row { display: block; }
-  .empty-row td { display: grid; width: 100%; height: 96px; place-items: center; }
-  .ledger-actions { padding: 10px 12px; }
-  .guess-desk { display: block; }
-  .guess-form { display: grid; grid-template-columns: minmax(0, 1fr) 118px; gap: 0; margin: 0; }
-  .guess-form .primary-button { min-width: 0; }
-  .search-field input { min-height: 48px; border-right: 0; }
-  .guess-form .primary-button { min-height: 48px; }
-  .suggestions { position: static; max-height: 220px; margin-top: 6px; }
-  .form-feedback { min-height: 1.5em; margin: 8px 0 0; }
-  .help-button { display: none; }
 }
 
 @media (max-width: 420px) {
-  .comparison-cell { height: 58px; padding-top: 19px; }
+  .comparison-cell { height: 54px; }
   .ledger-actions .secondary-button { min-height: 40px; padding: 0 12px; }
   .ledger-actions .text-button { min-height: 40px; }
 }

@@ -2,7 +2,7 @@ import { createQrMatrix } from "./qr-code.js";
 
 export const SHARE_CARD_WIDTH = 1080;
 export const SHARE_CARD_HEIGHT = 1350;
-export const SHARE_FIELDS = ["year", "duration", "project", "performance", "credits"];
+export const SHARE_FIELDS = ["year", "duration", "language", "project", "performance", "credits"];
 
 const STATUS_STYLE = Object.freeze({
   match: { fill: "#49e99b", ink: "#050505", mark: "✓", label: "匹配" },

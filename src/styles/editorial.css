@@ -37,7 +37,7 @@ body::after {
   content: "";
   pointer-events: none;
   opacity: 0.055;
-  background-image: url("/assets/glue/blue-noise-texture.jpg");
+  background-image: url("/assets/glue/blue-noise-texture.webp");
   background-size: 520px;
   mix-blend-mode: screen;
 }

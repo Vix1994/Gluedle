@@ -317,7 +317,7 @@ if (
   !songCatalogSource.includes('SONG_CATALOG_URL = "/data/gluedle-songs.json"')
   || !gameMain.includes("loadSongCatalog({ signal })")
   || !Array.isArray(parsedSongCatalog)
-  || parsedSongCatalog.some((song) => "language" in song || "languages" in song)
+  || parsedSongCatalog.some((song) => !["zh", "en", "mixed", "ja"].includes(song.language))
   || parsedSongCatalog.some((song) => song.project?.type === "single" && song.project?.title !== "单曲")
   || parsedSongCatalog.some((song) => Object.hasOwn(song, "isLive"))
   || parsedSongCatalog.some((song) =>
@@ -325,7 +325,7 @@ if (
     || typeof song.curleyCredits.lyrics !== "boolean"
     || typeof song.curleyCredits.composition !== "boolean")
 ) {
-  errors.push("Gluedle must load a language-free catalog without Live metadata and with boolean creation credits");
+  errors.push("Gluedle must load a lyric-classified catalog without Live metadata and with boolean creation credits");
 }
 
 const inputTag = /<input\b[^>]*\bid="song-input"[^>]*>/i.exec(gameHtml)?.[0] ?? "";

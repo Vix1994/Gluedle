@@ -5,6 +5,7 @@ import { readFileSync } from "node:fs";
 import { siteContent } from "../src/data/catalog.js";
 import {
   SONG_CATALOG_URL,
+  SONG_LANGUAGES,
   normalizeProject,
   validateSongCatalog,
 } from "../src/data/song-catalog.js";
@@ -38,9 +39,16 @@ test("the guessing catalog excludes Live metadata and has resolved creation cred
   assert.ok(songs.every((song) => Array.isArray(song.featuredArtists) && song.featuredArtists.length <= 1));
 });
 
-test("the game reads one language-free JSON catalog with normalized singles", () => {
+test("the game reads one lyric-classified JSON catalog with normalized singles", () => {
   assert.equal(SONG_CATALOG_URL, "/data/gluedle-songs.json");
-  assert.ok(songs.every((song) => !("language" in song) && !("languages" in song)));
+  assert.ok(songs.every((song) => SONG_LANGUAGES.includes(song.language)));
+  assert.deepEqual(
+    Object.fromEntries(SONG_LANGUAGES.map((language) => [
+      language,
+      songs.filter((song) => song.language === language).length,
+    ])),
+    { zh: 148, en: 20, mixed: 14, ja: 1 },
+  );
   assert.ok(songs.every((song) => song.project.type !== "single" || song.project.title === "单曲"));
   assert.deepEqual(normalizeProject({ title: "独立发行名", type: "soundtrack single" }), {
     title: "单曲",

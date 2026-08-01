@@ -9,6 +9,9 @@ dist/
 gameplay-preview-v*/
 visual-previews-v*/
 
+# Local catalog synchronization script
+scripts/sync-curley-catalog.mjs
+
 # Local configuration
 .env
 .env.*

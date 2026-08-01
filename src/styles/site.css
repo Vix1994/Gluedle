@@ -205,7 +205,7 @@ a:focus-visible {
 
 .hero-grain {
   opacity: 0.14;
-  background: url("/assets/glue/blue-noise-texture.jpg") center / cover;
+  background: url("/assets/glue/blue-noise-texture.webp") center / cover;
   mix-blend-mode: screen;
   animation: grain-drift 1.8s steps(3) infinite;
 }

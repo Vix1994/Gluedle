@@ -24,6 +24,7 @@ function song(overrides = {}) {
     releaseYear: 2024,
     durationSec: 210,
     project: { title: "Project A", type: "album" },
+    language: "zh",
     performanceType: "solo",
     curleyCredits: { lyrics: true, composition: true },
     ...overrides,
@@ -153,6 +154,7 @@ test("compareSongs applies project, performance, and credits rules", () => {
     direction: null,
   });
   assert.equal(comparison.performance.status, COMPARISON_STATUS.MISS);
+  assert.equal(comparison.language.status, COMPARISON_STATUS.MATCH);
   assert.equal(comparison.credits.status, COMPARISON_STATUS.PARTIAL);
 
   const misses = compareSongs(
@@ -165,6 +167,28 @@ test("compareSongs applies project, performance, and credits rules", () => {
   assert.equal(misses.project.status, COMPARISON_STATUS.MISS);
   assert.equal(misses.credits.status, COMPARISON_STATUS.MISS);
 
+});
+
+test("compareSongs compares lyric language as an exact metadata field", () => {
+  const mixed = compareSongs(
+    song({ language: "mixed" }),
+    song({ language: "en" }),
+  );
+  assert.deepEqual(mixed.language, {
+    value: "mixed",
+    status: COMPARISON_STATUS.MISS,
+    direction: null,
+  });
+
+  const missing = compareSongs(
+    song({ language: undefined }),
+    song({ language: "zh" }),
+  );
+  assert.deepEqual(missing.language, {
+    value: "待核验",
+    status: COMPARISON_STATUS.UNKNOWN,
+    direction: null,
+  });
 });
 
 test("independent singles share the same project value and match", () => {

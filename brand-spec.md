@@ -17,15 +17,15 @@ The runtime images listed below are original AI-generated replacements created f
 
 | Runtime asset | Dimensions | Intended prototype role |
 | --- | --- | --- |
-| `public/assets/glue/blue-noise-texture.jpg` | 2362 × 2362 | lake-blue grain / atmosphere |
-| `public/assets/glue/body-detail-editorial.jpg` | 2160 × 2160 | clothed hand-and-sleeve detail |
-| `public/assets/glue/editorial-collage.jpg` | 2160 × 2160 | layered anonymous portrait collage |
-| `public/assets/glue/introduction-spread.jpg` | 1256 × 2760 | vertical figure and water spread |
-| `public/assets/glue/motion-blur-portrait.jpg` | 2362 × 2362 | anonymous motion / transition image |
-| `public/assets/glue/orbit-graphic.jpg` | 2160 × 2160 | figure-and-orbit motif |
-| `public/assets/glue/portrait-editorial.jpg` | 2362 × 2362 | anonymous overexposed editorial portrait |
-| `public/assets/glue/water-ripple.jpg` | 2362 × 2362 | fingertip-and-ripple motif |
-| `public/assets/glue/top-view-portrait.jpg` | 2362 × 2362 | anonymous top-view composition |
+| `public/assets/glue/blue-noise-texture.webp` | 2362 × 2362 | lake-blue grain / atmosphere |
+| `public/assets/glue/body-detail-editorial.webp` | 2160 × 2160 | clothed hand-and-sleeve detail |
+| `public/assets/glue/editorial-collage.webp` | 2160 × 2160 | layered anonymous portrait collage |
+| `public/assets/glue/introduction-spread.webp` | 1256 × 2760 | vertical figure and water spread |
+| `public/assets/glue/motion-blur-portrait.webp` | 2362 × 2362 | anonymous motion / transition image |
+| `public/assets/glue/orbit-graphic.webp` | 2160 × 2160 | figure-and-orbit motif |
+| `public/assets/glue/portrait-editorial.webp` | 2362 × 2362 | anonymous overexposed editorial portrait |
+| `public/assets/glue/water-ripple.webp` | 2362 × 2362 | fingertip-and-ripple motif |
+| `public/assets/glue/top-view-portrait.webp` | 2362 × 2362 | anonymous top-view composition |
 
 These role labels are internal design guidance only; they do not identify the creator, subject, publication, or original campaign.
 

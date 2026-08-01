@@ -276,7 +276,7 @@ export function mountGluedle() {
       const row = document.createElement("tr");
       const cell = document.createElement("td");
       row.className = "empty-row";
-      cell.colSpan = 6;
+      cell.colSpan = 7;
       cell.textContent = "输入歌名，第一条推理会出现在这里";
       row.append(cell);
       elements.board.append(row);
@@ -298,6 +298,7 @@ export function mountGluedle() {
       }, "song", "歌曲");
       appendComparisonCell(row, attempt.comparison.year, "year", "发行日");
       appendComparisonCell(row, attempt.comparison.duration, "duration", "时长");
+      appendComparisonCell(row, attempt.comparison.language, "language", "语言");
       appendComparisonCell(row, attempt.comparison.project, "project", "所属项目");
       appendComparisonCell(row, attempt.comparison.performance, "performance", "演唱");
       appendComparisonCell(row, attempt.comparison.credits, "credits", "创作");
@@ -526,6 +527,14 @@ function collectElements() {
 }
 
 function formatCellValue(value, field) {
+  if (field === "language") {
+    return {
+      zh: "中文",
+      en: "English",
+      mixed: "中英混合",
+      ja: "日本語",
+    }[value] ?? value ?? "待核验";
+  }
   if (field === "performance") {
     return { solo: "独唱", collaboration: "合作", duet: "合唱" }[value] ?? value ?? "待核验";
   }

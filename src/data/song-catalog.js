@@ -1,4 +1,5 @@
 export const SONG_CATALOG_URL = "/data/gluedle-songs.json";
+export const SONG_LANGUAGES = Object.freeze(["zh", "en", "mixed", "ja"]);
 
 export async function loadSongCatalog({ signal, fetchImpl = globalThis.fetch } = {}) {
   if (typeof fetchImpl !== "function") {
@@ -28,8 +29,8 @@ export function validateSongCatalog(value) {
     if (ids.has(song.id)) {
       throw new TypeError(`Catalog song id ${song.id} is duplicated.`);
     }
-    if (Object.hasOwn(song, "languages") || Object.hasOwn(song, "language")) {
-      throw new TypeError(`Catalog entry ${song.id} must not declare a language.`);
+    if (!SONG_LANGUAGES.includes(song.language)) {
+      throw new TypeError(`Catalog entry ${song.id} must declare a supported language.`);
     }
     if (
       !song.curleyCredits

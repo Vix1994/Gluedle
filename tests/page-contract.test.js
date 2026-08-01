@@ -272,7 +272,7 @@ test("the standalone shell exposes accessible dynamic-game integration points", 
   assert.equal((gameHtml.match(/\bdata-attempt-marker\b/g) ?? []).length, 8);
   assert.doesNotMatch(gameHtml, /data-live-column|>Live<\/th>/);
   assert.match(gameHtml, /<th\b[^>]*>发行日<\/th>/);
-  assert.doesNotMatch(gameHtml, />语言<\/th>/);
+  assert.match(gameHtml, />语言<\/th>/);
 });
 
 test("game entry synchronizes progress, reloads JSON data, and randomizes each round", () => {
@@ -289,7 +289,7 @@ test("game entry synchronizes progress, reloads JSON data, and randomizes each r
   assert.match(gameMain, /selectRandomAnswer\(choices\)/);
   assert.doesNotMatch(gameMain, /selectDailyAnswer|gluedle:daily|checkForNewDay/);
   const parsedCatalog = JSON.parse(songCatalogJson);
-  assert.ok(parsedCatalog.every((song) => !("language" in song) && !("languages" in song)));
+  assert.ok(parsedCatalog.every((song) => ["zh", "en", "mixed", "ja"].includes(song.language)));
   assert.ok(parsedCatalog.every((song) => song.project.type !== "single" || song.project.title === "单曲"));
 
   assert.match(gameMain, /activeSuggestion\s*===\s*-1/);
@@ -312,7 +312,7 @@ test("responsive game ledger exposes every field without horizontal scrolling", 
   assert.doesNotMatch(gameStyles, /#guess-board\s*\{[^}]*min-width:\s*8\d{2}px/s);
   assert.match(gameStyles, /#guess-board\s*\{\s*table-layout:\s*fixed;/);
   assert.match(gameStyles, /\.guess-desk\s*\{[\s\S]*?position:\s*fixed[\s\S]*?bottom:\s*var\(--mobile-keyboard-offset/);
-  for (const field of ["song", "year", "duration", "project", "performance", "credits"]) {
+  for (const field of ["song", "year", "duration", "language", "project", "performance", "credits"]) {
     assert.match(gameMain, new RegExp(`, "${field}",`));
   }
   assert.doesNotMatch(gameMain, /, "live",/);

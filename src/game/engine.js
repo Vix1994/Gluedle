@@ -98,6 +98,8 @@ export function compareSongs(guess, target) {
   const targetProject = readProject(target);
   const guessPerformance = guess.performanceType ?? null;
   const targetPerformance = target.performanceType ?? null;
+  const guessLanguage = readLanguage(guess);
+  const targetLanguage = readLanguage(target);
 
   return {
     year: numericComparison(
@@ -114,6 +116,7 @@ export function compareSongs(guess, target) {
     ),
     project: projectComparison(guessProject, targetProject),
     performance: equalityComparison(guessPerformance, targetPerformance),
+    language: equalityComparison(guessLanguage, targetLanguage),
     credits: creditsComparison(guess.curleyCredits ?? null, target.curleyCredits ?? null),
   };
 }
@@ -327,6 +330,12 @@ function readProject(song) {
     title: song.project.title ?? song.project.name ?? null,
     type: song.project.type ?? song.projectType ?? null,
   };
+}
+
+function readLanguage(song) {
+  return typeof song.language === "string" && song.language.trim()
+    ? song.language.trim().toLowerCase()
+    : null;
 }
 
 function normalizedMetadataValue(value) {
