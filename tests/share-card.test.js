@@ -24,7 +24,7 @@ test("share-card model contains only result statuses, not answer or song IDs", (
     },
   });
   assert.equal(model.outcome, "1 / …");
-  assert.deepEqual(model.rows[0], ["match", "near", "miss", "match", "near", "miss"]);
+  assert.deepEqual(model.rows[0], ["match", "near", "miss", "match", "near", "miss", "match", "near"]);
   const serialized = JSON.stringify(model);
   assert.doesNotMatch(serialized, /secret-answer|secret-guess/);
 });

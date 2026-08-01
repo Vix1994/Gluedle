@@ -1,3 +1,8 @@
+import {
+  FEATURED_ARTIST_GENDER_VALUES,
+  getFeaturedArtistGender,
+} from "./collaborator-genders.js";
+
 export const SONG_CATALOG_URL = "/data/gluedle-songs.json";
 export const SONG_LANGUAGES = Object.freeze(["zh", "en"]);
 
@@ -26,6 +31,9 @@ export function validateSongCatalog(value) {
     if (typeof song.title !== "string" || !song.title.trim()) {
       throw new TypeError(`Catalog entry ${song.id} must have a title.`);
     }
+    if (typeof song.releaseDate !== "string" || !/^\d{4}-\d{2}-\d{2}$/u.test(song.releaseDate)) {
+      throw new TypeError(`Catalog entry ${song.id} must have a release date.`);
+    }
     if (ids.has(song.id)) {
       throw new TypeError(`Catalog song id ${song.id} is duplicated.`);
     }
@@ -40,8 +48,32 @@ export function validateSongCatalog(value) {
     ) {
       throw new TypeError(`Catalog entry ${song.id} must declare boolean creation credits.`);
     }
-    if (!Array.isArray(song.featuredArtists) || song.featuredArtists.length > 1) {
-      throw new TypeError(`Catalog entry ${song.id} must have at most two total artists.`);
+    if (!Array.isArray(song.featuredArtists) || song.featuredArtists.some((artist) => (
+      typeof artist !== "string" || !artist.trim()
+    ))) {
+      throw new TypeError(`Catalog entry ${song.id} must declare featured artist names.`);
+    }
+    if (
+      song.featuredArtistGender !== undefined
+      && !FEATURED_ARTIST_GENDER_VALUES.includes(song.featuredArtistGender)
+    ) {
+      throw new TypeError(`Catalog entry ${song.id} must declare a valid featured artist gender.`);
+    }
+    if (
+      song.favoriteCount !== null
+      && song.favoriteCount !== undefined
+      && (typeof song.favoriteCount !== "number"
+        || !Number.isFinite(song.favoriteCount)
+        || song.favoriteCount < 0)
+    ) {
+      throw new TypeError(`Catalog entry ${song.id} must declare a valid favorite count.`);
+    }
+    if (
+      song.favoriteCountDisplay !== null
+      && song.favoriteCountDisplay !== undefined
+      && (typeof song.favoriteCountDisplay !== "string" || !song.favoriteCountDisplay.trim())
+    ) {
+      throw new TypeError(`Catalog entry ${song.id} must declare a valid favorite count display.`);
     }
     ids.add(song.id);
   }
@@ -49,6 +81,10 @@ export function validateSongCatalog(value) {
   return value.map((song) => ({
     ...song,
     project: normalizeProject(song.project),
+    featuredArtistGender: song.featuredArtistGender
+      ?? getFeaturedArtistGender(song.featuredArtists),
+    favoriteCount: song.favoriteCount ?? null,
+    favoriteCountDisplay: song.favoriteCountDisplay?.trim() || null,
   }));
 }
 

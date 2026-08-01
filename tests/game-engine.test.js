@@ -8,6 +8,7 @@ import {
   createInitialState,
   findSongMatches,
   formatDuration,
+  formatFavoriteCount,
   formatReleaseDate,
   normalizeSearchText,
   restoreGameState,
@@ -26,6 +27,8 @@ function song(overrides = {}) {
     project: { title: "Project A", type: "album" },
     language: "zh",
     performanceType: "solo",
+    featuredArtistGender: "none",
+    favoriteCount: 10000,
     curleyCredits: { lyrics: true, composition: true },
     ...overrides,
   };
@@ -70,6 +73,13 @@ test("formatDuration renders minutes and zero-padded seconds", () => {
   assert.equal(formatDuration(125), "02:05");
   assert.equal(formatDuration(228), "03:48");
   assert.equal(formatDuration(null), "待核验");
+});
+
+test("formatFavoriteCount renders QQ Music collection snapshots", () => {
+  assert.equal(formatFavoriteCount(9999), "9,999");
+  assert.equal(formatFavoriteCount(10001), "1万+");
+  assert.equal(formatFavoriteCount(750000), "75万+");
+  assert.equal(formatFavoriteCount(null), "待核验");
 });
 
 test("formatReleaseDate renders and validates day-precision dates", () => {
@@ -138,6 +148,54 @@ test("compareSongs applies day-precision release-date and duration thresholds", 
   assert.deepEqual(missDown.duration, { value: "03:46", status: "miss", direction: "down" });
 });
 
+test("compareSongs compares favorite counts by relative distance", () => {
+  const near = compareSongs(
+    song({ favoriteCount: 100000 }),
+    song({ favoriteCount: 110000 }),
+  );
+  assert.deepEqual(near.favoriteCount, {
+    value: "10万+",
+    status: COMPARISON_STATUS.NEAR,
+    direction: "up",
+  });
+
+  const shown = compareSongs(
+    song({ favoriteCount: 100000, favoriteCountDisplay: "7.5w+" }),
+    song({ favoriteCount: 110000 }),
+  );
+  assert.equal(shown.favoriteCount.value, "7.5w+");
+
+  const parsedDisplays = compareSongs(
+    song({ favoriteCount: 10001, favoriteCountDisplay: "5w+" }),
+    song({ favoriteCount: 10001, favoriteCountDisplay: "2w+" }),
+  );
+  assert.deepEqual(parsedDisplays.favoriteCount, {
+    value: "5w+",
+    status: COMPARISON_STATUS.MISS,
+    direction: "down",
+  });
+
+  const miss = compareSongs(
+    song({ favoriteCount: 100000 }),
+    song({ favoriteCount: 200000 }),
+  );
+  assert.deepEqual(miss.favoriteCount, {
+    value: "10万+",
+    status: COMPARISON_STATUS.MISS,
+    direction: "up",
+  });
+
+  const unknown = compareSongs(
+    song({ favoriteCount: null }),
+    song({ favoriteCount: 200000 }),
+  );
+  assert.deepEqual(unknown.favoriteCount, {
+    value: "待核验",
+    status: COMPARISON_STATUS.UNKNOWN,
+    direction: null,
+  });
+});
+
 test("compareSongs applies project, performance, and credits rules", () => {
   const comparison = compareSongs(
     song({
@@ -185,6 +243,38 @@ test("compareSongs compares lyric language as an exact metadata field", () => {
     song({ language: "zh" }),
   );
   assert.deepEqual(missing.language, {
+    value: "待核验",
+    status: COMPARISON_STATUS.UNKNOWN,
+    direction: null,
+  });
+});
+
+test("compareSongs compares manually maintained featured artist gender", () => {
+  const match = compareSongs(
+    song({ featuredArtistGender: "female" }),
+    song({ featuredArtistGender: "female" }),
+  );
+  assert.deepEqual(match.featuredArtistGender, {
+    value: "female",
+    status: COMPARISON_STATUS.MATCH,
+    direction: null,
+  });
+
+  const miss = compareSongs(
+    song({ featuredArtistGender: "male" }),
+    song({ featuredArtistGender: "female" }),
+  );
+  assert.deepEqual(miss.featuredArtistGender, {
+    value: "male",
+    status: COMPARISON_STATUS.MISS,
+    direction: null,
+  });
+
+  const unknown = compareSongs(
+    song({ featuredArtistGender: undefined }),
+    song({ featuredArtistGender: "female" }),
+  );
+  assert.deepEqual(unknown.featuredArtistGender, {
     value: "待核验",
     status: COMPARISON_STATUS.UNKNOWN,
     direction: null,

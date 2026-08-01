@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
 import { siteContent } from "../src/data/catalog.js";
+import { FEATURED_ARTIST_GENDER_VALUES } from "../src/data/collaborator-genders.js";
 import {
   SONG_CATALOG_URL,
   SONG_LANGUAGES,
@@ -37,21 +38,36 @@ test("the guessing catalog uses QQ Music sources and has resolved creation credi
     typeof song.curleyCredits?.lyrics === "boolean"
     && typeof song.curleyCredits?.composition === "boolean"
   )));
-  assert.ok(songs.every((song) => Array.isArray(song.featuredArtists) && song.featuredArtists.length <= 1));
-  assert.ok(songs.every((song) => !/DJ/i.test(song.title)));
+  assert.ok(songs.every((song) => (
+    Array.isArray(song.featuredArtists)
+    && song.featuredArtists.every((artist) => typeof artist === "string" && artist.trim())
+  )));
+  assert.ok(songs.every((song) => FEATURED_ARTIST_GENDER_VALUES.includes(song.featuredArtistGender)));
+  assert.ok(songs.some((song) => song.featuredArtistGender === "male"));
+  assert.ok(songs.some((song) => song.featuredArtistGender === "female"));
+  assert.ok(songs.some((song) => song.featuredArtistGender === "unknown"));
+  assert.ok(songs.every((song) => song.favoriteCount === null || (
+    Number.isInteger(song.favoriteCount) && song.favoriteCount >= 0
+  )));
+  assert.ok(songs.some((song) => song.favoriteCount > 0));
+  assert.ok(songs.every((song) => song.favoriteCountDisplay === null || (
+    typeof song.favoriteCountDisplay === "string" && song.favoriteCountDisplay.trim()
+  )));
+  assert.ok(songs.some((song) => /[wk]\+$/u.test(song.favoriteCountDisplay ?? "")));
+  assert.ok(songs.every((song) => /^\d{4}-\d{2}-\d{2}$/u.test(song.releaseDate)));
   assert.ok(songs.every((song) => song.sources.every((source) => source.name.startsWith("QQ音乐"))));
   assert.ok(songs.some((song) => song.project.type === "ost"));
   assert.deepEqual(
-    songs.find((song) => song.title === "歌曲：缘分一道桥")?.curleyCredits,
+    songs.find((song) => song.title === "于是我这样生活")?.curleyCredits,
     { lyrics: false, composition: false },
   );
 });
 
-test("the catalog sync starts from the QQ singer hot-song list instead of keyword search", () => {
-  assert.match(syncSource, /GetSingerSongList/);
-  assert.match(syncSource, /order: 1/);
-  assert.match(syncSource, /singerSongLimit = 300/);
-  assert.doesNotMatch(syncSource, /search_for_qq_cp|singerQueries/);
+test("the catalog sync starts from the maintained QQ Music playlist", () => {
+  assert.match(syncSource, /fcg_v8_playlist_cp\.fcg/);
+  assert.match(syncSource, /playlistId = "9756927982"/);
+  assert.match(syncSource, /loadPlaylistSongs/);
+  assert.doesNotMatch(syncSource, /GetSingerSongList|blockedTitlePattern|candidateByTitle/);
 });
 
 test("the game reads one lyric-classified JSON catalog with normalized singles", () => {

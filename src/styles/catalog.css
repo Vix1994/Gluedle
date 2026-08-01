@@ -158,7 +158,7 @@ body[data-page="catalog"] {
   border: 1px solid var(--catalog-lake);
   border-radius: 0;
   background: transparent;
-  font: 0.58rem var(--catalog-font-mono);
+  font: 0.70rem var(--catalog-font-mono);
   cursor: pointer;
 }
 

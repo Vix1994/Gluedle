@@ -111,7 +111,8 @@ body.is-booting .app-boot.is-error { border-color: var(--wrong); }
   grid-template-columns: minmax(172px, 0.64fr) minmax(540px, 2.7fr) minmax(250px, 1fr);
   grid-template-areas: "rail ledger desk";
   gap: 1px;
-  width: min(calc(100% - 2 * var(--page-pad)), 1540px);
+  width: calc(100% - 2 * var(--page-pad));
+  max-width: 1540px;
   min-height: calc(100svh - var(--header-height) - 2 * var(--page-pad));
   margin: calc(var(--header-height) + var(--page-pad)) auto var(--page-pad);
   background: var(--line-dark);
@@ -240,7 +241,7 @@ body.is-booting .app-boot.is-error { border-color: var(--wrong); }
 .desk-head h2 { color: var(--white); font-size: clamp(2rem, 3vw, 3.6rem); }
 .desk-head > p:last-child { margin: 16px 0 0; color: var(--grey); font-size: 0.72rem; line-height: 1.55; }
 
-@media (max-width: 1100px) {
+@media (max-width: 1240px) {
   .game-shell {
     grid-template-columns: 160px minmax(0, 1fr);
     grid-template-areas: "rail ledger" "rail desk";
@@ -251,43 +252,46 @@ body.is-booting .app-boot.is-error { border-color: var(--wrong); }
 
 @media (max-width: 720px) {
   :root { --page-pad: 10px; }
-  body[data-game-state] { --header-height: 58px; }
+  body[data-game-state] {
+    --header-height: 52px;
+  }
   body[data-game-state] .app-header {
     grid-template-columns: 1fr auto;
-    grid-template-rows: 58px;
+    grid-template-rows: 52px;
     height: var(--header-height);
-    padding: 0 14px;
+    padding: 0 12px;
   }
   body[data-game-state] .app-nav,
   body[data-game-state] .app-listen-action { display: none; }
   body[data-game-state] .app-header-actions { grid-column: 2; grid-row: 1; }
-  body[data-game-state] .app-header-action { min-width: 40px; min-height: 40px; padding: 0 10px; }
+  body[data-game-state] .app-header-action { min-width: 40px; min-height: 38px; padding: 0 9px; }
   .game-shell {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-areas: "rail" "ledger" "desk";
     min-height: 0;
-    margin-top: calc(var(--header-height) + 10px);
-    margin-bottom: 76px;
+    margin-top: calc(var(--header-height) + 6px);
+    margin-bottom: 68px;
   }
   .round-rail {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: 8px 12px;
-    padding: 10px 12px;
+    gap: 5px 8px;
+    padding: 7px 10px;
   }
   .rail-brand p,
   .rail-index,
   .attempt-display,
   .legend,
   .library-note { display: none; }
-  .rail-brand h1 { margin: 0; font-size: 1.15rem; }
+  .rail-brand h1 { margin: 0; font-size: 1.05rem; }
   .round-state { display: flex; flex-direction: column; align-items: end; margin: 0; padding: 0; border: 0; }
-  #game-status { min-height: 0; margin: 4px 0 0; font-size: 0.65rem; }
+  #game-status { min-height: 0; margin: 2px 0 0; font-size: 0.58rem; }
   .attempt-track { grid-column: 1 / -1; grid-template-columns: repeat(8, 1fr); margin: 0; }
-  [data-attempt-marker] { min-height: 24px; }
-  .ledger-head { padding: 11px 12px; }
-  .ledger-head h2 { font-size: 1.5rem; }
+  [data-attempt-marker] { min-height: 20px; }
+  .ledger-head { padding: 8px 10px; }
+  .ledger-head .meta-label { font-size: 0.55rem; }
+  .ledger-head h2 { margin-top: 4px; font-size: 1.25rem; }
   .ledger-head > p { display: none; }
   .guess-desk {
     position: fixed;

@@ -7,10 +7,34 @@ const pagesDirectory = fileURLToPath(new URL("./pages", import.meta.url));
 const publicDirectory = fileURLToPath(new URL("./public", import.meta.url));
 const distDirectory = fileURLToPath(new URL("./dist", import.meta.url));
 const sourceDirectory = fileURLToPath(new URL("./src", import.meta.url));
+const noSlashRoutes = new Set(["/concept", "/visuals", "/glue", "/gluedle", "/catalog"]);
+
+function rewriteNoSlashRoute(request, _response, next) {
+  if (!["GET", "HEAD"].includes(request.method) || !request.url) {
+    next();
+    return;
+  }
+
+  const requestUrl = new URL(request.url, "http://localhost");
+  if (noSlashRoutes.has(requestUrl.pathname)) {
+    requestUrl.pathname = `${requestUrl.pathname}/`;
+    request.url = `${requestUrl.pathname}${requestUrl.search}`;
+  }
+  next();
+}
 
 export default defineConfig({
   root: pagesDirectory,
   publicDir: publicDirectory,
+  plugins: [{
+    name: "gluedle-no-slash-routes",
+    configureServer(server) {
+      server.middlewares.use(rewriteNoSlashRoute);
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use(rewriteNoSlashRoute);
+    },
+  }],
   resolve: {
     alias: [{ find: /^\/src\//, replacement: `${sourceDirectory}/` }],
   },

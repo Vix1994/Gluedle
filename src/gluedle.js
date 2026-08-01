@@ -1,4 +1,5 @@
 import { siteContent } from "./data/catalog.js";
+import { FEATURED_ARTIST_GENDER_LABELS } from "./data/collaborator-genders.js";
 import { loadSongCatalog } from "./data/song-catalog.js";
 import {
   MAX_ATTEMPTS,
@@ -276,7 +277,7 @@ export function mountGluedle() {
       const row = document.createElement("tr");
       const cell = document.createElement("td");
       row.className = "empty-row";
-      cell.colSpan = 7;
+      cell.colSpan = 9;
       cell.textContent = "输入歌名，第一条推理会出现在这里";
       row.append(cell);
       elements.board.append(row);
@@ -298,9 +299,11 @@ export function mountGluedle() {
       }, "song", "歌曲");
       appendComparisonCell(row, attempt.comparison.year, "year", "发行日");
       appendComparisonCell(row, attempt.comparison.duration, "duration", "时长");
+      appendComparisonCell(row, attempt.comparison.favoriteCount, "favoriteCount", "收藏数");
       appendComparisonCell(row, attempt.comparison.language, "language", "语言");
-      appendComparisonCell(row, attempt.comparison.project, "project", "所属项目");
+      appendComparisonCell(row, attempt.comparison.project, "project", "专辑");
       appendComparisonCell(row, attempt.comparison.performance, "performance", "演唱");
+      appendComparisonCell(row, attempt.comparison.featuredArtistGender, "featuredArtistGender", "合作对象");
       appendComparisonCell(row, attempt.comparison.credits, "credits", "创作");
       elements.board.append(row);
     });
@@ -325,18 +328,22 @@ export function mountGluedle() {
     const helper = document.createElement("span");
     const formattedValue = formatCellValue(comparison.value, field);
     const directionMark = comparison.direction === "up"
-      ? "↑"
-      : comparison.direction === "down" ? "↓" : "";
-    const displayValue = directionMark ? `${formattedValue} ${directionMark}` : formattedValue;
+      ? "▲"
+      : comparison.direction === "down" ? "▼" : "";
+    const accessibleValue = directionMark ? `${formattedValue} ${directionMark}` : formattedValue;
     const helperText = comparisonHelper(comparison);
     cell.className = "comparison-cell";
     cell.dataset.field = field;
     cell.dataset.label = label;
     cell.dataset.status = comparison.status;
-    cell.setAttribute("aria-label", `${label}：${displayValue}，${helperText}`);
+    if (comparison.direction) cell.dataset.direction = comparison.direction;
+    cell.setAttribute(
+      "aria-label",
+      `${label}：${accessibleValue}，${comparisonAccessibilityHelper(comparison)}`,
+    );
     value.className = "cell-value";
     helper.className = "cell-direction";
-    value.textContent = displayValue;
+    value.textContent = formattedValue;
     helper.textContent = helperText;
     cell.append(value, helper);
     row.append(cell);
@@ -389,15 +396,26 @@ export function mountGluedle() {
       const file = typeof File === "function"
         ? new File([shareBlob], shareFilename, { type: "image/png" })
         : null;
-      if (file && typeof navigator.share === "function" && typeof navigator.canShare === "function"
-        && navigator.canShare({ files: [file] })) {
+      let canShareFiles = false;
+      if (file && typeof navigator.share === "function") {
+        try {
+          canShareFiles = typeof navigator.canShare !== "function"
+            || navigator.canShare({ files: [file] });
+        } catch {
+          canShareFiles = false;
+        }
+      }
+      if (canShareFiles) {
         await navigator.share({ files: [file], title: "GLUEDLE 随机歌曲推理" });
         showToast("分享面板已打开");
       } else {
-        showToast("当前设备不支持直接分享，请选择保存图片");
+        downloadBlob(shareBlob, shareFilename);
+        showToast("当前设备不支持直接分享，已自动保存图片");
       }
     } catch (error) {
-      if (error?.name !== "AbortError") showToast("分享失败，请稍后再试");
+      if (error?.name === "AbortError") return;
+      downloadBlob(shareBlob, shareFilename);
+      showToast("分享面板不可用，已自动保存图片");
     } finally {
       isSharing = false;
       setShareButtonsBusy(false);
@@ -527,6 +545,10 @@ function collectElements() {
 }
 
 function formatCellValue(value, field) {
+  if (field === "year" && typeof value === "string") {
+    const match = /^(\d{4})-(\d{2})-(\d{2})$/u.exec(value);
+    if (match) return `${match[2]}-${match[3]}\n${match[1]}`;
+  }
   if (field === "language") {
     return {
       zh: "中文",
@@ -535,6 +557,9 @@ function formatCellValue(value, field) {
   }
   if (field === "performance") {
     return { solo: "独唱", collaboration: "合作", duet: "合唱" }[value] ?? value ?? "待核验";
+  }
+  if (field === "featuredArtistGender") {
+    return FEATURED_ARTIST_GENDER_LABELS[value] ?? value ?? "待核验";
   }
   if (field === "credits" && value && typeof value === "object") {
     const participation = [
@@ -549,7 +574,11 @@ function formatCellValue(value, field) {
   return String(value ?? "待核验");
 }
 
-function comparisonHelper(comparison) {
+function comparisonHelper() {
+  return "";
+}
+
+function comparisonAccessibilityHelper(comparison) {
   const statusLabel = {
     match: "✓ 匹配",
     near: "≈ 接近",

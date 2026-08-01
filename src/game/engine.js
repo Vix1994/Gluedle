@@ -43,6 +43,18 @@ export function formatDuration(seconds) {
   return `${minutes}:${remainder}`;
 }
 
+export function formatFavoriteCount(value) {
+  const count = toFiniteNumber(value);
+  if (count === null || count < 0) return PENDING_VERIFICATION;
+
+  const rounded = Math.round(count);
+  if (rounded < 10000) return rounded.toLocaleString("zh-CN");
+  if (rounded < 100000) {
+    return `${(rounded / 10000).toFixed(1).replace(/\.0$/u, "")}万+`;
+  }
+  return `${Math.floor(rounded / 10000)}万+`;
+}
+
 export function formatReleaseDate(value) {
   const timestamp = toReleaseTimestamp(value);
   if (timestamp === null) return PENDING_VERIFICATION;
@@ -94,10 +106,16 @@ export function compareSongs(guess, target) {
   const targetReleaseDate = readReleaseDate(target);
   const guessDuration = readDuration(guess);
   const targetDuration = readDuration(target);
+  const guessFavoriteCount = readFavoriteCount(guess);
+  const targetFavoriteCount = readFavoriteCount(target);
+  const guessFavoriteCountDisplay = readFavoriteCountDisplay(guess);
+  const targetFavoriteCountDisplay = readFavoriteCountDisplay(target);
   const guessProject = readProject(guess);
   const targetProject = readProject(target);
   const guessPerformance = guess.performanceType ?? null;
   const targetPerformance = target.performanceType ?? null;
+  const guessFeaturedArtistGender = readFeaturedArtistGender(guess);
+  const targetFeaturedArtistGender = readFeaturedArtistGender(target);
   const guessLanguage = readLanguage(guess);
   const targetLanguage = readLanguage(target);
 
@@ -114,8 +132,18 @@ export function compareSongs(guess, target) {
       15,
       formatDuration(guessDuration),
     ),
+    favoriteCount: favoriteCountComparison(
+      guessFavoriteCount,
+      targetFavoriteCount,
+      guessFavoriteCountDisplay,
+      targetFavoriteCountDisplay,
+    ),
     project: projectComparison(guessProject, targetProject),
     performance: equalityComparison(guessPerformance, targetPerformance),
+    featuredArtistGender: equalityComparison(
+      guessFeaturedArtistGender,
+      targetFeaturedArtistGender,
+    ),
     language: equalityComparison(guessLanguage, targetLanguage),
     credits: creditsComparison(guess.curleyCredits ?? null, target.curleyCredits ?? null),
   };
@@ -241,6 +269,24 @@ function numericComparison(guess, target, nearThreshold, value) {
   return cell(value, status, directionFor(difference));
 }
 
+function favoriteCountComparison(guess, target, displayValue, targetDisplayValue) {
+  const value = guess === null ? PENDING_VERIFICATION : displayValue ?? formatFavoriteCount(guess);
+  const guessComparable = parseFavoriteCountDisplay(displayValue) ?? guess;
+  const targetComparable = parseFavoriteCountDisplay(targetDisplayValue) ?? target;
+  if (guessComparable === null || targetComparable === null) {
+    return cell(value, COMPARISON_STATUS.UNKNOWN, null);
+  }
+
+  const difference = targetComparable - guessComparable;
+  const scale = Math.max(Math.abs(targetComparable), Math.abs(guessComparable), 1);
+  const status = difference === 0
+    ? COMPARISON_STATUS.MATCH
+    : Math.abs(difference) / scale <= 0.2
+      ? COMPARISON_STATUS.NEAR
+      : COMPARISON_STATUS.MISS;
+  return cell(value, status, directionFor(difference));
+}
+
 function projectComparison(guess, target) {
   const value = guess.title ?? PENDING_VERIFICATION;
   if (guess.title === null || target.title === null) {
@@ -308,6 +354,36 @@ function readDuration(song) {
   return toFiniteNumber(song.durationSec ?? song.durationSeconds ?? song.duration);
 }
 
+function readFavoriteCount(song) {
+  return toFiniteNumber(song.favoriteCount);
+}
+
+function readFavoriteCountDisplay(song) {
+  return typeof song.favoriteCountDisplay === "string" && song.favoriteCountDisplay.trim()
+    ? song.favoriteCountDisplay.trim()
+    : null;
+}
+
+function parseFavoriteCountDisplay(value) {
+  if (typeof value !== "string" || !value.trim()) return null;
+
+  const match = /^([\d,.]+)\s*(百万|万|千|m|w|k)?\+?$/iu.exec(value.trim());
+  if (!match) return null;
+
+  const number = Number(match[1].replace(/,/gu, ""));
+  if (!Number.isFinite(number) || number < 0) return null;
+
+  const unit = match[2]?.toLocaleLowerCase("und");
+  const multiplier = unit === "m" || unit === "百万"
+    ? 1_000_000
+    : unit === "w" || unit === "万"
+      ? 10_000
+      : unit === "k" || unit === "千"
+        ? 1_000
+        : 1;
+  return number * multiplier;
+}
+
 function readReleaseDate(song) {
   const exactDate = toReleaseTimestamp(song.releaseDate);
   if (exactDate !== null) return exactDate;
@@ -335,6 +411,12 @@ function readProject(song) {
 function readLanguage(song) {
   return typeof song.language === "string" && song.language.trim()
     ? song.language.trim().toLowerCase()
+    : null;
+}
+
+function readFeaturedArtistGender(song) {
+  return typeof song.featuredArtistGender === "string" && song.featuredArtistGender.trim()
+    ? song.featuredArtistGender.trim().toLowerCase()
     : null;
 }
 
