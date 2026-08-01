@@ -229,6 +229,10 @@ a:focus-visible {
   scroll-margin-top: var(--header-height);
 }
 
+[data-scroll-anchor]:not(.chapter) {
+  scroll-margin-top: calc(var(--header-height) + 24px);
+}
+
 .chapter--black {
   color: var(--white);
   background: var(--black);

@@ -60,6 +60,20 @@ test("home links to the standalone game without embedding game controls", () => 
   assert.doesNotMatch(gameHtml, /不代表《Glue》所在专辑已公布曲目|DATA BOUNDARY/);
 });
 
+test("home wheel navigation advances through explicit content anchors", () => {
+  for (const id of ["home", "concept", "story", "visuals", "release", "play", "listen"]) {
+    assert.match(homeHtml, new RegExp(`id="${id}"[^>]*\\bdata-scroll-anchor\\b`));
+  }
+
+  const wheelNavigation = extractFunction(homeMain, "setupAnchorWheelNavigation");
+  assert.match(wheelNavigation, /addEventListener\(\s*["']wheel["']/);
+  assert.match(wheelNavigation, /\{\s*passive:\s*false\s*\}/);
+  assert.match(wheelNavigation, /window\.scrollTo\(\{/);
+  assert.match(wheelNavigation, /prefers-reduced-motion:\s*reduce/);
+  assert.match(wheelNavigation, /nestedScrollerCanMove\(event\.target,\s*direction\)/);
+  assert.doesNotMatch(wheelNavigation, /scrollIntoView/);
+});
+
 test("home exposes the verified artist destinations safely", () => {
   for (const url of [
     "https://weibo.com/u/5948723938",

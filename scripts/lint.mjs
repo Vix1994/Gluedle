@@ -152,6 +152,18 @@ if (!gameMain.includes('import "./styles/gluedle.css";')) {
   errors.push("src/gluedle.js: gluedle.css must be imported from the game entry");
 }
 
+const homeAnchorIds = ["home", "concept", "story", "visuals", "release", "play", "listen"];
+if (
+  homeAnchorIds.some((id) => !new RegExp(`id="${id}"[^>]*\\bdata-scroll-anchor\\b`).test(homeHtml))
+  || !/addEventListener\(\s*["']wheel["']/.test(homeMain)
+  || !/\{\s*passive:\s*false\s*\}/.test(homeMain)
+  || !/window\.scrollTo\(\{/.test(homeMain)
+  || !/prefers-reduced-motion:\s*reduce/.test(homeMain)
+  || !/nestedScrollerCanMove\(event\.target,\s*direction\)/.test(homeMain)
+) {
+  errors.push("home page: wheel navigation must advance through explicit anchors without trapping nested scrollers");
+}
+
 for (const { name, source } of gameStyleFiles) {
   if (source.split(/\r?\n/).length > 1000) {
     errors.push(`src/styles/${name}: game stylesheet parts must not exceed 1000 lines`);
