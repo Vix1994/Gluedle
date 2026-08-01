@@ -31,6 +31,17 @@ export function validateSongCatalog(value) {
     if (Object.hasOwn(song, "languages") || Object.hasOwn(song, "language")) {
       throw new TypeError(`Catalog entry ${song.id} must not declare a language.`);
     }
+    if (
+      !song.curleyCredits
+      || typeof song.curleyCredits !== "object"
+      || typeof song.curleyCredits.lyrics !== "boolean"
+      || typeof song.curleyCredits.composition !== "boolean"
+    ) {
+      throw new TypeError(`Catalog entry ${song.id} must declare boolean creation credits.`);
+    }
+    if (!Array.isArray(song.featuredArtists) || song.featuredArtists.length > 1) {
+      throw new TypeError(`Catalog entry ${song.id} must have at most two total artists.`);
+    }
     ids.add(song.id);
   }
 

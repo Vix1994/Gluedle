@@ -1,4 +1,4 @@
-export const MAX_ATTEMPTS = 6;
+export const MAX_ATTEMPTS = 8;
 
 export const COMPARISON_STATUS = Object.freeze({
   MATCH: "match",
@@ -96,8 +96,6 @@ export function compareSongs(guess, target) {
   const targetDuration = readDuration(target);
   const guessProject = readProject(guess);
   const targetProject = readProject(target);
-  const guessLive = readLiveStatus(guess);
-  const targetLive = readLiveStatus(target);
   const guessPerformance = guess.performanceType ?? null;
   const targetPerformance = target.performanceType ?? null;
 
@@ -115,7 +113,6 @@ export function compareSongs(guess, target) {
       formatDuration(guessDuration),
     ),
     project: projectComparison(guessProject, targetProject),
-    live: equalityComparison(guessLive, targetLive),
     performance: equalityComparison(guessPerformance, targetPerformance),
     credits: creditsComparison(guess.curleyCredits ?? null, target.curleyCredits ?? null),
   };
@@ -330,10 +327,6 @@ function readProject(song) {
     title: song.project.title ?? song.project.name ?? null,
     type: song.project.type ?? song.projectType ?? null,
   };
-}
-
-function readLiveStatus(song) {
-  return typeof song.isLive === "boolean" ? song.isLive : null;
 }
 
 function normalizedMetadataValue(value) {

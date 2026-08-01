@@ -29,16 +29,13 @@ test("the guessing catalog remains separate without disclaimer copy", () => {
   assert.equal("libraryNotice" in siteContent.game, false);
 });
 
-test("every guessing entry declares whether it is a live recording", () => {
-  assert.ok(songs.every((song) => typeof song.isLive === "boolean"));
-  assert.deepEqual(
-    songs.filter((song) => song.isLive).map((song) => song.id),
-    ["xi-huan-ni-live"],
-  );
-  assert.equal(
-    songs.find((song) => song.id === "xi-huan-ni-live").performanceType,
-    "solo",
-  );
+test("the guessing catalog excludes Live metadata and has resolved creation credits", () => {
+  assert.ok(songs.every((song) => !("isLive" in song)));
+  assert.ok(songs.every((song) => (
+    typeof song.curleyCredits?.lyrics === "boolean"
+    && typeof song.curleyCredits?.composition === "boolean"
+  )));
+  assert.ok(songs.every((song) => Array.isArray(song.featuredArtists) && song.featuredArtists.length <= 1));
 });
 
 test("the game reads one language-free JSON catalog with normalized singles", () => {

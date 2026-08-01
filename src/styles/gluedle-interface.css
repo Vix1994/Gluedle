@@ -12,13 +12,12 @@
   font: 500 clamp(0.48rem, 0.6vw, 0.59rem)/1.2 var(--font-mono);
   text-align: left;
 }
-#guess-board th:nth-child(1) { width: 16%; }
-#guess-board th:nth-child(2) { width: 13%; }
-#guess-board th:nth-child(3) { width: 9%; }
-#guess-board th:nth-child(4) { width: 14%; }
-#guess-board th:nth-child(5) { width: 8%; }
-#guess-board th:nth-child(6) { width: 10%; }
-#guess-board th:nth-child(7) { width: 30%; }
+#guess-board th:nth-child(1) { width: 18%; }
+#guess-board th:nth-child(2) { width: 14%; }
+#guess-board th:nth-child(3) { width: 10%; }
+#guess-board th:nth-child(4) { width: 16%; }
+#guess-board th:nth-child(5) { width: 12%; }
+#guess-board th:nth-child(6) { width: 30%; }
 
 .guess-row {
   border-bottom: 6px solid var(--black);
@@ -201,7 +200,16 @@ button:disabled { cursor: not-allowed; opacity: 0.38; }
   transition: opacity 180ms ease, transform 180ms var(--ease-out);
 }
 .toast.is-visible { opacity: 1; transform: translateY(0); }
-.share-canvas { display: none; }
+.share-preview { margin-top: 28px; }
+.share-preview-frame {
+  max-height: min(62dvh, 720px);
+  margin-top: 10px;
+  overflow: auto;
+  border: 1px solid var(--line-dark);
+  background: var(--black);
+}
+.share-canvas { display: block; width: 100%; height: auto; }
+.share-preview-actions { display: grid; gap: 8px; margin-top: 12px; }
 
 @keyframes row-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 

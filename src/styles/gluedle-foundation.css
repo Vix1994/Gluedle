@@ -272,7 +272,7 @@ body.is-booting .app-boot.is-error { border-color: var(--wrong); }
   .rail-brand h1 { margin: 0; font-size: 1.3rem; }
   .round-state { display: flex; flex-direction: column; align-items: end; margin: 0; padding: 0; border: 0; }
   #game-status { min-height: 0; margin: 4px 0 0; font-size: 0.65rem; }
-  .attempt-track { grid-column: 1 / -1; grid-template-columns: repeat(6, 1fr); margin: 0; }
+  .attempt-track { grid-column: 1 / -1; grid-template-columns: repeat(8, 1fr); margin: 0; }
   [data-attempt-marker] { min-height: 24px; }
   .ledger-head { padding: 14px; }
   .ledger-head h2 { font-size: 1.8rem; }

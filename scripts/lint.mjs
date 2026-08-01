@@ -106,7 +106,6 @@ for (const id of requiredIds) {
 const releaseBoundaryMarkers = [
   [homeHtml, "index.html", "data-release-title", "published Glue track"],
   [gameHtml, gameHtmlLabel, "data-game-song-count", "separate game library count"],
-  [gameHtml, gameHtmlLabel, "data-live-column", "Live comparison column"],
 ];
 
 for (const [source, file, marker, label] of releaseBoundaryMarkers) {
@@ -124,13 +123,6 @@ if (homeHtml.includes("data-track-list") || homeMain.includes("function renderCa
   errors.push("album story must not render the guessing catalog as a track list");
 }
 
-if (
-  !gameMain.includes('attempt.comparison.live, "live"')
-  || !shareCardSource.includes('SHARE_FIELDS = ["year", "duration", "project", "live"')
-) {
-  errors.push("standalone Gluedle: Live comparison must render and be included in shared results");
-}
-
 const suggestionsSource = extractFunction(gameMain, "showSuggestions");
 if (
   !suggestionsSource
@@ -144,10 +136,10 @@ if (
 
 if (
   !suggestionsSource
-  || !/songs\.filter\([\s\S]*?!guessedIds\.has\(song\.id\)[\s\S]*?\)/
-    .test(suggestionsSource)
+  || !/if\s*\(\s*!query\.trim\(\)\s*\)\s*\{\s*closeSuggestions\(\);\s*return;\s*\}/.test(suggestionsSource)
+  || !/songs\.filter\([\s\S]*?!guessedIds\.has\(song\.id\)[\s\S]*?\)/.test(suggestionsSource)
 ) {
-  errors.push("src/gluedle.js: empty-query suggestions must exclude guessed songs before limiting results");
+  errors.push("src/gluedle.js: empty input must close suggestions and typed search must exclude guessed songs");
 }
 
 const htmlForbidden = [
@@ -327,8 +319,13 @@ if (
   || !Array.isArray(parsedSongCatalog)
   || parsedSongCatalog.some((song) => "language" in song || "languages" in song)
   || parsedSongCatalog.some((song) => song.project?.type === "single" && song.project?.title !== "单曲")
+  || parsedSongCatalog.some((song) => Object.hasOwn(song, "isLive"))
+  || parsedSongCatalog.some((song) =>
+    !song.curleyCredits
+    || typeof song.curleyCredits.lyrics !== "boolean"
+    || typeof song.curleyCredits.composition !== "boolean")
 ) {
-  errors.push("Gluedle must load the language-free JSON catalog and normalize independent releases to 单曲");
+  errors.push("Gluedle must load a language-free catalog without Live metadata and with boolean creation credits");
 }
 
 const inputTag = /<input\b[^>]*\bid="song-input"[^>]*>/i.exec(gameHtml)?.[0] ?? "";
@@ -352,9 +349,9 @@ if (
 }
 
 if (
-  (gameHtml.match(/\bdata-attempt-marker\b/g) ?? []).length !== 6
+  (gameHtml.match(/\bdata-attempt-marker\b/g) ?? []).length !== 8
 ) {
-  errors.push(`${gameHtmlLabel}: game must expose six attempt markers`);
+  errors.push(`${gameHtmlLabel}: game must expose eight attempt markers`);
 }
 
 if (
@@ -382,9 +379,9 @@ if (
   || !/event\.key\s*===\s*["']ArrowDown["']\s*\?\s*0\s*:\s*suggestionSongs\.length\s*-\s*1/
     .test(gameMain)
   || !/activeSuggestion\s*=\s*0;[\s\S]*?updateActiveSuggestion\(\)/.test(suggestionsSource)
-  || !/exactMatch[\s\S]*?elements\.form\.requestSubmit\(\)/.test(gameMain)
+  || !/selectSuggestion\(song,\s*\{\s*submit:\s*true\s*\}\)/.test(gameMain)
 ) {
-  errors.push("src/gluedle.js: search must default-select the first result and submit exact matches on Enter");
+  errors.push("src/gluedle.js: search must default-select the first result and submit a selected candidate directly");
 }
 
 const standaloneLinks = homeHtml.match(/href="\/gluedle\/"/g) ?? [];

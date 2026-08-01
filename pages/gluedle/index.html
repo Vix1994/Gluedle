@@ -29,7 +29,7 @@
       <main class="game-shell">
         <aside class="round-rail" aria-label="本轮进度">
           <div class="rail-brand">
-            <span class="rail-index">GL / 06</span>
+            <span class="rail-index">GL / 08</span>
             <h1>GLUEDLE</h1>
             <p>歌曲资料推理</p>
           </div>
@@ -37,13 +37,14 @@
           <div class="round-state">
             <p class="meta-label" id="game-round">ROUND / —</p>
             <p id="game-status" aria-live="polite">正在读取题库</p>
-            <p class="attempt-display"><span id="attempt-count">0</span><small>/ 06</small></p>
+            <p class="attempt-display"><span id="attempt-count">0</span><small>/ 08</small></p>
           </div>
 
-          <ol class="attempt-track" aria-label="六次推理进度">
+          <ol class="attempt-track" aria-label="八次推理进度">
             <li data-attempt-marker>01</li><li data-attempt-marker>02</li>
             <li data-attempt-marker>03</li><li data-attempt-marker>04</li>
             <li data-attempt-marker>05</li><li data-attempt-marker>06</li>
+            <li data-attempt-marker>07</li><li data-attempt-marker>08</li>
           </ol>
 
           <div class="legend" aria-label="反馈状态说明">
@@ -73,12 +74,11 @@
               <thead>
                 <tr>
                   <th scope="col">歌曲</th><th scope="col">发行日</th><th scope="col">时长</th>
-                  <th scope="col">所属项目</th><th scope="col" data-live-column>Live</th>
-                  <th scope="col">演唱</th><th scope="col">创作</th>
+                  <th scope="col">所属项目</th><th scope="col">演唱</th><th scope="col">创作</th>
                 </tr>
               </thead>
               <tbody data-guess-rows>
-                <tr class="empty-row"><td colspan="7">输入歌名，第一条推理会出现在这里</td></tr>
+                <tr class="empty-row"><td colspan="6">输入歌名，第一条推理会出现在这里</td></tr>
               </tbody>
             </table>
           </div>
@@ -102,7 +102,7 @@
               <input id="song-input" name="song" type="search" role="combobox" inputmode="search" autocomplete="off" aria-autocomplete="list" aria-controls="song-suggestions" aria-expanded="false" placeholder="输入曲名或别名" disabled />
               <ul id="song-suggestions" class="suggestions" role="listbox" hidden></ul>
             </div>
-            <button id="guess-submit" class="primary-button" type="submit" disabled>提交这首歌</button>
+            <button id="guess-submit" class="sr-only" type="submit" disabled>提交这首歌</button>
           </form>
           <p id="guess-feedback" class="form-feedback" aria-live="polite">正在读取题库。</p>
           <button class="help-button" type="button" data-open-dialog="help-dialog">查看玩法说明</button>
@@ -116,7 +116,7 @@
           <h2 id="help-title">沿着差异，找到随机答案。</h2>
           <ol>
             <li>每轮从 JSON 题库随机生成一个答案。</li>
-            <li>比较年份、时长、所属项目、是否 Live、演唱与创作资料。</li>
+            <li>比较年份、时长、所属项目、演唱与创作资料。</li>
             <li>独立发行统一显示为“单曲”，两首单曲会判定项目匹配。</li>
             <li>绿色为匹配，米色为接近，深灰为不同；箭头提示答案方向。</li>
           </ol>
@@ -130,12 +130,22 @@
           <p class="meta-label">ROUND RESULT</p>
           <h2 id="result-title">连接完成。</h2>
           <div data-result-summary></div>
-          <button class="primary-button" type="button" data-result-share>分享结果</button>
+          <div class="share-preview" data-share-preview hidden>
+            <p class="meta-label">SHARE PREVIEW</p>
+            <div class="share-preview-frame">
+              <canvas class="share-canvas" data-share-canvas aria-label="分享结果图片预览"></canvas>
+            </div>
+            <div class="share-preview-actions">
+              <button class="primary-button" type="button" data-share-confirm>分享图片</button>
+              <button class="secondary-button" type="button" data-share-download>保存图片</button>
+            </div>
+          </div>
+          <button class="primary-button" type="button" data-result-share>生成分享图片</button>
+          <button class="secondary-button" type="button" data-result-reset>重新开始</button>
           <button class="secondary-button" type="button" data-close-dialog>返回记录台</button>
         </div>
       </dialog>
 
-      <canvas class="share-canvas" data-share-canvas aria-hidden="true"></canvas>
       <div class="toast" data-toast role="status" aria-live="polite"></div>
     </div>
   </body>

@@ -226,7 +226,7 @@ test("home hero links directly to the verified Glue song on QQ Music", () => {
   assert.match(appShellStyles, /@media \(max-width:\s*760px\)[\s\S]*?\.app-listen-action,\s*\.app-header-action\s*\{[\s\S]*?min-height:\s*44px/);
 });
 
-test("standalone game keeps title-only suggestions, Live clues, and image sharing", () => {
+test("standalone game keeps title-only suggestions, metadata clues, and image sharing", () => {
   for (const id of [
     "guess-form",
     "song-input",
@@ -246,8 +246,13 @@ test("standalone game keeps title-only suggestions, Live clues, and image sharin
     suggestionSource,
     /option\.(?:innerHTML|outerHTML|insertAdjacentHTML|append|prepend|replaceChildren)\b/,
   );
-  assert.match(gameMain, /attempt\.comparison\.live, "live"/);
+  assert.doesNotMatch(gameMain, /attempt\.comparison\.live|data-live-column/);
   assert.match(gameMain, /renderShareCard\(elements\.shareCanvas, model\)/);
+  assert.match(gameHtml, /data-share-preview/);
+  assert.match(gameHtml, /data-share-confirm/);
+  assert.match(gameHtml, /data-share-download/);
+  assert.match(gameHtml, /data-result-reset/);
+  assert.match(gameMain, /state = submitGuess\(state, selectedSong\.id, songs\);[\s\S]*?resetSharePreview\(\);/);
   assert.match(gameMain, /navigator\.canShare\(\{ files: \[file\] \}\)/);
   assert.match(gameMain, /downloadBlob\(blob, filename\)/);
 });
@@ -264,8 +269,8 @@ test("the standalone shell exposes accessible dynamic-game integration points", 
   assert.match(gameHtml, /<body\b[^>]*\bdata-game-state="loading"[^>]*\bdata-attempts="0"/);
   assert.match(gameHtml, /\bdata-app-boot\b[^>]*\brole="status"/);
   assert.match(gameHtml, /<noscript>/);
-  assert.equal((gameHtml.match(/\bdata-attempt-marker\b/g) ?? []).length, 6);
-  assert.match(gameHtml, /<th\b[^>]*\bdata-live-column[^>]*>Live<\/th>/);
+  assert.equal((gameHtml.match(/\bdata-attempt-marker\b/g) ?? []).length, 8);
+  assert.doesNotMatch(gameHtml, /data-live-column|>Live<\/th>/);
   assert.match(gameHtml, /<th\b[^>]*>发行日<\/th>/);
   assert.doesNotMatch(gameHtml, />语言<\/th>/);
 });
@@ -293,9 +298,10 @@ test("game entry synchronizes progress, reloads JSON data, and randomizes each r
     /event\.key\s*===\s*["']ArrowDown["']\s*\?\s*0\s*:\s*suggestionSongs\.length\s*-\s*1/,
   );
   assert.match(gameMain, /activeSuggestion\s*=\s*0;[\s\S]*?updateActiveSuggestion\(\)/);
-  assert.match(gameMain, /exactMatch[\s\S]*?elements\.form\.requestSubmit\(\)/);
-  const suggestionsSource = extractFunction(gameMain, "showSuggestions");
-  assert.match(suggestionsSource, /songs\.filter\([\s\S]*?!guessedIds\.has\(song\.id\)/);
+  assert.match(gameMain, /selectSuggestion\(song,\s*\{\s*submit:\s*true\s*\}\)/);
+const suggestionsSource = extractFunction(gameMain, "showSuggestions");
+assert.match(suggestionsSource, /if\s*\(\s*!query\.trim\(\)\s*\)\s*\{\s*closeSuggestions\(\);\s*return;\s*\}/);
+assert.match(suggestionsSource, /songs\.filter\([\s\S]*?!guessedIds\.has\(song\.id\)/);
 
   const finishBootSource = extractFunction(gameMain, "finishBoot");
   assert.match(finishBootSource, /appBoot\?\.remove\(\)/);
@@ -304,10 +310,12 @@ test("game entry synchronizes progress, reloads JSON data, and randomizes each r
 test("responsive game ledger exposes every field without horizontal scrolling", () => {
   assert.doesNotMatch(gameStyles, /overflow-x:\s*auto/);
   assert.doesNotMatch(gameStyles, /#guess-board\s*\{[^}]*min-width:\s*8\d{2}px/s);
-  assert.match(gameStyles, /grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/);
-  for (const field of ["song", "year", "duration", "project", "live", "performance", "credits"]) {
+  assert.match(gameStyles, /#guess-board\s*\{\s*table-layout:\s*fixed;/);
+  assert.match(gameStyles, /\.guess-desk\s*\{[\s\S]*?position:\s*fixed[\s\S]*?bottom:\s*var\(--mobile-keyboard-offset/);
+  for (const field of ["song", "year", "duration", "project", "performance", "credits"]) {
     assert.match(gameMain, new RegExp(`, "${field}",`));
   }
+  assert.doesNotMatch(gameMain, /, "live",/);
 });
 
 test("result states use high-contrast colors plus non-color marks", () => {

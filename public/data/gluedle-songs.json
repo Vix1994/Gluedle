@@ -2,145 +2,5103 @@
   {
     "id": "ke-li-ji",
     "title": "颗粒季",
-    "aliases": ["顆粒季", "Ke Li Ji"],
+    "aliases": [
+      "顆粒季",
+      "Ke Li Ji"
+    ],
     "releaseDate": "2016-01-01",
     "releaseYear": 2016,
     "durationSec": 269,
-    "project": { "title": "单曲", "type": "single" },
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
     "version": null,
-    "isLive": false,
     "performanceType": "solo",
     "featuredArtists": [],
-    "curleyCredits": { "lyrics": null, "composition": null },
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
     "guessable": true,
-    "sources": [{ "name": "Apple Music — 颗粒季", "url": "https://music.apple.com/us/album/%E9%A2%97%E7%B2%92%E5%AD%A3/1593815890?i=1593815891" }]
+    "sources": [
+      {
+        "name": "Apple Music — 颗粒季",
+        "url": "https://music.apple.com/us/album/%E9%A2%97%E7%B2%92%E5%AD%A3/1593815890?i=1593815891"
+      }
+    ]
   },
   {
     "id": "u-sugar",
     "title": "U",
-    "aliases": ["u"],
+    "aliases": [
+      "u"
+    ],
     "releaseDate": "2020-02-04",
     "releaseYear": 2020,
     "durationSec": 245,
-    "project": { "title": "单曲", "type": "single" },
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
     "version": null,
-    "isLive": false,
     "performanceType": "collaboration",
-    "featuredArtists": ["Sugar"],
-    "curleyCredits": { "lyrics": null, "composition": null },
+    "featuredArtists": [
+      "Sugar"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
     "guessable": true,
-    "sources": [{ "name": "Apple Music — U", "url": "https://music.apple.com/cn/album/u/1668532846?i=1668532852" }]
-  },
-  {
-    "id": "xi-huan-ni-live",
-    "title": "喜欢你 (Live)",
-    "aliases": ["喜欢你", "喜歡你", "喜欢你 Live"],
-    "releaseDate": "2020-05-02",
-    "releaseYear": 2020,
-    "durationSec": 77,
-    "project": { "title": "单曲", "type": "single" },
-    "version": "Live",
-    "isLive": true,
-    "performanceType": "solo",
-    "featuredArtists": [],
-    "curleyCredits": { "lyrics": null, "composition": null },
-    "guessable": true,
-    "sources": [{ "name": "Apple Music — 喜欢你 (Live)", "url": "https://music.apple.com/cn/album/%E5%96%9C%E6%AC%A2%E4%BD%A0-live/1805137813?i=1805140021" }]
+    "sources": [
+      {
+        "name": "Apple Music — U",
+        "url": "https://music.apple.com/cn/album/u/1668532846?i=1668532852"
+      }
+    ]
   },
   {
     "id": "zen-me-hui-wang-ji-ni",
     "title": "怎么会忘记你",
-    "aliases": ["怎麼會忘記你", "怎么会忘记你?"],
+    "aliases": [
+      "怎麼會忘記你",
+      "怎么会忘记你?"
+    ],
     "releaseDate": "2023-05-31",
     "releaseYear": 2023,
     "durationSec": 255,
-    "project": { "title": "单曲", "type": "single" },
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
     "version": null,
-    "isLive": false,
     "performanceType": "collaboration",
-    "featuredArtists": ["王赫野"],
-    "curleyCredits": { "lyrics": null, "composition": null },
+    "featuredArtists": [
+      "王赫野"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
     "guessable": true,
-    "sources": [{ "name": "Apple Music — 怎么会忘记你", "url": "https://music.apple.com/cn/album/%E6%80%8E%E4%B9%88%E4%BC%9A%E5%BF%98%E8%AE%B0%E4%BD%A0/1690731006?i=1690731013" }]
+    "sources": [
+      {
+        "name": "Apple Music — 怎么会忘记你",
+        "url": "https://music.apple.com/cn/album/%E6%80%8E%E4%B9%88%E4%BC%9A%E5%BF%98%E8%AE%B0%E4%BD%A0/1690731006?i=1690731013"
+      }
+    ]
   },
   {
     "id": "zhe-jiu-shi-ai",
     "title": "这,就是爱",
-    "aliases": ["这就是爱", "這,就是愛", "這就是愛"],
+    "aliases": [
+      "这就是爱",
+      "這,就是愛",
+      "這就是愛"
+    ],
     "releaseDate": "2023-08-26",
     "releaseYear": 2023,
     "durationSec": 229,
-    "project": { "title": "单曲", "type": "single" },
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
     "version": null,
-    "isLive": false,
     "performanceType": "solo",
     "featuredArtists": [],
-    "curleyCredits": { "lyrics": null, "composition": null },
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
     "guessable": true,
-    "sources": [{ "name": "Apple Music — 这,就是爱", "url": "https://music.apple.com/cn/album/%E8%BF%99-%E5%B0%B1%E6%98%AF%E7%88%B1/1793189706?i=1793189713" }]
+    "sources": [
+      {
+        "name": "Apple Music — 这,就是爱",
+        "url": "https://music.apple.com/cn/album/%E8%BF%99-%E5%B0%B1%E6%98%AF%E7%88%B1/1793189706?i=1793189713"
+      }
+    ]
   },
   {
     "id": "chi-xin",
     "title": "炽心",
-    "aliases": ["熾心", "炽心 (电视剧《与凤行》「凤行世上」主题曲)"],
+    "aliases": [
+      "熾心",
+      "炽心 (电视剧《与凤行》「凤行世上」主题曲)"
+    ],
     "releaseDate": "2024-02-14",
     "releaseYear": 2024,
     "durationSec": 216,
-    "project": { "title": "单曲", "type": "single" },
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
     "version": null,
-    "isLive": false,
     "performanceType": "solo",
     "featuredArtists": [],
-    "curleyCredits": { "lyrics": null, "composition": null },
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
     "guessable": true,
-    "sources": [{ "name": "Apple Music — 炽心", "url": "https://music.apple.com/cn/album/%E7%82%BD%E5%BF%83-%E7%94%B5%E8%A7%86%E5%89%A7-%E4%B8%8E%E5%87%A4%E8%A1%8C-%E5%87%A4%E8%A1%8C%E4%B8%96%E4%B8%8A-%E4%B8%BB%E9%A2%98%E6%9B%B2/1736007862?i=1736007864" }]
+    "sources": [
+      {
+        "name": "Apple Music — 炽心",
+        "url": "https://music.apple.com/cn/album/%E7%82%BD%E5%BF%83-%E7%94%B5%E8%A7%86%E5%89%A7-%E4%B8%8E%E5%87%A4%E8%A1%8C-%E5%87%A4%E8%A1%8C%E4%B8%96%E4%B8%8A-%E4%B8%BB%E9%A2%98%E6%9B%B2/1736007862?i=1736007864"
+      }
+    ]
   },
   {
     "id": "re-la-gun-tang",
     "title": "热辣滚烫",
-    "aliases": ["熱辣滾燙", "热辣滚烫 (电影《热辣滚烫》热辣逐梦曲)"],
+    "aliases": [
+      "熱辣滾燙",
+      "热辣滚烫 (电影《热辣滚烫》热辣逐梦曲)"
+    ],
     "releaseDate": "2024-03-18",
     "releaseYear": 2024,
     "durationSec": 354,
-    "project": { "title": "单曲", "type": "single" },
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
     "version": null,
-    "isLive": false,
     "performanceType": "solo",
     "featuredArtists": [],
-    "curleyCredits": { "lyrics": null, "composition": null },
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
     "guessable": true,
-    "sources": [{ "name": "Apple Music — 热辣滚烫", "url": "https://music.apple.com/cn/album/%E7%83%AD%E8%BE%A3%E6%BB%9A%E7%83%AB-%E7%83%AD%E8%BE%A3%E6%BB%9A%E7%83%AB-%E7%94%B5%E5%BD%B1%E7%83%AD%E8%BE%A3%E9%80%90%E6%A2%A6%E6%9B%B2/1735246104?i=1735246110" }]
+    "sources": [
+      {
+        "name": "Apple Music — 热辣滚烫",
+        "url": "https://music.apple.com/cn/album/%E7%83%AD%E8%BE%A3%E6%BB%9A%E7%83%AB-%E7%83%AD%E8%BE%A3%E6%BB%9A%E7%83%AB-%E7%94%B5%E5%BD%B1%E7%83%AD%E8%BE%A3%E9%80%90%E6%A2%A6%E6%9B%B2/1735246104?i=1735246110"
+      }
+    ]
   },
   {
     "id": "qi-shi",
     "title": "其时",
-    "aliases": ["其時", "Qi Shi"],
+    "aliases": [
+      "其時",
+      "Qi Shi"
+    ],
     "releaseDate": "2024-05-02",
     "releaseYear": 2024,
     "durationSec": 202,
-    "project": { "title": "单曲", "type": "single" },
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
     "version": null,
-    "isLive": false,
     "performanceType": "solo",
     "featuredArtists": [],
-    "curleyCredits": { "lyrics": null, "composition": null },
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
     "guessable": true,
-    "sources": [{ "name": "Apple Music — 其时", "url": "https://music.apple.com/cn/album/%E5%85%B6%E6%97%B6/1743940833?i=1743940835" }]
+    "sources": [
+      {
+        "name": "Apple Music — 其时",
+        "url": "https://music.apple.com/cn/album/%E5%85%B6%E6%97%B6/1743940833?i=1743940835"
+      }
+    ]
   },
   {
     "id": "shine-brighter",
     "title": "Shine Brighter (愈加璀璨)",
-    "aliases": ["Shine Brighter", "愈加璀璨", "shine brighter"],
+    "aliases": [
+      "Shine Brighter",
+      "愈加璀璨",
+      "shine brighter"
+    ],
     "releaseDate": "2024-06-06",
     "releaseYear": 2024,
     "durationSec": 216,
-    "project": { "title": "单曲", "type": "single" },
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
     "version": null,
-    "isLive": false,
     "performanceType": "solo",
     "featuredArtists": [],
-    "curleyCredits": { "lyrics": null, "composition": null },
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
     "guessable": true,
-    "sources": [{ "name": "Apple Music — Shine Brighter (愈加璀璨)", "url": "https://music.apple.com/cn/album/shine-brighter-%E6%84%88%E5%8A%A0%E7%92%80%E7%92%A8-%E7%94%B5%E8%A7%86%E5%89%A7-%E7%8E%AB%E7%91%B0%E7%9A%84%E6%95%85%E4%BA%8B-%E6%8F%92%E6%9B%B2/1750192569?i=1750192570" }]
+    "sources": [
+      {
+        "name": "Apple Music — Shine Brighter (愈加璀璨)",
+        "url": "https://music.apple.com/cn/album/shine-brighter-%E6%84%88%E5%8A%A0%E7%92%80%E7%92%A8-%E7%94%B5%E8%A7%86%E5%89%A7-%E7%8E%AB%E7%91%B0%E7%9A%84%E6%95%85%E4%BA%8B-%E6%8F%92%E6%9B%B2/1750192569?i=1750192570"
+      }
+    ]
+  },
+  {
+    "id": "netease-510027147",
+    "title": "This Is Our Paradise",
+    "aliases": [],
+    "releaseDate": "2017-07-01",
+    "releaseYear": 2017,
+    "durationSec": 210,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": true
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — This Is Our Paradise",
+        "url": "https://music.163.com/#/song?id=510027147"
+      }
+    ]
+  },
+  {
+    "id": "netease-519039081",
+    "title": "Apeirophobia",
+    "releaseDate": "2017-11-14",
+    "releaseYear": 2017,
+    "durationSec": 125,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Apeirophobia",
+        "url": "https://music.163.com/#/song?id=519039081"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-1302348076",
+    "title": "Do You Think About Me",
+    "releaseDate": "2018-08-17",
+    "releaseYear": 2018,
+    "durationSec": 164,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "Ken Gao"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Do You Think About Me (feat. Curley G)",
+        "url": "https://music.163.com/#/song?id=1302348076"
+      }
+    ],
+    "aliases": [
+      "Do You Think About Me (feat. Curley G)",
+      "Do You Think About Me (Acoustic)"
+    ]
+  },
+  {
+    "id": "netease-1353381436",
+    "title": "别对我说谎",
+    "releaseDate": "2019-03-22",
+    "releaseYear": 2019,
+    "durationSec": 232,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 别对我说谎",
+        "url": "https://music.163.com/#/song?id=1353381436"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-1368711427",
+    "title": "Lost Dreams",
+    "releaseDate": "2019-05-31",
+    "releaseYear": 2019,
+    "durationSec": 249,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "AyAno"
+    ],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": true
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Lost Dreams (feat. Curley G)",
+        "url": "https://music.163.com/#/song?id=1368711427"
+      }
+    ],
+    "aliases": [
+      "Lost Dreams (feat. Curley G)"
+    ]
+  },
+  {
+    "id": "netease-1393048618",
+    "title": "Follow You",
+    "releaseDate": "2019-09-24",
+    "releaseYear": 2019,
+    "durationSec": 213,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "黑糖Blacksugar"
+    ],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": true
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Follow You",
+        "url": "https://music.163.com/#/song?id=1393048618"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-1398179629",
+    "title": "Fade Out",
+    "releaseDate": "2019-10-20",
+    "releaseYear": 2019,
+    "durationSec": 264,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "路南"
+    ],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": true
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Fade Out",
+        "url": "https://music.163.com/#/song?id=1398179629"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-1408237834",
+    "title": "夜昼",
+    "releaseDate": "2019-12-06",
+    "releaseYear": 2019,
+    "durationSec": 225,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "路南"
+    ],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": true
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 夜昼",
+        "url": "https://music.163.com/#/song?id=1408237834"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-1409370189",
+    "title": "Love Me Slowly",
+    "releaseDate": "2019-12-20",
+    "releaseYear": 2019,
+    "durationSec": 212,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "六克Ryuk"
+    ],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": true
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Love Me Slowly",
+        "url": "https://music.163.com/#/song?id=1409370189"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-1457730308",
+    "title": "停不下来",
+    "releaseDate": "2020-06-27",
+    "releaseYear": 2020,
+    "durationSec": 249,
+    "project": {
+      "title": "停不下来",
+      "type": "ep"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 停不下来",
+        "url": "https://music.163.com/#/song?id=1457730308"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-1457729654",
+    "title": "I Wanna Say",
+    "releaseDate": "2020-06-27",
+    "releaseYear": 2020,
+    "durationSec": 173,
+    "project": {
+      "title": "停不下来",
+      "type": "ep"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — I Wanna Say",
+        "url": "https://music.163.com/#/song?id=1457729654"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-1474070471",
+    "title": "战斗的乐章 (中文特别版)",
+    "aliases": [
+      "英雄联盟·战斗之夜主题曲特别中文版"
+    ],
+    "releaseDate": "2020-08-24",
+    "releaseYear": 2020,
+    "durationSec": 233,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 战斗的乐章 (中文特别版)",
+        "url": "https://music.163.com/#/song?id=1474070471"
+      }
+    ]
+  },
+  {
+    "id": "netease-1474064984",
+    "title": "Fight of Your Life (特别版)",
+    "aliases": [
+      "英雄联盟·战斗之夜主题曲特别版"
+    ],
+    "releaseDate": "2020-08-24",
+    "releaseYear": 2020,
+    "durationSec": 233,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Fight of Your Life (特别版)",
+        "url": "https://music.163.com/#/song?id=1474064984"
+      }
+    ]
+  },
+  {
+    "id": "netease-1848225225",
+    "title": "阿莫希林",
+    "releaseDate": "2021-05-27",
+    "releaseYear": 2021,
+    "durationSec": 179,
+    "project": {
+      "title": "阿莫希林",
+      "type": "ep"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 阿莫希林",
+        "url": "https://music.163.com/#/song?id=1848225225"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-1848225226",
+    "title": "Mirror",
+    "releaseDate": "2021-05-27",
+    "releaseYear": 2021,
+    "durationSec": 233,
+    "project": {
+      "title": "阿莫希林",
+      "type": "ep"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Mirror",
+        "url": "https://music.163.com/#/song?id=1848225226"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-1864041137",
+    "title": "点亮世界",
+    "aliases": [
+      "《故宫里的大怪兽之洞光宝石的秘密》片尾曲"
+    ],
+    "releaseDate": "2021-07-24",
+    "releaseYear": 2021,
+    "durationSec": 259,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 点亮世界",
+        "url": "https://music.163.com/#/song?id=1864041137"
+      }
+    ]
+  },
+  {
+    "id": "netease-1864587739",
+    "title": "陷入爱情",
+    "aliases": [
+      "电视剧《你是我的荣耀》插曲"
+    ],
+    "releaseDate": "2021-07-27",
+    "releaseYear": 2021,
+    "durationSec": 182,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "米卡"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 陷入爱情",
+        "url": "https://music.163.com/#/song?id=1864587739"
+      }
+    ]
+  },
+  {
+    "id": "netease-1867928255",
+    "title": "无限飞驰",
+    "aliases": [
+      "手游王牌竞速季前赛主题曲"
+    ],
+    "releaseDate": "2021-08-09",
+    "releaseYear": 2021,
+    "durationSec": 216,
+    "project": {
+      "title": "无限飞驰 (手游《王牌竞速》季前赛主题曲)",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 无限飞驰",
+        "url": "https://music.163.com/#/song?id=1867928255"
+      }
+    ]
+  },
+  {
+    "id": "netease-1878285988",
+    "title": "牵一双手",
+    "aliases": [
+      "电影《关于我妈的一切》主题曲"
+    ],
+    "releaseDate": "2021-09-22",
+    "releaseYear": 2021,
+    "durationSec": 285,
+    "project": {
+      "title": "关于我妈的一切 电影原声大碟",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 牵一双手",
+        "url": "https://music.163.com/#/song?id=1878285988"
+      }
+    ]
+  },
+  {
+    "id": "netease-1905595848",
+    "title": "为我们失去的",
+    "aliases": [
+      "电影《穿过寒冬拥抱》宣传推广曲"
+    ],
+    "releaseDate": "2021-12-21",
+    "releaseYear": 2021,
+    "durationSec": 344,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 为我们失去的",
+        "url": "https://music.163.com/#/song?id=1905595848"
+      }
+    ]
+  },
+  {
+    "id": "netease-2102054985",
+    "title": "芳华如愿",
+    "releaseDate": "2021-12-30",
+    "releaseYear": 2021,
+    "durationSec": 203,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 芳华如愿",
+        "url": "https://music.163.com/#/song?id=2102054985"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-1945924832",
+    "title": "寓言",
+    "aliases": [
+      "电视剧《请叫我总监》片尾主题曲"
+    ],
+    "releaseDate": "2022-04-23",
+    "releaseYear": 2022,
+    "durationSec": 222,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 寓言",
+        "url": "https://music.163.com/#/song?id=1945924832"
+      }
+    ]
+  },
+  {
+    "id": "netease-1941207282",
+    "title": "那年星辰",
+    "releaseDate": "2022-04-27",
+    "releaseYear": 2022,
+    "durationSec": 253,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 那年星辰",
+        "url": "https://music.163.com/#/song?id=1941207282"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-1953129979",
+    "title": "对世界说你好",
+    "releaseDate": "2022-06-04",
+    "releaseYear": 2022,
+    "durationSec": 232,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 对世界说你好",
+        "url": "https://music.163.com/#/song?id=1953129979"
+      }
+    ],
+    "aliases": [
+      "对世界说你好 (对唱版)"
+    ]
+  },
+  {
+    "id": "netease-1962340418",
+    "title": "04:16",
+    "aliases": [],
+    "releaseDate": "2022-07-11",
+    "releaseYear": 2022,
+    "durationSec": 256,
+    "project": {
+      "title": "吾",
+      "type": "ep"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": true
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 04:16",
+        "url": "https://music.163.com/#/song?id=1962340418"
+      }
+    ]
+  },
+  {
+    "id": "netease-1962340417",
+    "title": "幻想写照",
+    "releaseDate": "2022-07-11",
+    "releaseYear": 2022,
+    "durationSec": 197,
+    "project": {
+      "title": "吾",
+      "type": "ep"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": true
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 幻想写照",
+        "url": "https://music.163.com/#/song?id=1962340417"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-1962340420",
+    "title": "来，你说",
+    "releaseDate": "2022-07-11",
+    "releaseYear": 2022,
+    "durationSec": 230,
+    "project": {
+      "title": "吾",
+      "type": "ep"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": true
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 来，你说",
+        "url": "https://music.163.com/#/song?id=1962340420"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-1962340416",
+    "title": "瑕面舞会",
+    "releaseDate": "2022-07-11",
+    "releaseYear": 2022,
+    "durationSec": 282,
+    "project": {
+      "title": "吾",
+      "type": "ep"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": true
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 瑕面舞会",
+        "url": "https://music.163.com/#/song?id=1962340416"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-1962340423",
+    "title": "FLiGHT",
+    "releaseDate": "2022-07-11",
+    "releaseYear": 2022,
+    "durationSec": 235,
+    "project": {
+      "title": "吾",
+      "type": "ep"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": true
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — FLiGHT",
+        "url": "https://music.163.com/#/song?id=1962340423"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-1967164201",
+    "title": "唯我•念",
+    "aliases": [
+      "《一念永恒》动画传承篇片尾曲"
+    ],
+    "releaseDate": "2022-07-19",
+    "releaseYear": 2022,
+    "durationSec": 234,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 唯我•念",
+        "url": "https://music.163.com/#/song?id=1967164201"
+      }
+    ]
+  },
+  {
+    "id": "netease-1971763561",
+    "title": "年轻的战场",
+    "releaseDate": "2022-08-13",
+    "releaseYear": 2022,
+    "durationSec": 259,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 年轻的战场",
+        "url": "https://music.163.com/#/song?id=1971763561"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-1985094440",
+    "title": "寻人启事",
+    "releaseDate": "2022-09-26",
+    "releaseYear": 2022,
+    "durationSec": 250,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 寻人启事",
+        "url": "https://music.163.com/#/song?id=1985094440"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-1988202931",
+    "title": "白鸽 (新版)",
+    "releaseDate": "2022-10-02",
+    "releaseYear": 2022,
+    "durationSec": 210,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 白鸽 (新版)",
+        "url": "https://music.163.com/#/song?id=1988202931"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-1988458200",
+    "title": "遨游在月亮上歌唱",
+    "releaseDate": "2022-10-12",
+    "releaseYear": 2022,
+    "durationSec": 223,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 遨游在月亮上歌唱",
+        "url": "https://music.163.com/#/song?id=1988458200"
+      }
+    ],
+    "aliases": [
+      "遨游在月亮上歌唱 (对唱版)"
+    ]
+  },
+  {
+    "id": "netease-1988527367",
+    "title": "I'll Carry On",
+    "releaseDate": "2022-10-12",
+    "releaseYear": 2022,
+    "durationSec": 236,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "黄霄雲"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — I'll Carry On",
+        "url": "https://music.163.com/#/song?id=1988527367"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-1996832929",
+    "title": "栩栩",
+    "releaseDate": "2022-11-11",
+    "releaseYear": 2022,
+    "durationSec": 250,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 栩栩",
+        "url": "https://music.163.com/#/song?id=1996832929"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-1998614280",
+    "title": "经年",
+    "aliases": [
+      "电视剧《卿卿日常》片尾曲"
+    ],
+    "releaseDate": "2022-11-14",
+    "releaseYear": 2022,
+    "durationSec": 195,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 经年",
+        "url": "https://music.163.com/#/song?id=1998614280"
+      }
+    ]
+  },
+  {
+    "id": "netease-2016688503",
+    "title": "是妈妈是女儿",
+    "releaseDate": "2023-01-22",
+    "releaseYear": 2023,
+    "durationSec": 375,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "黄绮珊"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 是妈妈是女儿",
+        "url": "https://music.163.com/#/song?id=2016688503"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2022122689",
+    "title": "微光",
+    "aliases": [
+      "《2023美好中国新歌会》主题曲",
+      "微光 (合唱版)"
+    ],
+    "releaseDate": "2023-02-13",
+    "releaseYear": 2023,
+    "durationSec": 230,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "赵骏"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 微光 (合唱版)",
+        "url": "https://music.163.com/#/song?id=2022122689"
+      }
+    ]
+  },
+  {
+    "id": "netease-2029370863",
+    "title": "人间好时节",
+    "releaseDate": "2023-03-13",
+    "releaseYear": 2023,
+    "durationSec": 205,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 人间好时节",
+        "url": "https://music.163.com/#/song?id=2029370863"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2032777050",
+    "title": "别为难星星",
+    "releaseDate": "2023-03-24",
+    "releaseYear": 2023,
+    "durationSec": 218,
+    "project": {
+      "title": "0.25",
+      "type": "album"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 别为难星星",
+        "url": "https://music.163.com/#/song?id=2032777050"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2032777023",
+    "title": "倒霉遇上你",
+    "releaseDate": "2023-03-24",
+    "releaseYear": 2023,
+    "durationSec": 197,
+    "project": {
+      "title": "0.25",
+      "type": "album"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "法老"
+    ],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": true
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 倒霉遇上你",
+        "url": "https://music.163.com/#/song?id=2032777023"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2032768368",
+    "title": "回避型依恋者",
+    "releaseDate": "2023-03-24",
+    "releaseYear": 2023,
+    "durationSec": 242,
+    "project": {
+      "title": "0.25",
+      "type": "album"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": true
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 回避型依恋者",
+        "url": "https://music.163.com/#/song?id=2032768368"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2032776983",
+    "title": "鲸",
+    "releaseDate": "2023-03-24",
+    "releaseYear": 2023,
+    "durationSec": 184,
+    "project": {
+      "title": "0.25",
+      "type": "album"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 鲸",
+        "url": "https://music.163.com/#/song?id=2032776983"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2032777843",
+    "title": "旧身份",
+    "releaseDate": "2023-03-24",
+    "releaseYear": 2023,
+    "durationSec": 248,
+    "project": {
+      "title": "0.25",
+      "type": "album"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 旧身份",
+        "url": "https://music.163.com/#/song?id=2032777843"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2032777004",
+    "title": "美式去冰",
+    "releaseDate": "2023-03-24",
+    "releaseYear": 2023,
+    "durationSec": 242,
+    "project": {
+      "title": "0.25",
+      "type": "album"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": true
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 美式去冰",
+        "url": "https://music.163.com/#/song?id=2032777004"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2032777024",
+    "title": "情场现形祭",
+    "releaseDate": "2023-03-24",
+    "releaseYear": 2023,
+    "durationSec": 281,
+    "project": {
+      "title": "0.25",
+      "type": "album"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 情场现形祭",
+        "url": "https://music.163.com/#/song?id=2032777024"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2032768289",
+    "title": "师傅，什么是爱情",
+    "releaseDate": "2023-03-24",
+    "releaseYear": 2023,
+    "durationSec": 196,
+    "project": {
+      "title": "0.25",
+      "type": "album"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": true
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 师傅，什么是爱情",
+        "url": "https://music.163.com/#/song?id=2032768289"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2032777833",
+    "title": "Don't Wanna Be Alone",
+    "releaseDate": "2023-03-24",
+    "releaseYear": 2023,
+    "durationSec": 210,
+    "project": {
+      "title": "0.25",
+      "type": "album"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Don't Wanna Be Alone",
+        "url": "https://music.163.com/#/song?id=2032777833"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2032777008",
+    "title": "Emerald City",
+    "releaseDate": "2023-03-24",
+    "releaseYear": 2023,
+    "durationSec": 247,
+    "project": {
+      "title": "0.25",
+      "type": "album"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": true
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Emerald City",
+        "url": "https://music.163.com/#/song?id=2032777008"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2041758107",
+    "title": "Flying High",
+    "releaseDate": "2023-04-23",
+    "releaseYear": 2023,
+    "durationSec": 222,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "路滨琪"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Flying High",
+        "url": "https://music.163.com/#/song?id=2041758107"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2047080934",
+    "title": "我多想拥抱你",
+    "releaseDate": "2023-05-13",
+    "releaseYear": 2023,
+    "durationSec": 204,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 我多想拥抱你",
+        "url": "https://music.163.com/#/song?id=2047080934"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2048295220",
+    "title": "微光星海",
+    "releaseDate": "2023-05-16",
+    "releaseYear": 2023,
+    "durationSec": 234,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 微光星海",
+        "url": "https://music.163.com/#/song?id=2048295220"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2055273511",
+    "title": "I Always Love You",
+    "aliases": [
+      "影视剧《你给我的喜欢》片尾主题曲"
+    ],
+    "releaseDate": "2023-06-19",
+    "releaseYear": 2023,
+    "durationSec": 243,
+    "project": {
+      "title": "你给我的喜欢 影视原声带",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — I Always Love You",
+        "url": "https://music.163.com/#/song?id=2055273511"
+      }
+    ]
+  },
+  {
+    "id": "netease-2063481117",
+    "title": "我们终将到达",
+    "aliases": [
+      "电视剧《追光的日子》插曲"
+    ],
+    "releaseDate": "2023-07-05",
+    "releaseYear": 2023,
+    "durationSec": 254,
+    "project": {
+      "title": "追光的日子 影视原声专辑",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 我们终将到达",
+        "url": "https://music.163.com/#/song?id=2063481117"
+      }
+    ]
+  },
+  {
+    "id": "netease-2072257974",
+    "title": "同爱同在 (舞曲版)",
+    "releaseDate": "2023-07-06",
+    "releaseYear": 2023,
+    "durationSec": 223,
+    "project": {
+      "title": "杭州亚运会歌曲集",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 同爱同在 (舞曲版)",
+        "url": "https://music.163.com/#/song?id=2072257974"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2061703966",
+    "title": "Ulike",
+    "releaseDate": "2023-07-08",
+    "releaseYear": 2023,
+    "durationSec": 160,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Ulike",
+        "url": "https://music.163.com/#/song?id=2061703966"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2060775002",
+    "title": "真爱万岁",
+    "aliases": [
+      "《HEAVEN》官方中文版"
+    ],
+    "releaseDate": "2023-07-18",
+    "releaseYear": 2023,
+    "durationSec": 220,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 真爱万岁",
+        "url": "https://music.163.com/#/song?id=2060775002"
+      }
+    ]
+  },
+  {
+    "id": "netease-2071237846",
+    "title": "如火",
+    "releaseDate": "2023-08-01",
+    "releaseYear": 2023,
+    "durationSec": 203,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 如火",
+        "url": "https://music.163.com/#/song?id=2071237846"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2075488111",
+    "title": "别再怕",
+    "releaseDate": "2023-08-11",
+    "releaseYear": 2023,
+    "durationSec": 280,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 别再怕",
+        "url": "https://music.163.com/#/song?id=2075488111"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2078319149",
+    "title": "有风",
+    "releaseDate": "2023-08-30",
+    "releaseYear": 2023,
+    "durationSec": 230,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 有风",
+        "url": "https://music.163.com/#/song?id=2078319149"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2083148889",
+    "title": "等风吹来",
+    "releaseDate": "2023-09-15",
+    "releaseYear": 2023,
+    "durationSec": 207,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 等风吹来",
+        "url": "https://music.163.com/#/song?id=2083148889"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2083484030",
+    "title": "岂敢",
+    "releaseDate": "2023-09-16",
+    "releaseYear": 2023,
+    "durationSec": 219,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "李常超 (Lao乾妈)"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 岂敢",
+        "url": "https://music.163.com/#/song?id=2083484030"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2099552083",
+    "title": "乐游原",
+    "releaseDate": "2023-11-08",
+    "releaseYear": 2023,
+    "durationSec": 208,
+    "project": {
+      "title": "乐游原 影视原声大碟",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 乐游原",
+        "url": "https://music.163.com/#/song?id=2099552083"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2114436702",
+    "title": "一眼",
+    "releaseDate": "2024-01-07",
+    "releaseYear": 2024,
+    "durationSec": 209,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 一眼",
+        "url": "https://music.163.com/#/song?id=2114436702"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2122607089",
+    "title": "听你诉说",
+    "releaseDate": "2024-01-10",
+    "releaseYear": 2024,
+    "durationSec": 244,
+    "project": {
+      "title": "我们的翻译官 影视原声带",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "米卡"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 听你诉说",
+        "url": "https://music.163.com/#/song?id=2122607089"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2621643993",
+    "title": "猜",
+    "aliases": [
+      "猜-《热辣滚烫》电影热辣心动曲"
+    ],
+    "releaseDate": "2024-02-13",
+    "releaseYear": 2024,
+    "durationSec": 249,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 猜",
+        "url": "https://music.163.com/#/song?id=2621643993"
+      }
+    ]
+  },
+  {
+    "id": "netease-2141590772",
+    "title": "荆棘中孤生的花",
+    "aliases": [
+      "影视剧《惜花芷》主题曲"
+    ],
+    "releaseDate": "2024-04-01",
+    "releaseYear": 2024,
+    "durationSec": 185,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 荆棘中孤生的花",
+        "url": "https://music.163.com/#/song?id=2141590772"
+      }
+    ]
+  },
+  {
+    "id": "netease-2141842558",
+    "title": "一直很安静",
+    "aliases": [
+      "电视剧《又见逍遥》插曲"
+    ],
+    "releaseDate": "2024-04-16",
+    "releaseYear": 2024,
+    "durationSec": 243,
+    "project": {
+      "title": "又见逍遥 仙剑记忆OST原声带",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 一直很安静",
+        "url": "https://music.163.com/#/song?id=2141842558"
+      }
+    ]
+  },
+  {
+    "id": "netease-2147140935",
+    "title": "烬火 Emberfire",
+    "aliases": [
+      "《原神》动画短片「烬中歌」插曲"
+    ],
+    "releaseDate": "2024-04-17",
+    "releaseYear": 2024,
+    "durationSec": 171,
+    "project": {
+      "title": "原神-「烬火 Emberfire」游戏原声EP专辑",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "HOYO-MiX"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 烬火 Emberfire",
+        "url": "https://music.163.com/#/song?id=2147140935"
+      }
+    ]
+  },
+  {
+    "id": "netease-2149854767",
+    "title": "放下你手中的那片花瓣",
+    "releaseDate": "2024-04-22",
+    "releaseYear": 2024,
+    "durationSec": 228,
+    "project": {
+      "title": "透过墨镜直视太阳",
+      "type": "ep"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": true
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 放下你手中的那片花瓣",
+        "url": "https://music.163.com/#/song?id=2149854767"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2149854765",
+    "title": "分裂前的时刻",
+    "releaseDate": "2024-04-22",
+    "releaseYear": 2024,
+    "durationSec": 241,
+    "project": {
+      "title": "透过墨镜直视太阳",
+      "type": "ep"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": true
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 分裂前的时刻",
+        "url": "https://music.163.com/#/song?id=2149854765"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2147076222",
+    "title": "净含量750毫升",
+    "releaseDate": "2024-04-22",
+    "releaseYear": 2024,
+    "durationSec": 350,
+    "project": {
+      "title": "透过墨镜直视太阳",
+      "type": "ep"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": true
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 净含量750毫升",
+        "url": "https://music.163.com/#/song?id=2147076222"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2149854766",
+    "title": "What If",
+    "releaseDate": "2024-04-22",
+    "releaseYear": 2024,
+    "durationSec": 259,
+    "project": {
+      "title": "透过墨镜直视太阳",
+      "type": "ep"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": true
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — What If",
+        "url": "https://music.163.com/#/song?id=2149854766"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2602348593",
+    "title": "从我的世界消失吧",
+    "releaseDate": "2024-06-28",
+    "releaseYear": 2024,
+    "durationSec": 149,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 从我的世界消失吧",
+        "url": "https://music.163.com/#/song?id=2602348593"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2604247332",
+    "title": "爱丽希梦游仙境",
+    "releaseDate": "2024-07-03",
+    "releaseYear": 2024,
+    "durationSec": 194,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 爱丽希梦游仙境",
+        "url": "https://music.163.com/#/song?id=2604247332"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2685895423",
+    "title": "华年不负",
+    "aliases": [
+      "《度华年》电视剧主题曲"
+    ],
+    "releaseDate": "2024-07-03",
+    "releaseYear": 2024,
+    "durationSec": 210,
+    "project": {
+      "title": "度华年 电视剧原声带",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 华年不负",
+        "url": "https://music.163.com/#/song?id=2685895423"
+      }
+    ]
+  },
+  {
+    "id": "netease-2606594820",
+    "title": "最好的朋友",
+    "aliases": [
+      "电影《沙漏》片尾主题曲"
+    ],
+    "releaseDate": "2024-07-10",
+    "releaseYear": 2024,
+    "durationSec": 311,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 最好的朋友",
+        "url": "https://music.163.com/#/song?id=2606594820"
+      }
+    ]
+  },
+  {
+    "id": "netease-2604551926",
+    "title": "You are the only way",
+    "aliases": [
+      "电影《欢迎来到我身边》片尾曲"
+    ],
+    "releaseDate": "2024-07-10",
+    "releaseYear": 2024,
+    "durationSec": 230,
+    "project": {
+      "title": "电影《欢迎来到我身边》原声专辑",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — You are the only way",
+        "url": "https://music.163.com/#/song?id=2604551926"
+      }
+    ]
+  },
+  {
+    "id": "netease-2608740513",
+    "title": "白裙子黑童话",
+    "releaseDate": "2024-07-17",
+    "releaseYear": 2024,
+    "durationSec": 242,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 白裙子黑童话",
+        "url": "https://music.163.com/#/song?id=2608740513"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2612658169",
+    "title": "为什么乌鸦会像写字台",
+    "releaseDate": "2024-07-30",
+    "releaseYear": 2024,
+    "durationSec": 234,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 为什么乌鸦会像写字台",
+        "url": "https://music.163.com/#/song?id=2612658169"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2614954255",
+    "title": "Things You Said",
+    "aliases": [
+      "Things You Said (ft.希林娜依·高)"
+    ],
+    "releaseDate": "2024-08-08",
+    "releaseYear": 2024,
+    "durationSec": 235,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "Cody Fry"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Things You Said",
+        "url": "https://music.163.com/#/song?id=2614954255"
+      }
+    ]
+  },
+  {
+    "id": "netease-2618769507",
+    "title": "猝不及防",
+    "releaseDate": "2024-08-19",
+    "releaseYear": 2024,
+    "durationSec": 274,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "黄子弘凡"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 猝不及防",
+        "url": "https://music.163.com/#/song?id=2618769507"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2618769506",
+    "title": "如果我不是我",
+    "releaseDate": "2024-08-19",
+    "releaseYear": 2024,
+    "durationSec": 284,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "黄子弘凡"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 如果我不是我",
+        "url": "https://music.163.com/#/song?id=2618769506"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2618769504",
+    "title": "我要你",
+    "releaseDate": "2024-08-19",
+    "releaseYear": 2024,
+    "durationSec": 263,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "黄子弘凡"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 我要你",
+        "url": "https://music.163.com/#/song?id=2618769504"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2618050216",
+    "title": "一湾潮起",
+    "releaseDate": "2024-08-19",
+    "releaseYear": 2024,
+    "durationSec": 192,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 一湾潮起",
+        "url": "https://music.163.com/#/song?id=2618050216"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2625779441",
+    "title": "爱是唯一的选择 (舒楠监制 官方正式版) 中文版",
+    "releaseDate": "2024-09-10",
+    "releaseYear": 2024,
+    "durationSec": 271,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 爱是唯一的选择 (舒楠监制 官方正式版) 中文版",
+        "url": "https://music.163.com/#/song?id=2625779441"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2625779440",
+    "title": "Loving you is my only truth (舒楠监制 官方正式版) 英文版",
+    "releaseDate": "2024-09-10",
+    "releaseYear": 2024,
+    "durationSec": 270,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Loving you is my only truth (舒楠监制 官方正式版) 英文版",
+        "url": "https://music.163.com/#/song?id=2625779440"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2628352177",
+    "title": "誓言",
+    "aliases": [
+      "影视剧《流水迢迢》插曲"
+    ],
+    "releaseDate": "2024-09-16",
+    "releaseYear": 2024,
+    "durationSec": 243,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 誓言",
+        "url": "https://music.163.com/#/song?id=2628352177"
+      }
+    ]
+  },
+  {
+    "id": "netease-2637722853",
+    "title": "焰",
+    "aliases": [
+      "电视剧《春花焰》浴火重生向片头曲"
+    ],
+    "releaseDate": "2024-10-16",
+    "releaseYear": 2024,
+    "durationSec": 235,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 焰",
+        "url": "https://music.163.com/#/song?id=2637722853"
+      }
+    ]
+  },
+  {
+    "id": "netease-2639712049",
+    "title": "契约之船",
+    "aliases": [
+      "手游《天涯明月刀》不朽者门派主题曲"
+    ],
+    "releaseDate": "2024-10-23",
+    "releaseYear": 2024,
+    "durationSec": 214,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "天涯明月刀"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 契约之船",
+        "url": "https://music.163.com/#/song?id=2639712049"
+      }
+    ]
+  },
+  {
+    "id": "netease-2655879669",
+    "title": "逐梦",
+    "releaseDate": "2024-12-16",
+    "releaseYear": 2024,
+    "durationSec": 221,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 逐梦",
+        "url": "https://music.163.com/#/song?id=2655879669"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2657792527",
+    "title": "永夜之前",
+    "aliases": [
+      "影视剧《永夜星河》系统攻略曲"
+    ],
+    "releaseDate": "2024-12-17",
+    "releaseYear": 2024,
+    "durationSec": 223,
+    "project": {
+      "title": "永夜星河 影视原声大碟",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 永夜之前",
+        "url": "https://music.163.com/#/song?id=2657792527"
+      }
+    ]
+  },
+  {
+    "id": "netease-2657778763",
+    "title": "七子之歌 (25周年重置版)",
+    "aliases": [
+      "电影《多想和你再见一面》澳门回归25周年特别重置版"
+    ],
+    "releaseDate": "2024-12-19",
+    "releaseYear": 2024,
+    "durationSec": 263,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 七子之歌 (25周年重置版)",
+        "url": "https://music.163.com/#/song?id=2657778763"
+      }
+    ]
+  },
+  {
+    "id": "netease-2668237716",
+    "title": "世间离愁",
+    "aliases": [
+      "电视剧《相思令》片头曲"
+    ],
+    "releaseDate": "2025-01-22",
+    "releaseYear": 2025,
+    "durationSec": 269,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 世间离愁",
+        "url": "https://music.163.com/#/song?id=2668237716"
+      }
+    ]
+  },
+  {
+    "id": "netease-2683613051",
+    "title": "从心底祈愿",
+    "aliases": [
+      "从心底祈愿（迪士尼《白雪公主》中文主题曲）"
+    ],
+    "releaseDate": "2025-03-11",
+    "releaseYear": 2025,
+    "durationSec": 292,
+    "project": {
+      "title": "从心底祈愿 (白雪公主/中文主题曲)",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 从心底祈愿",
+        "url": "https://music.163.com/#/song?id=2683613051"
+      }
+    ]
+  },
+  {
+    "id": "netease-2700707652",
+    "title": "寻光",
+    "releaseDate": "2025-05-03",
+    "releaseYear": 2025,
+    "durationSec": 228,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 寻光",
+        "url": "https://music.163.com/#/song?id=2700707652"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2706280575",
+    "title": "须尽欢",
+    "aliases": [
+      "《折腰》电视剧誓爱曲"
+    ],
+    "releaseDate": "2025-05-16",
+    "releaseYear": 2025,
+    "durationSec": 239,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 须尽欢",
+        "url": "https://music.163.com/#/song?id=2706280575"
+      }
+    ]
+  },
+  {
+    "id": "netease-2709346097",
+    "title": "风月局中",
+    "aliases": [
+      "《藏海传》电视剧旖旎纯音"
+    ],
+    "releaseDate": "2025-05-27",
+    "releaseYear": 2025,
+    "durationSec": 215,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 风月局中",
+        "url": "https://music.163.com/#/song?id=2709346097"
+      }
+    ]
+  },
+  {
+    "id": "netease-2726287854",
+    "title": "Dark Dream",
+    "aliases": [
+      "《诡秘之主小丑篇》动画片尾曲"
+    ],
+    "releaseDate": "2025-06-27",
+    "releaseYear": 2025,
+    "durationSec": 206,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Dark Dream",
+        "url": "https://music.163.com/#/song?id=2726287854"
+      }
+    ]
+  },
+  {
+    "id": "netease-2724396840",
+    "title": "是你在心底",
+    "aliases": [
+      "《朝雪录》影视剧插曲"
+    ],
+    "releaseDate": "2025-07-10",
+    "releaseYear": 2025,
+    "durationSec": 232,
+    "project": {
+      "title": "朝雪录 影视原声带",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 是你在心底",
+        "url": "https://music.163.com/#/song?id=2724396840"
+      }
+    ]
+  },
+  {
+    "id": "netease-2724777438",
+    "title": "颠倒",
+    "releaseDate": "2025-07-14",
+    "releaseYear": 2025,
+    "durationSec": 254,
+    "project": {
+      "title": "她眼中的月亮",
+      "type": "album"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 颠倒",
+        "url": "https://music.163.com/#/song?id=2724777438"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2724774794",
+    "title": "來生之前",
+    "releaseDate": "2025-07-14",
+    "releaseYear": 2025,
+    "durationSec": 232,
+    "project": {
+      "title": "她眼中的月亮",
+      "type": "album"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 來生之前",
+        "url": "https://music.163.com/#/song?id=2724774794"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2724777463",
+    "title": "少有人走的路",
+    "releaseDate": "2025-07-14",
+    "releaseYear": 2025,
+    "durationSec": 180,
+    "project": {
+      "title": "她眼中的月亮",
+      "type": "album"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 少有人走的路",
+        "url": "https://music.163.com/#/song?id=2724777463"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2724774785",
+    "title": "我可以",
+    "releaseDate": "2025-07-14",
+    "releaseYear": 2025,
+    "durationSec": 284,
+    "project": {
+      "title": "她眼中的月亮",
+      "type": "album"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 我可以",
+        "url": "https://music.163.com/#/song?id=2724774785"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2724774796",
+    "title": "于是我这样生活",
+    "releaseDate": "2025-07-14",
+    "releaseYear": 2025,
+    "durationSec": 214,
+    "project": {
+      "title": "她眼中的月亮",
+      "type": "album"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 于是我这样生活",
+        "url": "https://music.163.com/#/song?id=2724774796"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2724774800",
+    "title": "Solar",
+    "releaseDate": "2025-07-14",
+    "releaseYear": 2025,
+    "durationSec": 200,
+    "project": {
+      "title": "她眼中的月亮",
+      "type": "album"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Solar",
+        "url": "https://music.163.com/#/song?id=2724774800"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2725874349",
+    "title": "从前那个女孩",
+    "releaseDate": "2025-07-16",
+    "releaseYear": 2025,
+    "durationSec": 256,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "黄绮珊"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 从前那个女孩",
+        "url": "https://music.163.com/#/song?id=2725874349"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-2745410177",
+    "title": "黑与白",
+    "aliases": [
+      "影视剧《灼灼韶华》哀婉曲"
+    ],
+    "releaseDate": "2025-07-24",
+    "releaseYear": 2025,
+    "durationSec": 200,
+    "project": {
+      "title": "《灼灼韶华》影视原声带",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 黑与白",
+        "url": "https://music.163.com/#/song?id=2745410177"
+      }
+    ]
+  },
+  {
+    "id": "netease-2733392297",
+    "title": "月如歌",
+    "aliases": [
+      "《锦月如歌》影视剧炽热奔赴曲"
+    ],
+    "releaseDate": "2025-08-13",
+    "releaseYear": 2025,
+    "durationSec": 190,
+    "project": {
+      "title": "锦月如歌 影视原声带",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 月如歌",
+        "url": "https://music.163.com/#/song?id=2733392297"
+      }
+    ]
+  },
+  {
+    "id": "netease-2743501284",
+    "title": "盛世天下",
+    "aliases": [
+      "互动影视《盛世天下》同名主题曲"
+    ],
+    "releaseDate": "2025-09-08",
+    "releaseYear": 2025,
+    "durationSec": 229,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 盛世天下",
+        "url": "https://music.163.com/#/song?id=2743501284"
+      }
+    ]
+  },
+  {
+    "id": "netease-2753844164",
+    "title": "红尘客",
+    "aliases": [
+      "《宴遇永安》电视剧主题曲"
+    ],
+    "releaseDate": "2025-10-12",
+    "releaseYear": 2025,
+    "durationSec": 264,
+    "project": {
+      "title": "宴遇永安 电视剧原声音乐专辑",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 红尘客",
+        "url": "https://music.163.com/#/song?id=2753844164"
+      }
+    ]
+  },
+  {
+    "id": "netease-3312989547",
+    "title": "即兴演出",
+    "aliases": [
+      "《即兴谋杀》电影片尾曲"
+    ],
+    "releaseDate": "2025-10-30",
+    "releaseYear": 2025,
+    "durationSec": 230,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 即兴演出",
+        "url": "https://music.163.com/#/song?id=3312989547"
+      }
+    ]
+  },
+  {
+    "id": "netease-2749451142",
+    "title": "我们的世界晴空万里",
+    "aliases": [
+      "《红石榴餐厅》电视剧推广曲/主题曲"
+    ],
+    "releaseDate": "2025-11-05",
+    "releaseYear": 2025,
+    "durationSec": 284,
+    "project": {
+      "title": "红石榴餐厅 影视原声带",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 我们的世界晴空万里",
+        "url": "https://music.163.com/#/song?id=2749451142"
+      }
+    ]
+  },
+  {
+    "id": "netease-3317338375",
+    "title": "平凡的力量",
+    "aliases": [
+      "十五运会和残特奥会助力曲"
+    ],
+    "releaseDate": "2025-11-10",
+    "releaseYear": 2025,
+    "durationSec": 184,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 平凡的力量",
+        "url": "https://music.163.com/#/song?id=3317338375"
+      }
+    ]
+  },
+  {
+    "id": "netease-3329320583",
+    "title": "破茧（COUNTER TO GLORY）",
+    "aliases": [
+      "2025永劫无间世界冠军赛总决赛主题曲"
+    ],
+    "releaseDate": "2025-12-17",
+    "releaseYear": 2025,
+    "durationSec": 201,
+    "project": {
+      "title": "2025永劫无间世界冠军赛总决赛主题曲",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "永劫无间"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 破茧（COUNTER TO GLORY）",
+        "url": "https://music.163.com/#/song?id=3329320583"
+      }
+    ]
+  },
+  {
+    "id": "netease-3332314152",
+    "title": "时光的暴风雨",
+    "aliases": [
+      "《哑舍》电视剧主题曲"
+    ],
+    "releaseDate": "2025-12-30",
+    "releaseYear": 2025,
+    "durationSec": 235,
+    "project": {
+      "title": "哑舍 电视剧原声音乐专辑",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 时光的暴风雨",
+        "url": "https://music.163.com/#/song?id=3332314152"
+      }
+    ]
+  },
+  {
+    "id": "netease-3340715200",
+    "title": "阿婆说",
+    "releaseDate": "2026-01-23",
+    "releaseYear": 2026,
+    "durationSec": 269,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 阿婆说",
+        "url": "https://music.163.com/#/song?id=3340715200"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-3343570057",
+    "title": "在一起 就是家",
+    "releaseDate": "2026-01-29",
+    "releaseYear": 2026,
+    "durationSec": 187,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "麦当劳"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 在一起 就是家",
+        "url": "https://music.163.com/#/song?id=3343570057"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-3347209551",
+    "title": "炽光",
+    "releaseDate": "2026-02-07",
+    "releaseYear": 2026,
+    "durationSec": 229,
+    "project": {
+      "title": "成何体统 影视原声带",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 炽光",
+        "url": "https://music.163.com/#/song?id=3347209551"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-3366333467",
+    "title": "重生",
+    "aliases": [
+      "《冰湖重生》影视剧片尾曲"
+    ],
+    "releaseDate": "2026-04-10",
+    "releaseYear": 2026,
+    "durationSec": 280,
+    "project": {
+      "title": "冰湖重生 影视剧原声带",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 重生",
+        "url": "https://music.163.com/#/song?id=3366333467"
+      }
+    ]
+  },
+  {
+    "id": "netease-3372426255",
+    "title": "身旁的远方",
+    "aliases": [
+      "《方圆八百米》影视剧主题曲"
+    ],
+    "releaseDate": "2026-04-21",
+    "releaseYear": 2026,
+    "durationSec": 237,
+    "project": {
+      "title": "方圆八百米 影视剧原声音乐专辑",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 身旁的远方",
+        "url": "https://music.163.com/#/song?id=3372426255"
+      }
+    ]
+  },
+  {
+    "id": "netease-3373873321",
+    "title": "我开始喜欢自己了",
+    "aliases": [
+      "《三心两意》电影片尾曲"
+    ],
+    "releaseDate": "2026-04-22",
+    "releaseYear": 2026,
+    "durationSec": 256,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 我开始喜欢自己了",
+        "url": "https://music.163.com/#/song?id=3373873321"
+      }
+    ]
+  },
+  {
+    "id": "netease-3376038199",
+    "title": "逐光",
+    "releaseDate": "2026-04-30",
+    "releaseYear": 2026,
+    "durationSec": 149,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "张远"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 逐光",
+        "url": "https://music.163.com/#/song?id=3376038199"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-3378802220",
+    "title": "岁岁朝夕",
+    "aliases": [
+      "《良陈美锦》电视剧顾锦朝情感曲"
+    ],
+    "releaseDate": "2026-05-03",
+    "releaseYear": 2026,
+    "durationSec": 257,
+    "project": {
+      "title": "良陈美锦 影视原声带",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 岁岁朝夕",
+        "url": "https://music.163.com/#/song?id=3378802220"
+      }
+    ]
+  },
+  {
+    "id": "netease-3378781674",
+    "title": "Stay With Me",
+    "aliases": [
+      "《爱情没有神话》电视剧插曲"
+    ],
+    "releaseDate": "2026-05-05",
+    "releaseYear": 2026,
+    "durationSec": 240,
+    "project": {
+      "title": "爱情没有神话 电视剧原声带",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Stay With Me",
+        "url": "https://music.163.com/#/song?id=3378781674"
+      }
+    ]
+  },
+  {
+    "id": "netease-3382219379",
+    "title": "碎梦为刃",
+    "aliases": [
+      "《雨霖铃》电视剧插曲"
+    ],
+    "releaseDate": "2026-05-21",
+    "releaseYear": 2026,
+    "durationSec": 226,
+    "project": {
+      "title": "雨霖铃 电视剧原声带",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 碎梦为刃",
+        "url": "https://music.163.com/#/song?id=3382219379"
+      }
+    ]
+  },
+  {
+    "id": "netease-3385887913",
+    "title": "心望",
+    "aliases": [
+      "《家业》电视剧心墙难越曲"
+    ],
+    "releaseDate": "2026-05-22",
+    "releaseYear": 2026,
+    "durationSec": 224,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 心望",
+        "url": "https://music.163.com/#/song?id=3385887913"
+      }
+    ]
+  },
+  {
+    "id": "netease-3399420799",
+    "title": "甜敌",
+    "aliases": [
+      "《千香》网剧倾心曲"
+    ],
+    "releaseDate": "2026-07-14",
+    "releaseYear": 2026,
+    "durationSec": 228,
+    "project": {
+      "title": "千香 影视剧原声音乐专辑",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 甜敌",
+        "url": "https://music.163.com/#/song?id=3399420799"
+      }
+    ]
+  },
+  {
+    "id": "netease-3406580244",
+    "title": "寻鲸记",
+    "aliases": [
+      "《心动小镇》二周年寻鲸潮流季主题曲"
+    ],
+    "releaseDate": "2026-07-16",
+    "releaseYear": 2026,
+    "durationSec": 260,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 寻鲸记",
+        "url": "https://music.163.com/#/song?id=3406580244"
+      }
+    ]
+  },
+  {
+    "id": "netease-3406579690",
+    "title": "Call of Whales",
+    "aliases": [
+      "Theme Song for Heartopia's Call of Whales Fashionwave"
+    ],
+    "releaseDate": "2026-07-16",
+    "releaseYear": 2026,
+    "durationSec": 260,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Call of Whales",
+        "url": "https://music.163.com/#/song?id=3406579690"
+      }
+    ]
+  },
+  {
+    "id": "netease-3409362969",
+    "title": "Go 4 It! 就在此刻",
+    "releaseDate": "2026-07-23",
+    "releaseYear": 2026,
+    "durationSec": 170,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "LABUBU"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Go 4 It! 就在此刻",
+        "url": "https://music.163.com/#/song?id=3409362969"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-3409829134",
+    "title": "笑脸",
+    "releaseDate": "2026-07-26",
+    "releaseYear": 2026,
+    "durationSec": 248,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "JA符龙飞"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 笑脸",
+        "url": "https://music.163.com/#/song?id=3409829134"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-3404873738",
+    "title": "花影",
+    "aliases": [
+      "《百花杀》影视剧插曲"
+    ],
+    "releaseDate": "2026-07-27",
+    "releaseYear": 2026,
+    "durationSec": 312,
+    "project": {
+      "title": "百花杀 原声音乐专辑",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 花影",
+        "url": "https://music.163.com/#/song?id=3404873738"
+      }
+    ]
+  },
+  {
+    "id": "netease-3407868645",
+    "title": "Glue",
+    "releaseDate": "2026-07-30",
+    "releaseYear": 2026,
+    "durationSec": 263,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": true
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Glue",
+        "url": "https://music.163.com/#/song?id=3407868645"
+      }
+    ],
+    "aliases": []
+  },
+  {
+    "id": "netease-506083889",
+    "title": "男孩",
+    "aliases": [
+      "希林娜依・高胜出",
+      "男孩 (Live)"
+    ],
+    "releaseDate": "2017-09-14",
+    "releaseYear": 2017,
+    "durationSec": 280,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "梁博"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 男孩",
+        "url": "https://music.163.com/#/song?id=506083889"
+      }
+    ]
+  },
+  {
+    "id": "netease-506083892",
+    "title": "她来听我的",
+    "aliases": [
+      "希林娜依・高淘汰",
+      "她来听我的演唱会 (Live)",
+      "她来听我的演唱会"
+    ],
+    "releaseDate": "2017-09-14",
+    "releaseYear": 2017,
+    "durationSec": 286,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 她来听我的演唱会",
+        "url": "https://music.163.com/#/song?id=506083892"
+      }
+    ]
+  },
+  {
+    "id": "netease-1446615887",
+    "title": "喜欢你",
+    "aliases": [
+      "喜欢你 (Live)"
+    ],
+    "releaseDate": "2020-05-01",
+    "releaseYear": 2020,
+    "durationSec": 77,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 喜欢你",
+        "url": "https://music.163.com/#/song?id=1446615887"
+      }
+    ]
+  },
+  {
+    "id": "netease-1446615883",
+    "title": "Someone You Loved",
+    "aliases": [
+      "Someone You Loved (Live)"
+    ],
+    "releaseDate": "2020-05-01",
+    "releaseYear": 2020,
+    "durationSec": 79,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Someone You Loved",
+        "url": "https://music.163.com/#/song?id=1446615883"
+      }
+    ]
+  },
+  {
+    "id": "netease-1486511302",
+    "title": "为你我受冷风吹",
+    "aliases": [
+      "为你我受冷风吹 (Live)"
+    ],
+    "releaseDate": "2020-10-10",
+    "releaseYear": 2020,
+    "durationSec": 246,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "张信哲"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 为你我受冷风吹",
+        "url": "https://music.163.com/#/song?id=1486511302"
+      }
+    ]
+  },
+  {
+    "id": "netease-1488266533",
+    "title": "母系社会",
+    "aliases": [
+      "母系社会 (Live)"
+    ],
+    "releaseDate": "2020-10-17",
+    "releaseYear": 2020,
+    "durationSec": 236,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "容祖儿"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 母系社会",
+        "url": "https://music.163.com/#/song?id=1488266533"
+      }
+    ]
+  },
+  {
+    "id": "netease-1488266525",
+    "title": "小小",
+    "aliases": [
+      "小小 (Live)"
+    ],
+    "releaseDate": "2020-10-17",
+    "releaseYear": 2020,
+    "durationSec": 288,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "容祖儿"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 小小",
+        "url": "https://music.163.com/#/song?id=1488266525"
+      }
+    ]
+  },
+  {
+    "id": "netease-1501212717",
+    "title": "百年孤寂",
+    "aliases": [
+      "百年孤寂 (Live)"
+    ],
+    "releaseDate": "2020-12-05",
+    "releaseYear": 2020,
+    "durationSec": 297,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "容祖儿"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 百年孤寂",
+        "url": "https://music.163.com/#/song?id=1501212717"
+      }
+    ]
+  },
+  {
+    "id": "netease-1804328735",
+    "title": "浮夸",
+    "aliases": [
+      "浮夸 (Live)"
+    ],
+    "releaseDate": "2020-12-12",
+    "releaseYear": 2020,
+    "durationSec": 282,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "容祖儿"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 浮夸",
+        "url": "https://music.163.com/#/song?id=1804328735"
+      }
+    ]
+  },
+  {
+    "id": "netease-1945875466",
+    "title": "铿锵玫瑰",
+    "aliases": [
+      "铿锵玫瑰 (Live)"
+    ],
+    "releaseDate": "2022-03-10",
+    "releaseYear": 2022,
+    "durationSec": 289,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "吉克隽逸"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 铿锵玫瑰",
+        "url": "https://music.163.com/#/song?id=1945875466"
+      }
+    ]
+  },
+  {
+    "id": "netease-1945875468",
+    "title": "每天爱你多一些",
+    "aliases": [
+      "每天爱你多一些 (Live)"
+    ],
+    "releaseDate": "2022-03-10",
+    "releaseYear": 2022,
+    "durationSec": 279,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "胡彦斌"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 每天爱你多一些",
+        "url": "https://music.163.com/#/song?id=1945875468"
+      }
+    ]
+  },
+  {
+    "id": "netease-1945875456",
+    "title": "唯一",
+    "aliases": [
+      "唯一 (Live)"
+    ],
+    "releaseDate": "2022-03-18",
+    "releaseYear": 2022,
+    "durationSec": 291,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "胡海泉"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 唯一",
+        "url": "https://music.163.com/#/song?id=1945875456"
+      }
+    ]
+  },
+  {
+    "id": "netease-1945875452",
+    "title": "骁",
+    "aliases": [
+      "骁 (Live)"
+    ],
+    "releaseDate": "2022-03-18",
+    "releaseYear": 2022,
+    "durationSec": 218,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "梁龙"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 骁",
+        "url": "https://music.163.com/#/song?id=1945875452"
+      }
+    ]
+  },
+  {
+    "id": "netease-1945878287",
+    "title": "木兰星",
+    "aliases": [
+      "木兰星 (Live)"
+    ],
+    "releaseDate": "2022-03-31",
+    "releaseYear": 2022,
+    "durationSec": 312,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "阿云嘎"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 木兰星",
+        "url": "https://music.163.com/#/song?id=1945878287"
+      }
+    ]
+  },
+  {
+    "id": "netease-2016388265",
+    "title": "歌曲：是妈妈是女儿",
+    "aliases": [
+      "歌曲：是妈妈是女儿 (Live)"
+    ],
+    "releaseDate": "2023-01-20",
+    "releaseYear": 2023,
+    "durationSec": 351,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "黄绮珊"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 歌曲：是妈妈是女儿",
+        "url": "https://music.163.com/#/song?id=2016388265"
+      }
+    ]
+  },
+  {
+    "id": "netease-2021403833",
+    "title": "夏至未至",
+    "aliases": [
+      "夏至未至 (Live版)"
+    ],
+    "releaseDate": "2023-02-09",
+    "releaseYear": 2023,
+    "durationSec": 254,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 夏至未至",
+        "url": "https://music.163.com/#/song?id=2021403833"
+      }
+    ]
+  },
+  {
+    "id": "netease-2043126974",
+    "title": "慢冷",
+    "aliases": [
+      "慢冷 (Live版)"
+    ],
+    "releaseDate": "2023-04-27",
+    "releaseYear": 2023,
+    "durationSec": 309,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "张碧晨"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 慢冷",
+        "url": "https://music.163.com/#/song?id=2043126974"
+      }
+    ]
+  },
+  {
+    "id": "netease-2045090418",
+    "title": "给未来的自己",
+    "aliases": [
+      "给未来的自己 (Live版)"
+    ],
+    "releaseDate": "2023-05-04",
+    "releaseYear": 2023,
+    "durationSec": 274,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "容祖儿"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 给未来的自己",
+        "url": "https://music.163.com/#/song?id=2045090418"
+      }
+    ]
+  },
+  {
+    "id": "netease-2046984517",
+    "title": "起风了",
+    "aliases": [
+      "起风了 (Live版)"
+    ],
+    "releaseDate": "2023-05-11",
+    "releaseYear": 2023,
+    "durationSec": 267,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "伯远"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 起风了",
+        "url": "https://music.163.com/#/song?id=2046984517"
+      }
+    ]
+  },
+  {
+    "id": "netease-2048584478",
+    "title": "Shadow of the Sun",
+    "aliases": [
+      "Shadow of the Sun (Live版)"
+    ],
+    "releaseDate": "2023-05-18",
+    "releaseYear": 2023,
+    "durationSec": 258,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "于文文"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Shadow of the Sun",
+        "url": "https://music.163.com/#/song?id=2048584478"
+      }
+    ]
+  },
+  {
+    "id": "netease-2050391258",
+    "title": "靠近",
+    "aliases": [
+      "靠近 (Live版)"
+    ],
+    "releaseDate": "2023-05-25",
+    "releaseYear": 2023,
+    "durationSec": 255,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "Jessica"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 靠近",
+        "url": "https://music.163.com/#/song?id=2050391258"
+      }
+    ]
+  },
+  {
+    "id": "netease-2054190758",
+    "title": "倒带",
+    "aliases": [
+      "倒带（Live版）"
+    ],
+    "releaseDate": "2023-06-08",
+    "releaseYear": 2023,
+    "durationSec": 248,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "告五人"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 倒带",
+        "url": "https://music.163.com/#/song?id=2054190758"
+      }
+    ]
+  },
+  {
+    "id": "netease-2056169798",
+    "title": "狼",
+    "aliases": [
+      "狼 (Live版)"
+    ],
+    "releaseDate": "2023-06-15",
+    "releaseYear": 2023,
+    "durationSec": 303,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "GAI周延"
+    ],
+    "curleyCredits": {
+      "lyrics": true,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 狼",
+        "url": "https://music.163.com/#/song?id=2056169798"
+      }
+    ]
+  },
+  {
+    "id": "netease-2057718198",
+    "title": "今夜留给今夜吧",
+    "aliases": [
+      "今夜留给今夜吧 (Live版)"
+    ],
+    "releaseDate": "2023-06-22",
+    "releaseYear": 2023,
+    "durationSec": 238,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "汪苏泷"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 今夜留给今夜吧",
+        "url": "https://music.163.com/#/song?id=2057718198"
+      }
+    ]
+  },
+  {
+    "id": "netease-2059815659",
+    "title": "负重一万斤长大",
+    "aliases": [
+      "负重一万斤长大 (Live版)"
+    ],
+    "releaseDate": "2023-06-29",
+    "releaseYear": 2023,
+    "durationSec": 315,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "胡彦斌"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 负重一万斤长大",
+        "url": "https://music.163.com/#/song?id=2059815659"
+      }
+    ]
+  },
+  {
+    "id": "netease-2061885953",
+    "title": "阿拉斯加海湾",
+    "aliases": [
+      "阿拉斯加海湾 (Live版)"
+    ],
+    "releaseDate": "2023-07-06",
+    "releaseYear": 2023,
+    "durationSec": 261,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "张靓颖"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 阿拉斯加海湾",
+        "url": "https://music.163.com/#/song?id=2061885953"
+      }
+    ]
+  },
+  {
+    "id": "netease-2063469668",
+    "title": "赤伶",
+    "aliases": [
+      "赤伶 (Live版)"
+    ],
+    "releaseDate": "2023-07-13",
+    "releaseYear": 2023,
+    "durationSec": 281,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "黄龄"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 赤伶",
+        "url": "https://music.163.com/#/song?id=2063469668"
+      }
+    ]
+  },
+  {
+    "id": "netease-2094474484",
+    "title": "Can't Take My Eyes Off You",
+    "aliases": [
+      "Can't Take My Eyes Off You (Live)"
+    ],
+    "releaseDate": "2023-10-27",
+    "releaseYear": 2023,
+    "durationSec": 256,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "于文文"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Can't Take My Eyes Off You",
+        "url": "https://music.163.com/#/song?id=2094474484"
+      }
+    ]
+  },
+  {
+    "id": "netease-2154102422",
+    "title": "天若有情",
+    "aliases": [
+      "天若有情 (Live版)"
+    ],
+    "releaseDate": "2024-05-09",
+    "releaseYear": 2024,
+    "durationSec": 258,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "姚晓棠"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 天若有情",
+        "url": "https://music.163.com/#/song?id=2154102422"
+      }
+    ]
+  },
+  {
+    "id": "netease-2158973743",
+    "title": "等下一个他",
+    "aliases": [
+      "等下一个他 (Live版)"
+    ],
+    "releaseDate": "2024-05-23",
+    "releaseYear": 2024,
+    "durationSec": 253,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "王赫野"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 等下一个他",
+        "url": "https://music.163.com/#/song?id=2158973743"
+      }
+    ]
+  },
+  {
+    "id": "netease-2602622183",
+    "title": "你也怀念吗",
+    "aliases": [
+      "你也怀念吗 (Live版)"
+    ],
+    "releaseDate": "2024-06-27",
+    "releaseYear": 2024,
+    "durationSec": 270,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "杨坤"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 你也怀念吗",
+        "url": "https://music.163.com/#/song?id=2602622183"
+      }
+    ]
+  },
+  {
+    "id": "netease-2604909429",
+    "title": "梦臆",
+    "aliases": [
+      "梦臆 (Live版)"
+    ],
+    "releaseDate": "2024-07-04",
+    "releaseYear": 2024,
+    "durationSec": 233,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "李承铉"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 梦臆",
+        "url": "https://music.163.com/#/song?id=2604909429"
+      }
+    ]
+  },
+  {
+    "id": "netease-2646468710",
+    "title": "瞳",
+    "aliases": [
+      "瞳 (Live版)"
+    ],
+    "releaseDate": "2024-11-14",
+    "releaseYear": 2024,
+    "durationSec": 240,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "张信哲"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 瞳",
+        "url": "https://music.163.com/#/song?id=2646468710"
+      }
+    ]
+  },
+  {
+    "id": "netease-2660150238",
+    "title": "借月",
+    "aliases": [
+      "借月 (Live版)"
+    ],
+    "releaseDate": "2024-12-26",
+    "releaseYear": 2024,
+    "durationSec": 295,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "王天阳"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 借月",
+        "url": "https://music.163.com/#/song?id=2660150238"
+      }
+    ]
+  },
+  {
+    "id": "netease-2729401814",
+    "title": "ラヴ・イズ・オーヴァー",
+    "aliases": [
+      "ラヴ・イズ・オーヴァー (Live)"
+    ],
+    "releaseDate": "2025-07-26",
+    "releaseYear": 2025,
+    "durationSec": 240,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "みゆな"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — ラヴ・イズ・オーヴァー",
+        "url": "https://music.163.com/#/song?id=2729401814"
+      }
+    ]
+  },
+  {
+    "id": "netease-3315584689",
+    "title": "造物",
+    "aliases": [
+      "造物 (Live)"
+    ],
+    "releaseDate": "2025-11-06",
+    "releaseYear": 2025,
+    "durationSec": 238,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 造物",
+        "url": "https://music.163.com/#/song?id=3315584689"
+      }
+    ]
+  },
+  {
+    "id": "netease-3330123324",
+    "title": "讯号",
+    "aliases": [
+      "讯号 (Live)"
+    ],
+    "releaseDate": "2025-12-18",
+    "releaseYear": 2025,
+    "durationSec": 191,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 讯号",
+        "url": "https://music.163.com/#/song?id=3330123324"
+      }
+    ]
+  },
+  {
+    "id": "netease-3332756193",
+    "title": "博物馆奇妙夜",
+    "aliases": [
+      "博物馆奇妙夜 (Live)"
+    ],
+    "releaseDate": "2025-12-25",
+    "releaseYear": 2025,
+    "durationSec": 213,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 博物馆奇妙夜",
+        "url": "https://music.163.com/#/song?id=3332756193"
+      }
+    ]
+  },
+  {
+    "id": "netease-3334337807",
+    "title": "Stay A",
+    "aliases": [
+      "Stay Alive (live)"
+    ],
+    "releaseDate": "2026-01-01",
+    "releaseYear": 2026,
+    "durationSec": 258,
+    "project": {
+      "title": "单曲",
+      "type": "single"
+    },
+    "version": null,
+    "performanceType": "collaboration",
+    "featuredArtists": [
+      "汪苏泷"
+    ],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — Stay A",
+        "url": "https://music.163.com/#/song?id=3334337807"
+      }
+    ]
+  },
+  {
+    "id": "netease-1815676387",
+    "title": "红尘莫欺我年少",
+    "aliases": [
+      "电视剧《有翡》插曲"
+    ],
+    "releaseDate": "2020-12-15",
+    "releaseYear": 2020,
+    "durationSec": 232,
+    "project": {
+      "title": "有翡 电视剧原声带",
+      "type": "ost"
+    },
+    "version": null,
+    "performanceType": "solo",
+    "featuredArtists": [],
+    "curleyCredits": {
+      "lyrics": false,
+      "composition": false
+    },
+    "guessable": true,
+    "sources": [
+      {
+        "name": "网易云音乐 — 红尘莫欺我年少",
+        "url": "https://music.163.com/#/song?id=1815676387"
+      }
+    ]
   }
 ]

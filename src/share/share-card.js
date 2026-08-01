@@ -2,7 +2,7 @@ import { createQrMatrix } from "./qr-code.js";
 
 export const SHARE_CARD_WIDTH = 1080;
 export const SHARE_CARD_HEIGHT = 1350;
-export const SHARE_FIELDS = ["year", "duration", "project", "live", "performance", "credits"];
+export const SHARE_FIELDS = ["year", "duration", "project", "performance", "credits"];
 
 const STATUS_STYLE = Object.freeze({
   match: { fill: "#49e99b", ink: "#050505", mark: "✓", label: "匹配" },
@@ -14,8 +14,8 @@ const STATUS_STYLE = Object.freeze({
 
 export function buildShareCardModel({ roundLabel, state, canonicalUrl }) {
   const outcome = state.status === "won"
-    ? `${state.attempts.length} / 6`
-    : state.status === "lost" ? "X / 6" : `${state.attempts.length} / …`;
+    ? `${state.attempts.length} / 8`
+    : state.status === "lost" ? "X / 8" : `${state.attempts.length} / …`;
   return {
     roundLabel,
     outcome,
@@ -27,11 +27,11 @@ export function buildShareCardModel({ roundLabel, state, canonicalUrl }) {
 }
 
 export function shareCardLayout(rowCount) {
-  const count = Math.max(1, Math.min(6, Math.floor(Number(rowCount)) || 0));
+  const count = Math.max(1, Math.min(8, Math.floor(Number(rowCount)) || 0));
   const gridTop = 340;
-  const cellGap = 10;
-  const cellSize = 78;
-  const rowGap = 12;
+  const cellGap = count > 6 ? 8 : 10;
+  const cellSize = count > 6 ? Math.floor((540 - (count - 1) * 8) / count) : 78;
+  const rowGap = count > 6 ? 8 : 12;
   const qrModule = 7;
   const quietModules = 4;
   const qrOuterSize = (37 + quietModules * 2) * qrModule;

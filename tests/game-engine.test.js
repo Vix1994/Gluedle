@@ -24,7 +24,6 @@ function song(overrides = {}) {
     releaseYear: 2024,
     durationSec: 210,
     project: { title: "Project A", type: "album" },
-    isLive: false,
     performanceType: "solo",
     curleyCredits: { lyrics: true, composition: true },
     ...overrides,
@@ -56,6 +55,8 @@ const catalog = [
   song({ id: "four", title: "Fourth", aliases: [] }),
   song({ id: "five", title: "Fifth", aliases: [] }),
   song({ id: "six", title: "Sixth", aliases: [] }),
+  song({ id: "seven", title: "Seventh", aliases: [] }),
+  song({ id: "eight", title: "Eighth", aliases: [] }),
 ];
 
 test("normalizeSearchText normalizes case, width, whitespace, and Chinese/English punctuation", () => {
@@ -85,7 +86,7 @@ test("findSongMatches searches aliases, normalizes queries, ranks title matches,
 
 test("selectRandomAnswer maps a valid random value across the whole catalog", () => {
   assert.equal(selectRandomAnswer(catalog, () => 0).id, "target");
-  assert.equal(selectRandomAnswer(catalog, () => 0.999999).id, "six");
+  assert.equal(selectRandomAnswer(catalog, () => 0.999999).id, "eight");
   assert.equal(selectRandomAnswer(catalog, () => 2 / catalog.length).id, "two");
   assert.throws(() => selectRandomAnswer([], () => 0), { code: "EMPTY_CATALOG" });
   assert.throws(() => selectRandomAnswer(catalog, () => 1), { code: "INVALID_RANDOM" });
@@ -136,11 +137,10 @@ test("compareSongs applies day-precision release-date and duration thresholds", 
   assert.deepEqual(missDown.duration, { value: "03:46", status: "miss", direction: "down" });
 });
 
-test("compareSongs applies project, live, performance, and credits rules", () => {
+test("compareSongs applies project, performance, and credits rules", () => {
   const comparison = compareSongs(
     song({
       project: { title: "Other Album", type: "album" },
-      isLive: true,
       performanceType: "duet",
       curleyCredits: { lyrics: true, composition: false },
     }),
@@ -150,11 +150,6 @@ test("compareSongs applies project, live, performance, and credits rules", () =>
   assert.deepEqual(comparison.project, {
     value: "Other Album",
     status: COMPARISON_STATUS.PARTIAL,
-    direction: null,
-  });
-  assert.deepEqual(comparison.live, {
-    value: true,
-    status: COMPARISON_STATUS.MISS,
     direction: null,
   });
   assert.equal(comparison.performance.status, COMPARISON_STATUS.MISS);
@@ -170,12 +165,6 @@ test("compareSongs applies project, live, performance, and credits rules", () =>
   assert.equal(misses.project.status, COMPARISON_STATUS.MISS);
   assert.equal(misses.credits.status, COMPARISON_STATUS.MISS);
 
-  const unknownLive = compareSongs(song({ isLive: null }), song());
-  assert.deepEqual(unknownLive.live, {
-    value: "待核验",
-    status: COMPARISON_STATUS.UNKNOWN,
-    direction: null,
-  });
 });
 
 test("independent singles share the same project value and match", () => {
@@ -215,23 +204,21 @@ test("submitGuess updates state immutably and wins immediately", () => {
   assert.notEqual(afterMiss.attempts, initial.attempts);
   assert.equal(afterMiss.status, "playing");
   assert.equal(afterMiss.attempts[0].songId, "one");
-  assert.deepEqual(afterMiss.attempts[0].comparison.live, {
-    value: false,
-    status: COMPARISON_STATUS.MATCH,
-    direction: null,
-  });
+  assert.equal(afterMiss.attempts[0].comparison.performance.status, COMPARISON_STATUS.MATCH);
   assert.equal(won.status, "won");
   assert.equal(won.attempts.length, 2);
+  assert.equal(won.attempts[1].songId, "target");
+  assert.ok(Object.values(won.attempts[1].comparison).every(({ status }) => status === COMPARISON_STATUS.MATCH));
   assert.equal(won.maxAttempts, MAX_ATTEMPTS);
 });
 
-test("the sixth incorrect guess loses", () => {
+test("the eighth incorrect guess loses", () => {
   let state = createInitialState("target");
-  for (const guessId of ["one", "two", "three", "four", "five", "six"]) {
+  for (const guessId of ["one", "two", "three", "four", "five", "six", "seven", "eight"]) {
     state = submitGuess(state, guessId, catalog);
   }
   assert.equal(state.status, "lost");
-  assert.equal(state.attempts.length, 6);
+  assert.equal(state.attempts.length, 8);
 });
 
 test("invalid, duplicate, and post-game submissions throw stable errors without mutation", () => {

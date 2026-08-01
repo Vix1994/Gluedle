@@ -26,6 +26,8 @@ export function mountGluedle() {
   let toastTimer = 0;
   let lastDialogTrigger = null;
   let isSharing = false;
+  let shareBlob = null;
+  let shareFilename = "";
 
   void initialize();
 
@@ -35,6 +37,7 @@ export function mountGluedle() {
       if (signal.aborted) return;
       songs = catalog.filter((song) => song.guessable !== false);
       bindSearch();
+      bindMobileComposer();
       bindGameActions();
       bindDialogs();
       startRound();
@@ -53,6 +56,7 @@ export function mountGluedle() {
     state = createInitialState(answer.id);
     roundNumber += 1;
     selectedSong = null;
+    resetSharePreview();
     elements.input.value = "";
     closeSuggestions();
     hydrateContent();
@@ -100,11 +104,7 @@ export function mountGluedle() {
     if (event.key === "Enter" && activeSuggestion >= 0) {
       event.preventDefault();
       const song = suggestionSongs[activeSuggestion];
-      const query = normalizeSearchText(elements.input.value);
-      const exactMatch = [song.title, ...(song.aliases ?? [])]
-        .some((candidate) => normalizeSearchText(candidate) === query);
-      selectSuggestion(song);
-      if (exactMatch) elements.form.requestSubmit();
+      selectSuggestion(song, { submit: true });
     }
   }
 
@@ -113,11 +113,15 @@ export function mountGluedle() {
       closeSuggestions();
       return;
     }
+
+    if (!query.trim()) {
+      closeSuggestions();
+      return;
+    }
+
     const guessedIds = new Set(state.attempts.map((attempt) => attempt.songId));
     const availableSongs = songs.filter((song) => !guessedIds.has(song.id));
-    suggestionSongs = query.trim()
-      ? findSongMatches(query, availableSongs, 6)
-      : availableSongs.slice(0, 6);
+    suggestionSongs = findSongMatches(query, availableSongs, 6);
     activeSuggestion = -1;
     elements.suggestions.replaceChildren();
 
@@ -138,7 +142,7 @@ export function mountGluedle() {
       option.dataset.index = String(index);
       option.textContent = song.title;
       option.addEventListener("pointerdown", (event) => event.preventDefault(), { signal });
-      option.addEventListener("click", () => selectSuggestion(song), { signal });
+      option.addEventListener("click", () => selectSuggestion(song, { submit: true }), { signal });
       elements.suggestions.append(option);
     });
     elements.suggestions.hidden = false;
@@ -166,12 +170,29 @@ export function mountGluedle() {
     });
   }
 
-  function selectSuggestion(song) {
+  function selectSuggestion(song, { submit = false } = {}) {
     selectedSong = song;
     elements.input.value = song.title;
     elements.submit.disabled = false;
     closeSuggestions();
+    if (submit) {
+      elements.input.blur();
+      elements.form.requestSubmit();
+      return;
+    }
     setFeedback(`已选择「${song.title}」，可以提交。`);
+  }
+
+  function bindMobileComposer() {
+    const viewport = window.visualViewport;
+    if (!viewport) return;
+    const updateKeyboardOffset = () => {
+      const offset = Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop);
+      document.documentElement.style.setProperty("--mobile-keyboard-offset", `${offset}px`);
+    };
+    viewport.addEventListener("resize", updateKeyboardOffset, { signal });
+    viewport.addEventListener("scroll", updateKeyboardOffset, { signal });
+    updateKeyboardOffset();
   }
 
   function closeSuggestions() {
@@ -191,12 +212,13 @@ export function mountGluedle() {
       }
       try {
         state = submitGuess(state, selectedSong.id, songs);
+        resetSharePreview();
         selectedSong = null;
         elements.input.value = "";
         renderGame();
         if (state.status === "playing") {
           setFeedback(`第 ${state.attempts.length} 条推理已记录。`);
-          elements.input.focus();
+          if (!window.matchMedia("(max-width: 720px)").matches) elements.input.focus();
         } else openResultDialog();
       } catch (error) {
         const messages = {
@@ -207,14 +229,21 @@ export function mountGluedle() {
         setFeedback(messages[error.code] ?? "提交失败，请稍后再试。", true);
       }
     }, { signal });
-    elements.share.addEventListener("click", shareResultImage, { signal });
-    elements.resultShare.addEventListener("click", shareResultImage, { signal });
-    elements.reset.addEventListener("click", () => {
+    elements.share.addEventListener("click", () => {
+      openResultDialog();
+      void prepareSharePreview();
+    }, { signal });
+    elements.resultShare.addEventListener("click", () => void prepareSharePreview(), { signal });
+    elements.shareConfirm.addEventListener("click", () => void sharePreparedImage(), { signal });
+    elements.shareDownload.addEventListener("click", downloadPreparedImage, { signal });
+    const resetRound = () => {
       closeDialog(elements.resultDialog);
       startRound();
       elements.input.focus();
       showToast("已随机生成新答案");
-    }, { signal });
+    };
+    elements.reset.addEventListener("click", resetRound, { signal });
+    elements.resultReset.addEventListener("click", resetRound, { signal });
   }
 
   function renderGame() {
@@ -247,7 +276,7 @@ export function mountGluedle() {
       const row = document.createElement("tr");
       const cell = document.createElement("td");
       row.className = "empty-row";
-      cell.colSpan = 7;
+      cell.colSpan = 6;
       cell.textContent = "输入歌名，第一条推理会出现在这里";
       row.append(cell);
       elements.board.append(row);
@@ -270,7 +299,6 @@ export function mountGluedle() {
       appendComparisonCell(row, attempt.comparison.year, "year", "发行日");
       appendComparisonCell(row, attempt.comparison.duration, "duration", "时长");
       appendComparisonCell(row, attempt.comparison.project, "project", "所属项目");
-      appendComparisonCell(row, attempt.comparison.live, "live", "Live");
       appendComparisonCell(row, attempt.comparison.performance, "performance", "演唱");
       appendComparisonCell(row, attempt.comparison.credits, "credits", "创作");
       elements.board.append(row);
@@ -314,6 +342,7 @@ export function mountGluedle() {
   }
 
   function openResultDialog() {
+    resetSharePreview();
     elements.resultTitle.textContent = state.status === "won"
       ? siteContent.game.successTitle
       : siteContent.game.failureTitle;
@@ -326,7 +355,7 @@ export function mountGluedle() {
     openDialog(elements.resultDialog);
   }
 
-  async function shareResultImage() {
+  async function prepareSharePreview() {
     if (!state.attempts.length || isSharing) return;
     isSharing = true;
     setShareButtonsBusy(true);
@@ -337,36 +366,65 @@ export function mountGluedle() {
         canonicalUrl: canonicalGameUrl(window.location),
       });
       renderShareCard(elements.shareCanvas, model);
-      const blob = await canvasToBlob(elements.shareCanvas);
-      const filename = `gluedle-round-${roundNumber}.png`;
-      const file = typeof File === "function"
-        ? new File([blob], filename, { type: "image/png" })
-        : null;
-      if (file && typeof navigator.share === "function" && typeof navigator.canShare === "function"
-        && navigator.canShare({ files: [file] })) {
-        await navigator.share({ files: [file], title: "GLUEDLE 随机歌曲推理" });
-        showToast("分享面板已打开");
-      } else {
-        downloadBlob(blob, filename);
-        showToast("结果图片已下载");
-      }
+      shareBlob = await canvasToBlob(elements.shareCanvas);
+      shareFilename = `gluedle-round-${roundNumber}.png`;
+      elements.sharePreview.hidden = false;
+      elements.resultShare.hidden = true;
+      showToast("结果图片已生成，可选择分享或保存");
     } catch (error) {
-      if (error?.name !== "AbortError") {
-        setFeedback("结果图片生成失败，请稍后再试。", true);
-        showToast("分享失败，请稍后再试");
-      }
+      setFeedback("结果图片生成失败，请稍后再试。", true);
+      showToast("图片生成失败，请稍后再试");
     } finally {
       isSharing = false;
       setShareButtonsBusy(false);
     }
   }
 
+  async function sharePreparedImage() {
+    if (!shareBlob || isSharing) return;
+    isSharing = true;
+    setShareButtonsBusy(true);
+    try {
+      const file = typeof File === "function"
+        ? new File([shareBlob], shareFilename, { type: "image/png" })
+        : null;
+      if (file && typeof navigator.share === "function" && typeof navigator.canShare === "function"
+        && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: "GLUEDLE 随机歌曲推理" });
+        showToast("分享面板已打开");
+      } else {
+        showToast("当前设备不支持直接分享，请选择保存图片");
+      }
+    } catch (error) {
+      if (error?.name !== "AbortError") showToast("分享失败，请稍后再试");
+    } finally {
+      isSharing = false;
+      setShareButtonsBusy(false);
+    }
+  }
+
+  function downloadPreparedImage() {
+    if (!shareBlob || isSharing) return;
+    downloadBlob(shareBlob, shareFilename);
+    showToast("结果图片已下载");
+  }
+
+  function resetSharePreview() {
+    shareBlob = null;
+    shareFilename = "";
+    elements.sharePreview.hidden = true;
+    elements.resultShare.hidden = false;
+  }
+
   function setShareButtonsBusy(busy) {
     elements.share.disabled = busy || !state.attempts.length;
     elements.resultShare.disabled = busy;
+    elements.shareConfirm.disabled = busy || !shareBlob;
+    elements.shareDownload.disabled = busy || !shareBlob;
     elements.reset.disabled = busy;
+    elements.resultReset.disabled = busy;
     elements.share.textContent = busy ? "正在生成…" : "分享结果";
-    elements.resultShare.textContent = busy ? "正在生成…" : "分享结果";
+    elements.resultShare.textContent = busy ? "正在生成…" : "生成分享图片";
   }
 
   function bindDialogs() {
@@ -457,6 +515,10 @@ function collectElements() {
     resultTitle: document.querySelector("#result-title"),
     resultSummary: document.querySelector("[data-result-summary]"),
     resultShare: document.querySelector("[data-result-share]"),
+    resultReset: document.querySelector("[data-result-reset]"),
+    sharePreview: document.querySelector("[data-share-preview]"),
+    shareConfirm: document.querySelector("[data-share-confirm]"),
+    shareDownload: document.querySelector("[data-share-download]"),
     shareCanvas: document.querySelector("[data-share-canvas]"),
     toast: document.querySelector("[data-toast]"),
     appBoot: document.querySelector("[data-app-boot]"),
@@ -464,24 +526,20 @@ function collectElements() {
 }
 
 function formatCellValue(value, field) {
-  if (field === "live") {
-    if (value === true) return "是";
-    if (value === false) return "否";
-    return "待核验";
-  }
   if (field === "performance") {
     return { solo: "独唱", collaboration: "合作", duet: "合唱" }[value] ?? value ?? "待核验";
   }
   if (field === "credits" && value && typeof value === "object") {
-    return `词 ${creditValue(value.lyrics)} · 曲 ${creditValue(value.composition)}`;
+    const participation = [
+      value.lyrics === true ? "词参与" : null,
+      value.composition === true ? "曲参与" : null,
+    ].filter(Boolean);
+    if (participation.length === 2) return "词·曲参与";
+    if (participation.length > 0) return participation.join(" · ");
+    if ([value.lyrics, value.composition].every((credit) => credit === false)) return "未参与";
+    return "待核验";
   }
   return String(value ?? "待核验");
-}
-
-function creditValue(value) {
-  if (value === true) return "参与";
-  if (value === false) return "未参与";
-  return value ?? "待核验";
 }
 
 function comparisonHelper(comparison, field) {

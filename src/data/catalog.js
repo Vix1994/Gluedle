@@ -44,7 +44,7 @@ export const siteContent = {
   game: {
     eyebrow: "03 / GLUEDLE",
     title: "不用听，也能猜到吗？",
-    description: "从发行日期、项目、是否 Live、演唱与创作资料逐步缩小答案范围。",
+    description: "从发行日期、项目、演唱与创作资料逐步缩小答案范围。",
     instructions: ["查看本轮元数据线索。", "输入歌名或可接受的别名。", "沿着每次比较继续推理。"],
     inputLabel: "你的答案",
     inputPlaceholder: "输入歌曲名",
