@@ -20,6 +20,7 @@ const conceptHtml = readFileSync(new URL("../concept/index.html", import.meta.ur
 const visualsHtml = readFileSync(new URL("../visuals/index.html", import.meta.url), "utf8");
 const glueHtml = readFileSync(new URL("../glue/index.html", import.meta.url), "utf8");
 const homeMain = readFileSync(new URL("../src/main.js", import.meta.url), "utf8");
+const anchorNavigation = readFileSync(new URL("../src/anchor-wheel-navigation.js", import.meta.url), "utf8");
 const gameMain = readFileSync(new URL("../src/gluedle.js", import.meta.url), "utf8");
 const editorialMain = readFileSync(new URL("../src/editorial.js", import.meta.url), "utf8");
 const appMain = readFileSync(new URL("../src/app.js", import.meta.url), "utf8");
@@ -165,18 +166,35 @@ test("all page styles load before JavaScript and use the persistent app router",
   assert.doesNotMatch(appShellStyles, /\.site-header|\.section-header|\.game-header/);
 });
 
-test("home wheel navigation advances through explicit content anchors", () => {
+test("non-game routes share wheel navigation across explicit content anchors", () => {
   for (const id of ["home", "concept", "story", "visuals", "release", "play", "listen"]) {
     assert.match(homeHtml, new RegExp(`id="${id}"[^>]*\\bdata-scroll-anchor\\b`));
   }
 
-  const wheelNavigation = extractFunction(homeMain, "setupAnchorWheelNavigation");
+  const routeAnchors = [
+    [conceptHtml, ["orbit-hero", "concept-statement", "contact-field", "contact-copy", "next-page"]],
+    [visualsHtml, ["visual-collage", "image-sequence", "sequence-item", "next-page"]],
+    [glueHtml, ["track-hero", "track-panel", "track-image-field", "track-ripple", "game-bridge"]],
+  ];
+  for (const [source, classNames] of routeAnchors) {
+    for (const className of classNames) {
+      assert.match(source, new RegExp(`class="[^"]*${className}[^"]*"[^>]*\\bdata-scroll-anchor\\b`));
+    }
+  }
+
+  assert.doesNotMatch(gameHtml, /data-scroll-anchor/);
+  assert.match(homeMain, /setupAnchorWheelNavigation\(\{\s*signal:\s*abortController\.signal\s*\}\)/);
+  assert.match(editorialMain, /setupAnchorWheelNavigation\(\{\s*signal:\s*abortController\.signal\s*\}\)/);
+
+  const wheelNavigation = anchorNavigation;
   assert.match(wheelNavigation, /addEventListener\(\s*["']wheel["']/);
-  assert.match(wheelNavigation, /passive:\s*false[\s\S]*signal:\s*abortController\.signal/);
+  assert.match(wheelNavigation, /passive:\s*false,\s*signal/);
   assert.match(wheelNavigation, /window\.scrollTo\(\{/);
   assert.match(wheelNavigation, /prefers-reduced-motion:\s*reduce/);
+  assert.match(wheelNavigation, /minimumAdvance[\s\S]*window\.innerHeight\s*\*\s*0\.12/);
   assert.match(wheelNavigation, /nestedScrollerCanMove\(event\.target,\s*direction\)/);
   assert.doesNotMatch(wheelNavigation, /scrollIntoView/);
+  assert.match(appShellStyles, /\[data-scroll-anchor\]\s*\{[\s\S]*?scroll-margin-top:\s*var\(--header-height\)/);
 });
 
 test("home exposes the verified artist destinations safely", () => {

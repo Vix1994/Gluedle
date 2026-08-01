@@ -15,6 +15,7 @@
 - `/glue/`：Blue Noise 方向的同名首曲视觉页；
 - 五个路由共用唯一的 `GLUE / 概念 / 影像 / 单曲 / Gluedle` App Shell 标题栏，进入游戏后仍可直接返回任一专辑页面；
 - 标签点击由 History API 客户端路由接管，只替换主内容和页面样式；标题栏保持常驻，并用 View Transition 完成一致的页面切换；
+- 首页、概念、影像与单曲页共用滚轮锚点控制器；Gluedle 保留普通滚动，长内容会按实际阅读节拍停靠；
 
 ## 游戏规则
 
@@ -61,7 +62,8 @@ Vite 通常会在 `http://localhost:5173` 提供首页。三个专辑章节分�
 ├── src/styles/              # 首页与独立游戏的响应式视觉
 ├── src/app.js               # 五个路由共用的浏览器入口
 ├── src/app-shell.js         # 常驻标题栏、History 路由与内容切换
-├── src/main.js              # 首页内容、滚动展示与路由生命周期
+├── src/anchor-wheel-navigation.js # 非游戏页共用的滚轮锚点控制器
+├── src/main.js              # 首页内容、展示动画与路由生命周期
 ├── src/gluedle.js           # 独立游戏、每日状态、动态反馈、分享与路由生命周期
 ├── tests/                   # 游戏引擎与内容边界测试
 ├── index.html               # GLUE 专辑视觉首页

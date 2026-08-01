@@ -1,3 +1,5 @@
+import { setupAnchorWheelNavigation } from "./anchor-wheel-navigation.js";
+
 export function mountEditorial() {
 const abortController = new AbortController();
 const observers = [];
@@ -12,6 +14,7 @@ document.querySelectorAll("[data-current-year]").forEach((element) => {
 setupReveals();
 setupScrollState();
 setupPointerMotion();
+const clearWheelNavigation = setupAnchorWheelNavigation({ signal: abortController.signal });
 
 function setupReveals() {
   const reveals = [...document.querySelectorAll(".reveal")];
@@ -68,6 +71,7 @@ function setupPointerMotion() {
 return () => {
   abortController.abort();
   observers.forEach((observer) => observer.disconnect());
+  clearWheelNavigation();
   header?.classList.remove("is-scrolled");
 };
 }

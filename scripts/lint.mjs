@@ -51,6 +51,7 @@ const editorialHtmlFiles = ["concept", "visuals", "glue"].map((route) => ({
   source: readFileSync(join(root, route, "index.html"), "utf8"),
 }));
 const homeMain = readFileSync(join(root, "src", "main.js"), "utf8");
+const anchorNavigation = readFileSync(join(root, "src", "anchor-wheel-navigation.js"), "utf8");
 const gameMain = readFileSync(join(root, "src", "gluedle.js"), "utf8");
 const editorialMain = readFileSync(join(root, "src", "editorial.js"), "utf8");
 const appMain = readFileSync(join(root, "src", "app.js"), "utf8");
@@ -220,15 +221,28 @@ if (
 }
 
 const homeAnchorIds = ["home", "concept", "story", "visuals", "release", "play", "listen"];
+const editorialAnchorClasses = [
+  [editorialHtmlFiles[0].source, ["orbit-hero", "concept-statement", "contact-field", "contact-copy", "next-page"]],
+  [editorialHtmlFiles[1].source, ["visual-collage", "image-sequence", "sequence-item", "next-page"]],
+  [editorialHtmlFiles[2].source, ["track-hero", "track-panel", "track-image-field", "track-ripple", "game-bridge"]],
+];
 if (
   homeAnchorIds.some((id) => !new RegExp(`id="${id}"[^>]*\\bdata-scroll-anchor\\b`).test(homeHtml))
-  || !/addEventListener\(\s*["']wheel["']/.test(homeMain)
-  || !/passive:\s*false[\s\S]*signal:\s*abortController\.signal/.test(homeMain)
-  || !/window\.scrollTo\(\{/.test(homeMain)
-  || !/prefers-reduced-motion:\s*reduce/.test(homeMain)
-  || !/nestedScrollerCanMove\(event\.target,\s*direction\)/.test(homeMain)
+  || editorialAnchorClasses.some(([source, classNames]) => classNames.some(
+    (className) => !new RegExp(`class="[^"]*${className}[^"]*"[^>]*\\bdata-scroll-anchor\\b`).test(source),
+  ))
+  || /data-scroll-anchor/.test(gameHtml)
+  || !/setupAnchorWheelNavigation\(\{\s*signal:\s*abortController\.signal\s*\}\)/.test(homeMain)
+  || !/setupAnchorWheelNavigation\(\{\s*signal:\s*abortController\.signal\s*\}\)/.test(editorialMain)
+  || !/addEventListener\(\s*["']wheel["']/.test(anchorNavigation)
+  || !/passive:\s*false,\s*signal/.test(anchorNavigation)
+  || !/window\.scrollTo\(\{/.test(anchorNavigation)
+  || !/prefers-reduced-motion:\s*reduce/.test(anchorNavigation)
+  || !/minimumAdvance[\s\S]*window\.innerHeight\s*\*\s*0\.12/.test(anchorNavigation)
+  || !/nestedScrollerCanMove\(event\.target,\s*direction\)/.test(anchorNavigation)
+  || !/\[data-scroll-anchor\]\s*\{[\s\S]*?scroll-margin-top:\s*var\(--header-height\)/.test(appShellStyles)
 ) {
-  errors.push("home page: wheel navigation must advance through explicit anchors without trapping nested scrollers");
+  errors.push("non-game routes: shared wheel navigation must advance through explicit anchors without trapping nested scrollers");
 }
 
 if (
