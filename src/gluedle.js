@@ -1,3 +1,5 @@
+import "./route-transitions.js";
+
 import { siteContent, songs } from "./data/catalog.js";
 import {
   MAX_ATTEMPTS,

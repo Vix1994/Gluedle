@@ -1,3 +1,5 @@
+import "./route-transitions.js";
+
 document.documentElement.classList.add("js");
 
 const progress = document.querySelector("[data-page-progress]");

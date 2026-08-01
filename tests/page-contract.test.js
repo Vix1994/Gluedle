@@ -22,6 +22,7 @@ const glueHtml = readFileSync(new URL("../glue/index.html", import.meta.url), "u
 const homeMain = readFileSync(new URL("../src/main.js", import.meta.url), "utf8");
 const gameMain = readFileSync(new URL("../src/gluedle.js", import.meta.url), "utf8");
 const editorialMain = readFileSync(new URL("../src/editorial.js", import.meta.url), "utf8");
+const routeTransitions = readFileSync(new URL("../src/route-transitions.js", import.meta.url), "utf8");
 const gameStyles = gameStyleFiles.map(({ source }) => source).join("\n");
 const editorialStyles = readFileSync(new URL("../src/styles/editorial.css", import.meta.url), "utf8");
 const transitionStyles = readFileSync(new URL("../src/styles/transitions.css", import.meta.url), "utf8");
@@ -71,9 +72,21 @@ test("GLUE leads the album identity while Green to Blue stays a concept chapter"
   assert.match(homeHtml, /<title>GLUE — CURLEY G<\/title>/);
   assert.match(homeHtml, /class="wordmark"[^>]*>GLUE<\/a>/);
   assert.match(homeHtml, /<h1\s+id="hero-title"><span>GLUE<\/span><\/h1>/);
+  assert.match(homeHtml, /class="site-nav"[\s\S]*?href="\/" aria-current="page"[^>]*>GLUE<\/a>/);
+  assert.match(homeHtml, /GLUE \/ ALBUM &amp; TITLE TRACK/);
+  assert.match(homeHtml, /TITLE TRACK \/ 01/);
   assert.match(homeHtml, /GREEN TO BLUE \/ CONCEPT/);
   assert.doesNotMatch(homeHtml, />GREEN\s*(?:→|TO)\s*BLUE<\/a>/i);
   assert.match(gameHtml, /class="wordmark"[^>]*>GLUEDLE<\/a>/);
+});
+
+test("all five routes keep a persistent tab path, including Gluedle", () => {
+  const routes = ["/", "/concept/", "/visuals/", "/glue/", "/gluedle/"];
+  for (const source of [homeHtml, conceptHtml, visualsHtml, glueHtml, gameHtml]) {
+    for (const route of routes) assert.match(source, new RegExp(`href="${route}"`));
+  }
+  assert.match(gameHtml, /class="game-nav"/);
+  assert.match(gameHtml, /href="\/gluedle\/" aria-current="page"[^>]*>Gluedle<\/a>/);
 });
 
 test("home exposes three clean editorial routes drawn from the original visual directions", () => {
@@ -133,6 +146,13 @@ test("all page styles load before JavaScript and share native route transitions"
   );
   assert.match(transitionStyles, /@view-transition\s*\{[\s\S]*?navigation:\s*auto/);
   assert.match(transitionStyles, /prefers-reduced-motion:\s*reduce/);
+  assert.match(transitionStyles, /route-transition-fallback/);
+  assert.match(routeTransitions, /document\.startViewTransition/);
+  assert.match(routeTransitions, /window\.location\.assign/);
+  assert.match(routeTransitions, /prefers-reduced-motion:\s*reduce/);
+  for (const source of [homeMain, editorialMain, gameMain]) {
+    assert.match(source, /import "\.\/route-transitions\.js"/);
+  }
 });
 
 test("home wheel navigation advances through explicit content anchors", () => {

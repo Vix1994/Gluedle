@@ -8,8 +8,9 @@
   view-transition-name: glue-header;
 }
 
-.wordmark,
-.section-wordmark {
+.site-header .wordmark,
+.section-header .section-wordmark,
+.game-header .wordmark {
   view-transition-name: glue-wordmark;
 }
 
@@ -56,9 +57,52 @@
   }
 }
 
+.route-transition-fallback::before {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  content: "";
+  pointer-events: none;
+  background: #87a8be;
+  transform: translateY(101%);
+}
+
+.route-transition-fallback body {
+  animation: glue-fallback-enter 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.route-transition-fallback[data-route-transition="leaving"]::before {
+  animation: glue-wash-cover 230ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+.route-transition-fallback[data-route-transition="leaving"] body {
+  pointer-events: none;
+  animation: glue-fallback-leave 200ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+@keyframes glue-wash-cover {
+  to { transform: translateY(0); }
+}
+
+@keyframes glue-fallback-enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glue-fallback-leave {
+  to { opacity: 0.22; transform: scale(0.992); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(*),
   ::view-transition-new(*) {
     animation-duration: 0.01ms !important;
+  }
+
+  .route-transition-fallback::before,
+  .route-transition-fallback body,
+  .route-transition-fallback[data-route-transition="leaving"]::before,
+  .route-transition-fallback[data-route-transition="leaving"] body {
+    animation: none !important;
   }
 }

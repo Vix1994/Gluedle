@@ -166,7 +166,7 @@ body.is-booting .app-boot p {
   top: 0;
   z-index: 100;
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 32px;
   min-height: var(--header-height);
@@ -189,13 +189,54 @@ body.is-booting .app-boot p {
   text-decoration: none;
 }
 
-.header-meta {
+.game-nav {
   display: flex;
   align-items: center;
-  gap: clamp(18px, 2.4vw, 36px);
-  color: var(--grey);
+  justify-self: center;
+  gap: clamp(16px, 2.3vw, 36px);
+}
+
+.game-nav a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   font: 500 0.66rem/1.4 var(--font-mono);
   letter-spacing: 0.08em;
+  text-decoration: none;
+}
+
+.game-nav a::after {
+  position: absolute;
+  right: 0;
+  bottom: 7px;
+  left: 0;
+  height: 1px;
+  content: "";
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 220ms var(--ease-out);
+}
+
+.game-nav a:hover::after,
+.game-nav a:focus-visible::after,
+.game-nav a[aria-current]::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.game-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.game-edition {
+  color: var(--grey);
+  font: 500 0.6rem/1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
 }
 
 .icon-button {

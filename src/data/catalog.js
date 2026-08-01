@@ -8,7 +8,7 @@
 
 export const siteContent = {
   navigation: [
-    { label: "首页", href: "/" },
+    { label: "GLUE", href: "/" },
     { label: "概念", href: "/concept/" },
     { label: "影像", href: "/visuals/" },
     { label: "单曲", href: "/glue/" },
@@ -18,7 +18,7 @@ export const siteContent = {
     eyebrow: "CURLEY G / GLUE — ALBUM VISUAL",
     title: "Glue",
     subtitle: "让接触留下形状。",
-    body: "从同名首曲《Glue》开始，让接触、涟漪、颗粒与曝光组成这张专辑的第一层视觉。",
+    body: "专辑与第一首公开歌曲共享同一个名字。这里从《Glue》出发，让接触、涟漪、颗粒与曝光构成第一张视觉页。",
     primaryAction: "进入 Glue",
     secondaryAction: "开始猜歌",
   },

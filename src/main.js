@@ -1,3 +1,5 @@
+import "./route-transitions.js";
+
 import { siteContent } from "./data/catalog.js";
 
 document.documentElement.classList.add("js");

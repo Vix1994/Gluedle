@@ -13,6 +13,8 @@
 - `/concept/`：Echo Orbit 方向的接触、涟漪与回声概念页；
 - `/visuals/`：Contact Lake 方向的非对称影像档案；
 - `/glue/`：Blue Noise 方向的同名首曲视觉页；
+- 五个路由共用 `GLUE / 概念 / 影像 / 单曲 / Gluedle` 导航，进入游戏后仍可直接返回任一专辑页面；
+- 页面样式在首帧直接加载，并使用原生跨文档 View Transition 缓和路由切换；
 
 ## 游戏规则
 

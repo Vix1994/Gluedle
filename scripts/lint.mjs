@@ -53,6 +53,7 @@ const editorialHtmlFiles = ["concept", "visuals", "glue"].map((route) => ({
 const homeMain = readFileSync(join(root, "src", "main.js"), "utf8");
 const gameMain = readFileSync(join(root, "src", "gluedle.js"), "utf8");
 const editorialMain = readFileSync(join(root, "src", "editorial.js"), "utf8");
+const routeTransitions = readFileSync(join(root, "src", "route-transitions.js"), "utf8");
 const editorialStyles = readFileSync(join(root, "src", "styles", "editorial.css"), "utf8");
 const transitionStyles = readFileSync(join(root, "src", "styles", "transitions.css"), "utf8");
 const gameStyleDirectory = join(root, "src", "styles");
@@ -181,8 +182,12 @@ if (
 if (
   !/@view-transition\s*\{[\s\S]*?navigation:\s*auto/.test(transitionStyles)
   || !/prefers-reduced-motion:\s*reduce/.test(transitionStyles)
+  || !/route-transition-fallback/.test(transitionStyles)
+  || !/document\.startViewTransition/.test(routeTransitions)
+  || !/window\.location\.assign/.test(routeTransitions)
+  || !/prefers-reduced-motion:\s*reduce/.test(routeTransitions)
 ) {
-  errors.push("shared transitions must enable cross-document navigation with reduced-motion support");
+  errors.push("shared transitions must include native and reduced-motion-safe fallback navigation");
 }
 
 for (const { route, label, source } of editorialHtmlFiles) {
@@ -225,11 +230,23 @@ if (
   !/<title>GLUE — CURLEY G<\/title>/.test(homeHtml)
   || !/class="wordmark"[^>]*>GLUE<\/a>/.test(homeHtml)
   || !/<h1\s+id="hero-title"><span>GLUE<\/span><\/h1>/.test(homeHtml)
+  || !/class="site-nav"[\s\S]*?href="\/" aria-current="page"[^>]*>GLUE<\/a>/.test(homeHtml)
+  || !/GLUE \/ ALBUM &amp; TITLE TRACK/.test(homeHtml)
+  || !/TITLE TRACK \/ 01/.test(homeHtml)
   || !/GREEN TO BLUE \/ CONCEPT/.test(homeHtml)
   || />GREEN\s*(?:→|TO)\s*BLUE<\/a>/i.test(homeHtml)
   || !/class="wordmark"[^>]*>GLUEDLE<\/a>/.test(gameHtml)
 ) {
   errors.push("site identity: GLUE must lead the album site and Green to Blue must remain a concept chapter");
+}
+
+const sharedRoutes = ["/", "/concept/", "/visuals/", "/glue/", "/gluedle/"];
+if (
+  !/class="game-nav"/.test(gameHtml)
+  || sharedRoutes.some((href) => !gameHtml.includes(`href="${href}"`))
+  || !/href="\/gluedle\/" aria-current="page"[^>]*>Gluedle<\/a>/.test(gameHtml)
+) {
+  errors.push("standalone Gluedle: persistent five-route navigation and current tab are required");
 }
 
 for (const { name, source } of gameStyleFiles) {
