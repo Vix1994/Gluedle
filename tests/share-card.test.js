@@ -16,7 +16,7 @@ const comparison = Object.fromEntries(
 test("share-card model contains only result statuses, not answer or song IDs", () => {
   const model = buildShareCardModel({
     dayKey: "2026-08-01",
-    canonicalUrl: "https://example.com/gluedle.html",
+    canonicalUrl: "https://example.com/gluedle/",
     state: {
       status: "playing",
       answerId: "secret-answer",
@@ -30,7 +30,7 @@ test("share-card model contains only result statuses, not answer or song IDs", (
 });
 
 test("won and lost outcomes use stable six-attempt notation", () => {
-  const base = { dayKey: "2026-08-01", canonicalUrl: "https://example.com/gluedle.html" };
+  const base = { dayKey: "2026-08-01", canonicalUrl: "https://example.com/gluedle/" };
   assert.equal(buildShareCardModel({
     ...base,
     state: { status: "won", attempts: [{ comparison }] },

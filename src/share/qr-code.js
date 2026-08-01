@@ -39,7 +39,15 @@ export function canonicalGameUrl(locationLike) {
     : new URL(String(locationLike?.href ?? locationLike));
   source.hash = "";
   source.search = "";
-  source.pathname = source.pathname.replace(/\/[^/]*$/, "/gluedle.html");
+  const trimmedPath = source.pathname.replace(/\/+$/, "");
+  if (/\/gluedle(?:\.html)?$/.test(trimmedPath)) {
+    source.pathname = `${trimmedPath.replace(/\/gluedle(?:\.html)?$/, "")}/gluedle/`;
+  } else {
+    const directory = source.pathname.endsWith("/")
+      ? source.pathname
+      : source.pathname.slice(0, source.pathname.lastIndexOf("/") + 1);
+    source.pathname = `${directory}gluedle/`;
+  }
   return source.href;
 }
 

@@ -2,7 +2,7 @@
 
 ## Status and scope
 
-Gluedle is an independent, non-audio song-guessing prototype built around publicly verifiable metadata for songs performed by 希林娜依高 (Curley G / Curley Gao). The `Green to Blue` and `Glue` language used by this project is concept copy unless a cited public source says otherwise.
+`GLUE` is the primary identity of the album-site experience. `Gluedle` is its independent, non-audio song-guessing interaction, built around publicly verifiable metadata for songs performed by 希林娜依高 (Curley G / Curley Gao). `Green to Blue` is a secondary concept chapter inside the `GLUE` story, not the site wordmark or the name repeated across every page.
 
 The runtime images listed below are original AI-generated replacements created for this repository. They are not official artist, label, album, or campaign assets, and their presence does not imply endorsement by any artist, label, or platform.
 
@@ -41,7 +41,7 @@ These role labels are internal design guidance only; they do not identify the cr
 | `--white-cool` | `#E8EBEB` | quiet editorial surface |
 | `--lake` | `#87A8BE` | primary lake blue |
 | `--lake-dark` | `#537B98` | depth, focus, active state |
-| `--green` | `#9CB59A` | the “green” end of the concept transition |
+| `--green` | `#9CB59A` | secondary accent used only inside the Green to Blue concept chapter |
 | `--correct` | `#A6C7A2` | exact metadata match |
 | `--near` | `#D5D0AD` | near or partial metadata match |
 | `--wrong` | `#626A70` | metadata mismatch |

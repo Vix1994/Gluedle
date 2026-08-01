@@ -43,7 +43,8 @@ for (const file of javaScriptFiles) {
 }
 
 const homeHtml = readFileSync(join(root, "index.html"), "utf8");
-const gameHtml = readFileSync(join(root, "gluedle.html"), "utf8");
+const gameHtmlLabel = "gluedle/index.html";
+const gameHtml = readFileSync(join(root, "gluedle", "index.html"), "utf8");
 const homeMain = readFileSync(join(root, "src", "main.js"), "utf8");
 const gameMain = readFileSync(join(root, "src", "gluedle.js"), "utf8");
 const gameStyleDirectory = join(root, "src", "styles");
@@ -75,14 +76,14 @@ const requiredIds = [
 ];
 
 for (const id of requiredIds) {
-  if (!gameHtml.includes(`id="${id}"`)) errors.push(`gluedle.html: missing required #${id}`);
+  if (!gameHtml.includes(`id="${id}"`)) errors.push(`${gameHtmlLabel}: missing required #${id}`);
   if (homeHtml.includes(`id="${id}"`)) errors.push(`index.html: game-only #${id} must live on the standalone page`);
 }
 
 const releaseBoundaryMarkers = [
   [homeHtml, "index.html", "data-release-title", "published Glue track"],
-  [gameHtml, "gluedle.html", "data-game-song-count", "separate game library count"],
-  [gameHtml, "gluedle.html", "data-live-column", "Live comparison column"],
+  [gameHtml, gameHtmlLabel, "data-game-song-count", "separate game library count"],
+  [gameHtml, gameHtmlLabel, "data-live-column", "Live comparison column"],
 ];
 
 for (const [source, file, marker, label] of releaseBoundaryMarkers) {
@@ -91,7 +92,7 @@ for (const [source, file, marker, label] of releaseBoundaryMarkers) {
 
 for (const [source, file, pattern] of [
   [homeHtml, "index.html", /当前只|其余曲目|页面边界|项目声明|不宣称/],
-  [gameHtml, "gluedle.html", /不代表《Glue》所在专辑已公布曲目|DATA BOUNDARY/],
+  [gameHtml, gameHtmlLabel, /不代表《Glue》所在专辑已公布曲目|DATA BOUNDARY/],
 ]) {
   if (pattern.test(source)) errors.push(`${file}: explanatory disclaimer copy must stay out of the visible experience`);
 }
@@ -133,7 +134,7 @@ const htmlForbidden = [
   [/<script(?![^>]*\bsrc=)[^>]*>/i, "inline scripts are not allowed"],
 ];
 
-for (const [file, source] of [["index.html", homeHtml], ["gluedle.html", gameHtml]]) {
+for (const [file, source] of [["index.html", homeHtml], [gameHtmlLabel, gameHtml]]) {
   for (const [pattern, message] of htmlForbidden) {
     if (pattern.test(source)) errors.push(`${file}: ${message}`);
   }
@@ -143,7 +144,7 @@ if (!homeHtml.includes('type="module" src="/src/main.js"')) {
   errors.push("index.html: missing Vite module entry");
 }
 if (!gameHtml.includes('type="module" src="/src/gluedle.js"')) {
-  errors.push("gluedle.html: missing Vite module entry");
+  errors.push(`${gameHtmlLabel}: missing Vite module entry`);
 }
 if (!homeMain.includes('import "./styles/site.css";')) {
   errors.push("src/main.js: site.css must be imported from the entry module");
@@ -162,6 +163,17 @@ if (
   || !/nestedScrollerCanMove\(event\.target,\s*direction\)/.test(homeMain)
 ) {
   errors.push("home page: wheel navigation must advance through explicit anchors without trapping nested scrollers");
+}
+
+if (
+  !/<title>GLUE — CURLEY G<\/title>/.test(homeHtml)
+  || !/class="wordmark"[^>]*>GLUE<\/a>/.test(homeHtml)
+  || !/<h1\s+id="hero-title"><span>GLUE<\/span><\/h1>/.test(homeHtml)
+  || !/GREEN TO BLUE \/ CONCEPT/.test(homeHtml)
+  || />GREEN\s*(?:→|TO)\s*BLUE<\/a>/i.test(homeHtml)
+  || !/class="wordmark"[^>]*>GLUEDLE<\/a>/.test(gameHtml)
+) {
+  errors.push("site identity: GLUE must lead the album site and Green to Blue must remain a concept chapter");
 }
 
 for (const { name, source } of gameStyleFiles) {
@@ -219,7 +231,7 @@ if (
   || !/\baria-expanded="false"/.test(inputTag)
   || !/\brole="listbox"/.test(listboxTag)
 ) {
-  errors.push("gluedle.html: song search must expose an associated combobox and listbox");
+  errors.push(`${gameHtmlLabel}: song search must expose an associated combobox and listbox`);
 }
 
 if (
@@ -227,7 +239,7 @@ if (
   || !/\bdata-app-boot\b[^>]*\brole="status"/.test(gameHtml)
   || !gameHtml.includes("<noscript>")
 ) {
-  errors.push("gluedle.html: game shell must expose boot fallback and initial state hooks");
+  errors.push(`${gameHtmlLabel}: game shell must expose boot fallback and initial state hooks`);
 }
 
 if (
@@ -235,7 +247,7 @@ if (
   || !/class="game-signal"[^>]*\baria-hidden="true"/.test(gameHtml)
   || (gameHtml.match(/class="signal-ring"/g) ?? []).length !== 6
 ) {
-  errors.push("gluedle.html: game must expose six attempt markers and six decorative signal rings");
+  errors.push(`${gameHtmlLabel}: game must expose six attempt markers and six decorative signal rings`);
 }
 
 const removeStoredStateSource = extractFunction(gameMain, "removeStoredState") ?? "";
@@ -276,9 +288,10 @@ if (
   errors.push("src/gluedle.js: ArrowUp from an unselected combobox must activate the last suggestion");
 }
 
-const standaloneLinks = homeHtml.match(/href="\/gluedle\.html"/g) ?? [];
+const standaloneLinks = homeHtml.match(/href="\/gluedle\/"/g) ?? [];
 if (
   standaloneLinks.length < 2
+  || /href="[^"]*gluedle\.html/.test(homeHtml)
   || homeHtml.includes('href="#gluedle"')
   || homeMain.includes("bindGameActions")
   || homeHtml.includes('id="guess-form"')
@@ -360,7 +373,7 @@ if (/#8e2638/i.test(shareCardSource)) {
   errors.push("src/share/share-card.js: saturated legacy miss color must not return");
 }
 
-if (!viteConfig.includes('"./index.html"') || !viteConfig.includes('"./gluedle.html"')) {
+if (!viteConfig.includes('"./index.html"') || !viteConfig.includes('"./gluedle/index.html"')) {
   errors.push("vite.config.js: production build must include both HTML entries");
 }
 

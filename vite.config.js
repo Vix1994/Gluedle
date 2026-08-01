@@ -7,7 +7,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         home: fileURLToPath(new URL("./index.html", import.meta.url)),
-        gluedle: fileURLToPath(new URL("./gluedle.html", import.meta.url)),
+        gluedle: fileURLToPath(new URL("./gluedle/index.html", import.meta.url)),
       },
     },
   },

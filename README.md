@@ -1,15 +1,15 @@
 # Gluedle
 
-Gluedle 是一款无音频的每日歌曲资料推理游戏，也是一座围绕 **GLUE / Green to Blue** 视觉概念展开的可浏览网站。玩家从希林娜依高过往作品题库中选择歌曲，在最多 6 次尝试内，根据年份、时长、所属项目、语言、是否 Live、演唱类型与创作资料的比较反馈找到每日答案。
+这是以 **GLUE** 为主身份的专辑视觉网站，Gluedle 是其中的无音频每日歌曲资料推理互动。玩家从希林娜依高过往作品题库中选择歌曲，在最多 6 次尝试内，根据年份、时长、所属项目、语言、是否 Live、演唱类型与创作资料的比较反馈找到每日答案。
 
-本项目不播放、不托管歌曲音频，也不摘录歌词。`GLUEDLE` 是项目字标；页面中的 `GLUE`、`Green to Blue` 与 Curley G 只作为内容主题，并不表示艺人、唱片公司或平台对本项目的官方授权或背书。
+本项目不播放、不托管歌曲音频，也不摘录歌词。`GLUE` 是专辑网站的主视觉身份，`GLUEDLE` 是游戏字标，`Green to Blue` 只作为概念章节出现。这些名称与 Curley G 仅作为内容主题，并不表示艺人、唱片公司或平台对本项目的官方授权或背书。
 
 ## 页面结构
 
-- `#home`：过曝黑白影像与 Green to Blue 首屏；
-- `#concept`：涟漪、轨道和概念说明；
+- `#home`：以 GLUE 为主标题的过曝黑白专辑首屏；
+- `#concept`：Green to Blue、涟漪与轨道概念说明；
 - `#story`：编辑式影像拼贴与当前唯一公开曲目《Glue》；
-- 首页居中的 Gluedle 入口：前往独立的 `/gluedle.html` 游戏页；
+- 首页居中的 Gluedle 入口：前往干净路由 `/gluedle/`；
 
 ## 游戏规则
 
@@ -29,7 +29,7 @@ npm install
 npm run dev
 ```
 
-Vite 通常会在 `http://localhost:5173` 提供首页，独立游戏位于 `http://localhost:5173/gluedle.html`。
+Vite 通常会在 `http://localhost:5173` 提供首页，独立游戏位于 `http://localhost:5173/gluedle/`。该目录型入口在生产构建中输出为 `dist/gluedle/index.html`，因此链接、直接访问和分享二维码都不暴露 `.html` 文件名。
 
 请通过 Vite 开发服务器或 `npm run build` 后的构建产物访问，不要直接双击源码 HTML。游戏入口依赖 ES modules、CSS 模块导入和浏览器本地存储；加载失败时页面会保留可见的启动提示，而不会伪装成可操作的静态界面。
 
@@ -57,8 +57,8 @@ Vite 通常会在 `http://localhost:5173` 提供首页，独立游戏位于 `htt
 ├── src/main.js              # 首页内容与滚动展示
 ├── src/gluedle.js           # 独立游戏、每日状态、动态反馈与分享流程
 ├── tests/                   # 游戏引擎与内容边界测试
-├── index.html               # GLUE / Green to Blue 首页
-└── gluedle.html             # 独立 Gluedle 游戏页
+├── index.html               # GLUE 专辑视觉首页
+└── gluedle/index.html       # `/gluedle/` 独立游戏路由入口
 ```
 
 ## 数据与授权

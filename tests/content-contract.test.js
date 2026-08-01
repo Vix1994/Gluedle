@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import { siteContent, songs } from "../src/data/catalog.js";
 
 test("the album release surface contains only the published Glue track", () => {
+  assert.equal(siteContent.release.countLabel, "01 / RELEASED TRACK");
   assert.deepEqual(
     siteContent.release.tracks.map((track) => track.title),
     ["Glue"],

@@ -10,15 +10,15 @@ export const siteContent = {
   navigation: [
     { label: "首页", href: "#home" },
     { label: "Green to Blue", href: "#concept" },
-    { label: "Glue", href: "#story" },
-    { label: "Gluedle", href: "/gluedle.html" },
+    { label: "视觉", href: "#story" },
+    { label: "Gluedle", href: "/gluedle/" },
   ],
   hero: {
-    eyebrow: "GLUEDLE / PROJECT CONCEPT",
-    title: "Green to Blue",
-    subtitle: "让颜色成为一条听见彼此的路径。",
-    body: "这是一组围绕“Glue”展开的视觉叙事：从绿色的生长感出发，经过水、颗粒与回声，抵达更深的蓝。",
-    primaryAction: "进入概念",
+    eyebrow: "CURLEY G / GLUE — ALBUM VISUAL",
+    title: "Glue",
+    subtitle: "让接触留下形状。",
+    body: "从同名首曲《Glue》开始，让接触、涟漪、颗粒与曝光组成这张专辑的第一层视觉。",
+    primaryAction: "进入 Glue",
     secondaryAction: "开始猜歌",
   },
   concept: {
@@ -34,7 +34,7 @@ export const siteContent = {
   },
   release: {
     label: "GLUE",
-    countLabel: "01 / SINGLE",
+    countLabel: "01 / RELEASED TRACK",
     tracks: [
       {
         position: "01",

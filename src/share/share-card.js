@@ -78,7 +78,7 @@ export function renderShareCard(canvas, model) {
   context.fillText("GLUEDLE", 124, 136);
   setFont(context, 500, 24);
   context.fillStyle = "#4d504e";
-  context.fillText("GREEN TO BLUE / DAILY DATA STUDY", 124, 177);
+  context.fillText("GLUE / CURLEY G / DAILY DATA STUDY", 124, 177);
 
   setFont(context, 700, 52);
   context.fillStyle = "#f4f3ed";

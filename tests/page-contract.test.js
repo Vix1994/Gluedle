@@ -15,7 +15,7 @@ const gameStyleFiles = gameStyleFileNames.map((name) => ({
 }));
 const gameStyleEntry = gameStyleFiles.find(({ name }) => name === "gluedle.css")?.source ?? "";
 const homeHtml = readFileSync(new URL("../index.html", import.meta.url), "utf8");
-const gameHtml = readFileSync(new URL("../gluedle.html", import.meta.url), "utf8");
+const gameHtml = readFileSync(new URL("../gluedle/index.html", import.meta.url), "utf8");
 const homeMain = readFileSync(new URL("../src/main.js", import.meta.url), "utf8");
 const gameMain = readFileSync(new URL("../src/gluedle.js", import.meta.url), "utf8");
 const gameStyles = gameStyleFiles.map(({ source }) => source).join("\n");
@@ -50,7 +50,8 @@ function importedStylePaths(source) {
 }
 
 test("home links to the standalone game without embedding game controls", () => {
-  assert.ok((homeHtml.match(/href="\/gluedle\.html"/g) ?? []).length >= 2);
+  assert.ok((homeHtml.match(/href="\/gluedle\/"/g) ?? []).length >= 2);
+  assert.doesNotMatch(homeHtml, /href="[^"]*gluedle\.html/);
   assert.doesNotMatch(homeHtml, /id="(?:guess-form|song-input|guess-board|result-dialog)"/);
   assert.doesNotMatch(homeMain, /bindGameActions|submitGuess|selectDailyAnswer/);
   for (const id of ["home", "concept", "story"]) {
@@ -58,6 +59,15 @@ test("home links to the standalone game without embedding game controls", () => 
   }
   assert.doesNotMatch(homeHtml, /当前只|其余曲目|页面边界|项目声明|不宣称/);
   assert.doesNotMatch(gameHtml, /不代表《Glue》所在专辑已公布曲目|DATA BOUNDARY/);
+});
+
+test("GLUE leads the album identity while Green to Blue stays a concept chapter", () => {
+  assert.match(homeHtml, /<title>GLUE — CURLEY G<\/title>/);
+  assert.match(homeHtml, /class="wordmark"[^>]*>GLUE<\/a>/);
+  assert.match(homeHtml, /<h1\s+id="hero-title"><span>GLUE<\/span><\/h1>/);
+  assert.match(homeHtml, /GREEN TO BLUE \/ CONCEPT/);
+  assert.doesNotMatch(homeHtml, />GREEN\s*(?:→|TO)\s*BLUE<\/a>/i);
+  assert.match(gameHtml, /class="wordmark"[^>]*>GLUEDLE<\/a>/);
 });
 
 test("home wheel navigation advances through explicit content anchors", () => {
@@ -238,5 +248,5 @@ test("share card uses the home black, paper, lake, and muted result palette", ()
 
 test("production build declares both HTML entries", () => {
   assert.match(viteConfig, /\.\/index\.html/);
-  assert.match(viteConfig, /\.\/gluedle\.html/);
+  assert.match(viteConfig, /\.\/gluedle\/index\.html/);
 });
