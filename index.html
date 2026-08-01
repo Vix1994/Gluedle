@@ -15,27 +15,17 @@
       href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,300..900&family=IBM+Plex+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/src/styles/site.css" />
+    <link rel="stylesheet" href="/src/styles/app-shell.css" />
+    <link rel="stylesheet" href="/src/styles/site.css" data-route-style />
     <link rel="stylesheet" href="/src/styles/transitions.css" />
-    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/app.js"></script>
   </head>
   <body>
+    <div data-app-header></div>
+
+    <div class="route-view" data-route-view>
     <a class="skip-link" href="#main-content">跳至主要内容</a>
-
-    <header class="site-header" data-header>
-      <a class="wordmark" href="/" aria-label="GLUE 首页">GLUE</a>
-      <nav class="site-nav" aria-label="主要导航">
-        <a href="/" aria-current="page">GLUE</a>
-        <a href="/concept/">概念</a>
-        <a href="/visuals/">影像</a>
-        <a href="/glue/">单曲</a>
-        <a href="/gluedle/">Gluedle</a>
-      </nav>
-      <a class="header-game-link" href="/gluedle/">PLAY GLUEDLE <span aria-hidden="true">↗</span></a>
-      <div class="scroll-progress" aria-hidden="true"><span data-scroll-progress></span></div>
-    </header>
-
-    <main id="main-content">
+    <main id="main-content" tabindex="-1">
       <section class="hero chapter chapter--black" id="home" data-scroll-anchor aria-labelledby="hero-title">
         <div class="hero-media" aria-hidden="true">
           <img src="/assets/glue/portrait-editorial.jpg" alt="" />
@@ -159,5 +149,6 @@
       <p>GLUE / CURLEY G — ALBUM VISUAL</p>
       <p><span data-current-year></span> / GLUE</p>
     </footer>
+    </div>
   </body>
 </html>

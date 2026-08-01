@@ -1,18 +1,15 @@
-import "./route-transitions.js";
-
 import { siteContent } from "./data/catalog.js";
 
-document.documentElement.classList.add("js");
-
+export function mountHome() {
+const abortController = new AbortController();
+const observers = [];
 const elements = {
-  header: document.querySelector("[data-header]"),
-  progress: document.querySelector("[data-scroll-progress]"),
-  nav: document.querySelector(".site-nav"),
+  header: document.querySelector("[data-app-header-element]"),
 };
 
 hydrateContent();
 setupPageMotion();
-setupAnchorWheelNavigation();
+const clearWheelNavigation = setupAnchorWheelNavigation();
 
 function hydrateContent() {
   setText("[data-content='conceptLead']", siteContent.concept.paragraphs[0]);
@@ -41,44 +38,29 @@ function setupPageMotion() {
       }
     }, { threshold: 0.12 });
     reveals.forEach((element) => revealObserver.observe(element));
+    observers.push(revealObserver);
   } else {
     reveals.forEach((element) => element.classList.add("is-visible"));
   }
 
   const sections = [...document.querySelectorAll("main > section[id]")];
-  const navLinks = [...elements.nav.querySelectorAll("a[href^='#']")];
   if ("IntersectionObserver" in window) {
     const sectionObserver = new IntersectionObserver((entries) => {
       const active = entries.find((entry) => entry.isIntersecting);
       if (!active) return;
-      const id = `#${active.target.id}`;
-      elements.header.classList.toggle("is-light", active.target.classList.contains("chapter--paper"));
-      navLinks.forEach((link) => {
-        if (link.getAttribute("href") === id) link.setAttribute("aria-current", "true");
-        else link.removeAttribute("aria-current");
-      });
+      elements.header?.classList.toggle(
+        "is-paper",
+        active.target.classList.contains("chapter--paper"),
+      );
     }, { rootMargin: "-35% 0px -55%", threshold: 0 });
     sections.forEach((section) => sectionObserver.observe(section));
+    observers.push(sectionObserver);
   }
-
-  let ticking = false;
-  const updateProgress = () => {
-    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-    const ratio = scrollable > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 0;
-    elements.progress.style.transform = `scaleX(${ratio})`;
-    ticking = false;
-  };
-  window.addEventListener("scroll", () => {
-    if (ticking) return;
-    ticking = true;
-    window.requestAnimationFrame(updateProgress);
-  }, { passive: true });
-  updateProgress();
 }
 
 function setupAnchorWheelNavigation() {
   const anchors = [...document.querySelectorAll("[data-scroll-anchor]")];
-  if (anchors.length < 2) return;
+  if (anchors.length < 2) return () => {};
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const triggerDistance = 24;
@@ -186,10 +168,24 @@ function setupAnchorWheelNavigation() {
       behavior: reducedMotion.matches ? "auto" : "smooth",
     });
     scheduleUnlock();
-  }, { passive: false });
+  }, { passive: false, signal: abortController.signal });
+
+  return () => {
+    window.clearTimeout(unlockTimer);
+    window.clearTimeout(accumulationTimer);
+    document.documentElement.removeAttribute("data-scroll-state");
+  };
 }
 
 function setText(selector, value) {
   const element = document.querySelector(selector);
   if (element && value) element.textContent = value;
+}
+
+return () => {
+  abortController.abort();
+  observers.forEach((observer) => observer.disconnect());
+  clearWheelNavigation();
+  elements.header?.classList.remove("is-paper");
+};
 }

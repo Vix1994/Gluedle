@@ -17,7 +17,6 @@
   --font-display: "Archivo", "Arial Narrow", sans-serif;
   --font-mono: "IBM Plex Mono", "Courier New", monospace;
   --page-pad: clamp(20px, 4vw, 64px);
-  --header-height: 72px;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --attempt-progress: 0;
   font-family: var(--font-display);
@@ -161,84 +160,6 @@ body.is-booting .app-boot p {
   margin: 0;
 }
 
-.game-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 32px;
-  min-height: var(--header-height);
-  padding: 0 var(--page-pad);
-  color: var(--white);
-  border-bottom: 1px solid rgb(244 243 237 / 14%);
-  background: rgb(5 5 5 / 84%);
-  backdrop-filter: blur(16px);
-}
-
-.wordmark {
-  display: inline-flex;
-  align-items: center;
-  width: max-content;
-  min-height: 44px;
-  font-size: 0.85rem;
-  font-stretch: condensed;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  text-decoration: none;
-}
-
-.game-nav {
-  display: flex;
-  align-items: center;
-  justify-self: center;
-  gap: clamp(16px, 2.3vw, 36px);
-}
-
-.game-nav a {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  font: 500 0.66rem/1.4 var(--font-mono);
-  letter-spacing: 0.08em;
-  text-decoration: none;
-}
-
-.game-nav a::after {
-  position: absolute;
-  right: 0;
-  bottom: 7px;
-  left: 0;
-  height: 1px;
-  content: "";
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 220ms var(--ease-out);
-}
-
-.game-nav a:hover::after,
-.game-nav a:focus-visible::after,
-.game-nav a[aria-current]::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-.game-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-
-.game-edition {
-  color: var(--grey);
-  font: 500 0.6rem/1.4 var(--font-mono);
-  letter-spacing: 0.08em;
-  white-space: nowrap;
-}
-
 .icon-button {
   display: grid;
   width: 44px;
@@ -272,7 +193,7 @@ body.is-booting .app-boot p {
   width: min(100%, 1540px);
   min-width: 0;
   margin: 0 auto;
-  padding: clamp(24px, 3vw, 48px) var(--page-pad) clamp(64px, 8vw, 112px);
+  padding: calc(var(--header-height) + clamp(24px, 3vw, 48px)) var(--page-pad) clamp(64px, 8vw, 112px);
 }
 
 .game-intro {

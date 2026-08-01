@@ -13,8 +13,8 @@
 - `/concept/`：Echo Orbit 方向的接触、涟漪与回声概念页；
 - `/visuals/`：Contact Lake 方向的非对称影像档案；
 - `/glue/`：Blue Noise 方向的同名首曲视觉页；
-- 五个路由共用 `GLUE / 概念 / 影像 / 单曲 / Gluedle` 导航，进入游戏后仍可直接返回任一专辑页面；
-- 页面样式在首帧直接加载，并使用原生跨文档 View Transition 缓和路由切换；
+- 五个路由共用唯一的 `GLUE / 概念 / 影像 / 单曲 / Gluedle` App Shell 标题栏，进入游戏后仍可直接返回任一专辑页面；
+- 标签点击由 History API 客户端路由接管，只替换主内容和页面样式；标题栏保持常驻，并用 View Transition 完成一致的页面切换；
 
 ## 游戏规则
 
@@ -59,8 +59,10 @@ Vite 通常会在 `http://localhost:5173` 提供首页。三个专辑章节分�
 ├── src/game/engine.js       # 确定性每日答案与比较状态机
 ├── src/share/               # 本地 QR 编码与分享卡绘制
 ├── src/styles/              # 首页与独立游戏的响应式视觉
-├── src/main.js              # 首页内容与滚动展示
-├── src/gluedle.js           # 独立游戏、每日状态、动态反馈与分享流程
+├── src/app.js               # 五个路由共用的浏览器入口
+├── src/app-shell.js         # 常驻标题栏、History 路由与内容切换
+├── src/main.js              # 首页内容、滚动展示与路由生命周期
+├── src/gluedle.js           # 独立游戏、每日状态、动态反馈、分享与路由生命周期
 ├── tests/                   # 游戏引擎与内容边界测试
 ├── index.html               # GLUE 专辑视觉首页
 ├── concept/index.html       # `/concept/` Echo Orbit 概念页

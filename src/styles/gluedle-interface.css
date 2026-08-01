@@ -495,7 +495,7 @@
   .game-shell {
     display: block;
     width: min(100%, 920px);
-    padding-top: 22px;
+    padding-top: calc(var(--header-height) + 22px);
   }
 
   .game-intro {
@@ -547,49 +547,12 @@
 
 @media (max-width: 760px) {
   :root {
-    --header-height: 112px;
     --page-pad: clamp(16px, 5vw, 28px);
-  }
-
-  .game-header {
-    grid-template-columns: 1fr auto;
-    grid-template-rows: 44px 50px;
-    align-content: center;
-    gap: 0 16px;
-    min-height: var(--header-height);
-    padding-top: 6px;
-  }
-
-  .game-nav {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    justify-self: start;
-    width: calc(100vw - var(--page-pad) * 2);
-    gap: 22px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .game-nav::-webkit-scrollbar {
-    display: none;
-  }
-
-  .game-nav a {
-    flex: 0 0 auto;
-  }
-
-  .game-header-actions {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .game-edition {
-    display: none;
   }
 
   .game-shell {
     width: 100%;
-    padding-top: 14px;
+    padding-top: calc(var(--header-height) + 14px);
     padding-bottom: 64px;
   }
 

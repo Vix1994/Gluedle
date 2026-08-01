@@ -22,7 +22,9 @@ const glueHtml = readFileSync(new URL("../glue/index.html", import.meta.url), "u
 const homeMain = readFileSync(new URL("../src/main.js", import.meta.url), "utf8");
 const gameMain = readFileSync(new URL("../src/gluedle.js", import.meta.url), "utf8");
 const editorialMain = readFileSync(new URL("../src/editorial.js", import.meta.url), "utf8");
-const routeTransitions = readFileSync(new URL("../src/route-transitions.js", import.meta.url), "utf8");
+const appMain = readFileSync(new URL("../src/app.js", import.meta.url), "utf8");
+const appShell = readFileSync(new URL("../src/app-shell.js", import.meta.url), "utf8");
+const appShellStyles = readFileSync(new URL("../src/styles/app-shell.css", import.meta.url), "utf8");
 const gameStyles = gameStyleFiles.map(({ source }) => source).join("\n");
 const editorialStyles = readFileSync(new URL("../src/styles/editorial.css", import.meta.url), "utf8");
 const transitionStyles = readFileSync(new URL("../src/styles/transitions.css", import.meta.url), "utf8");
@@ -57,7 +59,8 @@ function importedStylePaths(source) {
 }
 
 test("home links to the standalone game without embedding game controls", () => {
-  assert.ok((homeHtml.match(/href="\/gluedle\/"/g) ?? []).length >= 2);
+  assert.ok((homeHtml.match(/href="\/gluedle\/"/g) ?? []).length >= 1);
+  assert.match(appShell, /PLAY GLUEDLE/);
   assert.doesNotMatch(homeHtml, /href="[^"]*gluedle\.html/);
   assert.doesNotMatch(homeHtml, /id="(?:guess-form|song-input|guess-board|result-dialog)"/);
   assert.doesNotMatch(homeMain, /bindGameActions|submitGuess|selectDailyAnswer/);
@@ -70,23 +73,23 @@ test("home links to the standalone game without embedding game controls", () => 
 
 test("GLUE leads the album identity while Green to Blue stays a concept chapter", () => {
   assert.match(homeHtml, /<title>GLUE — CURLEY G<\/title>/);
-  assert.match(homeHtml, /class="wordmark"[^>]*>GLUE<\/a>/);
+  assert.match(appShell, /class="app-wordmark"[^>]*>GLUE<\/a>/);
   assert.match(homeHtml, /<h1\s+id="hero-title"><span>GLUE<\/span><\/h1>/);
-  assert.match(homeHtml, /class="site-nav"[\s\S]*?href="\/" aria-current="page"[^>]*>GLUE<\/a>/);
   assert.match(homeHtml, /GLUE \/ ALBUM &amp; TITLE TRACK/);
   assert.match(homeHtml, /TITLE TRACK \/ 01/);
   assert.match(homeHtml, /GREEN TO BLUE \/ CONCEPT/);
   assert.doesNotMatch(homeHtml, />GREEN\s*(?:→|TO)\s*BLUE<\/a>/i);
-  assert.match(gameHtml, /class="wordmark"[^>]*>GLUEDLE<\/a>/);
 });
 
 test("all five routes keep a persistent tab path, including Gluedle", () => {
   const routes = ["/", "/concept/", "/visuals/", "/glue/", "/gluedle/"];
   for (const source of [homeHtml, conceptHtml, visualsHtml, glueHtml, gameHtml]) {
-    for (const route of routes) assert.match(source, new RegExp(`href="${route}"`));
+    assert.match(source, /data-app-header/);
+    assert.match(source, /data-route-view/);
+    assert.match(source, /type="module" src="\/src\/app\.js"/);
   }
-  assert.match(gameHtml, /class="game-nav"/);
-  assert.match(gameHtml, /href="\/gluedle\/" aria-current="page"[^>]*>Gluedle<\/a>/);
+  for (const route of routes) assert.match(appShell, new RegExp(`\\["${route}"`));
+  assert.match(appShell, /link\.setAttribute\("aria-current", "page"\)/);
 });
 
 test("home exposes three clean editorial routes drawn from the original visual directions", () => {
@@ -96,19 +99,18 @@ test("home exposes three clean editorial routes drawn from the original visual d
   }
 
   assert.match(conceptHtml, /<title>CONCEPT — GLUE \/ CURLEY G<\/title>/);
-  assert.match(conceptHtml, /01 \/ ECHO ORBIT/);
+  assert.match(conceptHtml, /GLUE \/ CONCEPT 01/);
   assert.match(visualsHtml, /<title>VISUALS — GLUE \/ CURLEY G<\/title>/);
-  assert.match(visualsHtml, /02 \/ CONTACT LAKE/);
+  assert.match(visualsHtml, /GLUE \/ VISUAL ARCHIVE/);
   assert.match(glueHtml, /<title>GLUE 01 — CURLEY G<\/title>/);
-  assert.match(glueHtml, /03 \/ BLUE NOISE/);
+  assert.match(glueHtml, /\/ BLUE NOISE/);
 });
 
 test("editorial routes share navigation, motion, responsive, and content boundaries", () => {
   for (const source of [conceptHtml, visualsHtml, glueHtml]) {
-    assert.match(source, /type="module" src="\/src\/editorial\.js"/);
-    for (const route of ["/", "/concept/", "/visuals/", "/glue/", "/gluedle/"]) {
-      assert.match(source, new RegExp(`href="${route}"`));
-    }
+    assert.match(source, /type="module" src="\/src\/app\.js"/);
+    assert.match(source, /data-app-header/);
+    assert.match(source, /data-route-view/);
     assert.doesNotMatch(source, /<audio\b|播放|试听|20\d{2}[-年/]|\b\d{1,2}:\d{2}\b/i);
   }
 
@@ -121,7 +123,7 @@ test("editorial routes share navigation, motion, responsive, and content boundar
   }
 });
 
-test("all page styles load before JavaScript and share native route transitions", () => {
+test("all page styles load before JavaScript and use the persistent app router", () => {
   const contracts = [
     [homeHtml, "/src/styles/site.css"],
     [gameHtml, "/src/styles/gluedle.css"],
@@ -132,12 +134,17 @@ test("all page styles load before JavaScript and share native route transitions"
 
   for (const [source, pageStyle] of contracts) {
     const styleIndex = source.indexOf(`<link rel="stylesheet" href="${pageStyle}"`);
+    const shellStyleIndex = source.indexOf(
+      '<link rel="stylesheet" href="/src/styles/app-shell.css"',
+    );
     const transitionIndex = source.indexOf(
       '<link rel="stylesheet" href="/src/styles/transitions.css"',
     );
     const scriptIndex = source.indexOf('<script type="module"');
     assert.ok(styleIndex > -1 && styleIndex < scriptIndex);
+    assert.ok(shellStyleIndex > -1 && shellStyleIndex < scriptIndex);
     assert.ok(transitionIndex > -1 && transitionIndex < scriptIndex);
+    assert.match(source, /data-route-style/);
   }
 
   assert.doesNotMatch(
@@ -146,13 +153,16 @@ test("all page styles load before JavaScript and share native route transitions"
   );
   assert.match(transitionStyles, /@view-transition\s*\{[\s\S]*?navigation:\s*auto/);
   assert.match(transitionStyles, /prefers-reduced-motion:\s*reduce/);
-  assert.match(transitionStyles, /route-transition-fallback/);
-  assert.match(routeTransitions, /document\.startViewTransition/);
-  assert.match(routeTransitions, /window\.location\.assign/);
-  assert.match(routeTransitions, /prefers-reduced-motion:\s*reduce/);
-  for (const source of [homeMain, editorialMain, gameMain]) {
-    assert.match(source, /import "\.\/route-transitions\.js"/);
-  }
+  assert.match(appShell, /document\.startViewTransition/);
+  assert.match(appShell, /history\.pushState/);
+  assert.match(appShell, /addEventListener\("popstate"/);
+  assert.match(appShell, /fetch\(destination\.href/);
+  assert.match(appShell, /routeView\.replaceWith\(nextView\)/);
+  assert.match(appShell, /function\s+findRouteStyle/);
+  assert.match(appShell, /querySelectorAll\(['"]link\[rel=/);
+  assert.match(appMain, /createAppShell/);
+  assert.match(appShellStyles, /\.app-header\s*\{/);
+  assert.doesNotMatch(appShellStyles, /\.site-header|\.section-header|\.game-header/);
 });
 
 test("home wheel navigation advances through explicit content anchors", () => {
@@ -162,7 +172,7 @@ test("home wheel navigation advances through explicit content anchors", () => {
 
   const wheelNavigation = extractFunction(homeMain, "setupAnchorWheelNavigation");
   assert.match(wheelNavigation, /addEventListener\(\s*["']wheel["']/);
-  assert.match(wheelNavigation, /\{\s*passive:\s*false\s*\}/);
+  assert.match(wheelNavigation, /passive:\s*false[\s\S]*signal:\s*abortController\.signal/);
   assert.match(wheelNavigation, /window\.scrollTo\(\{/);
   assert.match(wheelNavigation, /prefers-reduced-motion:\s*reduce/);
   assert.match(wheelNavigation, /nestedScrollerCanMove\(event\.target,\s*direction\)/);

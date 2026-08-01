@@ -12,11 +12,14 @@
       href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,300..900&family=IBM+Plex+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/src/styles/gluedle.css" />
+    <link rel="stylesheet" href="/src/styles/app-shell.css" />
+    <link rel="stylesheet" href="/src/styles/gluedle.css" data-route-style />
     <link rel="stylesheet" href="/src/styles/transitions.css" />
-    <script type="module" src="/src/gluedle.js"></script>
+    <script type="module" src="/src/app.js"></script>
   </head>
   <body class="is-booting" data-game-state="loading" data-attempts="0">
+    <div data-app-header></div>
+    <div class="route-view" data-route-view>
     <a class="skip-link" href="#game-panel">跳至游戏</a>
 
     <div class="app-boot" data-app-boot role="status" aria-live="polite">
@@ -26,22 +29,7 @@
       <noscript><p>Gluedle 需要启用 JavaScript 才能进行每日推理。</p></noscript>
     </div>
 
-    <header class="game-header">
-      <a class="wordmark" href="/gluedle/" aria-label="GLUEDLE 游戏首页">GLUEDLE</a>
-      <nav class="game-nav" aria-label="专辑页面">
-        <a href="/">GLUE</a>
-        <a href="/concept/">概念</a>
-        <a href="/visuals/">影像</a>
-        <a href="/glue/">单曲</a>
-        <a href="/gluedle/" aria-current="page">Gluedle</a>
-      </nav>
-      <div class="game-header-actions">
-        <span class="game-edition">CURLEY G EDITION</span>
-        <button class="icon-button" type="button" data-open-dialog="help-dialog" aria-label="打开玩法说明">?</button>
-      </div>
-    </header>
-
-    <main class="game-shell">
+    <main class="game-shell" tabindex="-1">
       <section class="game-intro" aria-labelledby="game-title">
         <div class="game-signal" aria-hidden="true">
           <span class="signal-ring"></span>
@@ -177,5 +165,6 @@
 
     <canvas class="share-canvas" data-share-canvas aria-hidden="true"></canvas>
     <div class="toast" data-toast role="status" aria-live="polite"></div>
+    </div>
   </body>
 </html>

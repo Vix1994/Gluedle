@@ -2,15 +2,11 @@
   navigation: auto;
 }
 
-.site-header,
-.section-header,
-.game-header {
+.app-header {
   view-transition-name: glue-header;
 }
 
-.site-header .wordmark,
-.section-header .section-wordmark,
-.game-header .wordmark {
+.app-header .app-wordmark {
   view-transition-name: glue-wordmark;
 }
 

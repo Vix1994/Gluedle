@@ -1,28 +1,17 @@
-import "./route-transitions.js";
-
-document.documentElement.classList.add("js");
-
-const progress = document.querySelector("[data-page-progress]");
-const header = document.querySelector("[data-section-header]");
-const currentPath = normalizePath(window.location.pathname);
+export function mountEditorial() {
+const abortController = new AbortController();
+const observers = [];
+const progress = document.querySelector("[data-app-progress]");
+const header = document.querySelector("[data-app-header-element]");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 document.querySelectorAll("[data-current-year]").forEach((element) => {
   element.textContent = String(new Date().getFullYear());
 });
 
-document.querySelectorAll(".section-nav a").forEach((link) => {
-  const linkPath = normalizePath(new URL(link.href, window.location.origin).pathname);
-  if (linkPath === currentPath) link.setAttribute("aria-current", "page");
-});
-
 setupReveals();
 setupScrollState();
 setupPointerMotion();
-
-function normalizePath(pathname) {
-  return pathname.endsWith("/") ? pathname : `${pathname}/`;
-}
 
 function setupReveals() {
   const reveals = [...document.querySelectorAll(".reveal")];
@@ -39,6 +28,7 @@ function setupReveals() {
     }
   }, { threshold: 0.12 });
   reveals.forEach((element) => observer.observe(element));
+  observers.push(observer);
 }
 
 function setupScrollState() {
@@ -55,7 +45,7 @@ function setupScrollState() {
     if (ticking) return;
     ticking = true;
     window.requestAnimationFrame(update);
-  }, { passive: true });
+  }, { passive: true, signal: abortController.signal });
   update();
 }
 
@@ -72,5 +62,12 @@ function setupPointerMotion() {
       field.style.setProperty("--motion-x", `${x * 10 * depth}px`);
       field.style.setProperty("--motion-y", `${y * 8 * depth}px`);
     });
-  }, { passive: true });
+  }, { passive: true, signal: abortController.signal });
+}
+
+return () => {
+  abortController.abort();
+  observers.forEach((observer) => observer.disconnect());
+  header?.classList.remove("is-scrolled");
+};
 }

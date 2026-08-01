@@ -53,7 +53,9 @@ const editorialHtmlFiles = ["concept", "visuals", "glue"].map((route) => ({
 const homeMain = readFileSync(join(root, "src", "main.js"), "utf8");
 const gameMain = readFileSync(join(root, "src", "gluedle.js"), "utf8");
 const editorialMain = readFileSync(join(root, "src", "editorial.js"), "utf8");
-const routeTransitions = readFileSync(join(root, "src", "route-transitions.js"), "utf8");
+const appMain = readFileSync(join(root, "src", "app.js"), "utf8");
+const appShell = readFileSync(join(root, "src", "app-shell.js"), "utf8");
+const appShellStyles = readFileSync(join(root, "src", "styles", "app-shell.css"), "utf8");
 const editorialStyles = readFileSync(join(root, "src", "styles", "editorial.css"), "utf8");
 const transitionStyles = readFileSync(join(root, "src", "styles", "transitions.css"), "utf8");
 const gameStyleDirectory = join(root, "src", "styles");
@@ -153,10 +155,10 @@ for (const [file, source] of [
   }
 }
 
-if (!homeHtml.includes('type="module" src="/src/main.js"')) {
+if (!homeHtml.includes('type="module" src="/src/app.js"')) {
   errors.push("index.html: missing Vite module entry");
 }
-if (!gameHtml.includes('type="module" src="/src/gluedle.js"')) {
+if (!gameHtml.includes('type="module" src="/src/app.js"')) {
   errors.push(`${gameHtmlLabel}: missing Vite module entry`);
 }
 const htmlStyleContracts = [
@@ -167,7 +169,9 @@ const htmlStyleContracts = [
 for (const [source, label, pageStyle] of htmlStyleContracts) {
   if (
     !source.includes(`<link rel="stylesheet" href="${pageStyle}"`)
+    || !source.includes('<link rel="stylesheet" href="/src/styles/app-shell.css"')
     || !source.includes('<link rel="stylesheet" href="/src/styles/transitions.css"')
+    || !source.includes("data-route-style")
   ) {
     errors.push(`${label}: page and transition styles must load directly in <head>`);
   }
@@ -182,23 +186,24 @@ if (
 if (
   !/@view-transition\s*\{[\s\S]*?navigation:\s*auto/.test(transitionStyles)
   || !/prefers-reduced-motion:\s*reduce/.test(transitionStyles)
-  || !/route-transition-fallback/.test(transitionStyles)
-  || !/document\.startViewTransition/.test(routeTransitions)
-  || !/window\.location\.assign/.test(routeTransitions)
-  || !/prefers-reduced-motion:\s*reduce/.test(routeTransitions)
+  || !/document\.startViewTransition/.test(appShell)
+  || !/history\.pushState/.test(appShell)
+  || !/addEventListener\("popstate"/.test(appShell)
+  || !/fetch\(destination\.href/.test(appShell)
+  || !/routeView\.replaceWith\(nextView\)/.test(appShell)
+  || !/function\s+findRouteStyle/.test(appShell)
+  || !/querySelectorAll\(['"]link\[rel=/.test(appShell)
 ) {
-  errors.push("shared transitions must include native and reduced-motion-safe fallback navigation");
+  errors.push("shared app shell must provide client-side History routing and reduced-motion-safe transitions");
 }
 
-for (const { route, label, source } of editorialHtmlFiles) {
+for (const { label, source } of editorialHtmlFiles) {
   if (
-    !source.includes('type="module" src="/src/editorial.js"')
-    || !source.includes('class="section-wordmark"')
-    || !source.includes(`href="/${route}/"`)
-    || ["/", "/concept/", "/visuals/", "/glue/", "/gluedle/"]
-      .some((href) => !source.includes(`href="${href}"`))
+    !source.includes('type="module" src="/src/app.js"')
+    || !source.includes("data-app-header")
+    || !source.includes("data-route-view")
   ) {
-    errors.push(`${label}: missing shared editorial entry, identity, or clean-route navigation`);
+    errors.push(`${label}: missing the shared app shell or clean-route content entry`);
   }
 
   if (/<audio\b|播放|试听|20\d{2}[-年/]|\b\d{1,2}:\d{2}\b/i.test(source)) {
@@ -218,7 +223,7 @@ const homeAnchorIds = ["home", "concept", "story", "visuals", "release", "play",
 if (
   homeAnchorIds.some((id) => !new RegExp(`id="${id}"[^>]*\\bdata-scroll-anchor\\b`).test(homeHtml))
   || !/addEventListener\(\s*["']wheel["']/.test(homeMain)
-  || !/\{\s*passive:\s*false\s*\}/.test(homeMain)
+  || !/passive:\s*false[\s\S]*signal:\s*abortController\.signal/.test(homeMain)
   || !/window\.scrollTo\(\{/.test(homeMain)
   || !/prefers-reduced-motion:\s*reduce/.test(homeMain)
   || !/nestedScrollerCanMove\(event\.target,\s*direction\)/.test(homeMain)
@@ -228,25 +233,32 @@ if (
 
 if (
   !/<title>GLUE — CURLEY G<\/title>/.test(homeHtml)
-  || !/class="wordmark"[^>]*>GLUE<\/a>/.test(homeHtml)
+  || !/class="app-wordmark"[^>]*>GLUE<\/a>/.test(appShell)
   || !/<h1\s+id="hero-title"><span>GLUE<\/span><\/h1>/.test(homeHtml)
-  || !/class="site-nav"[\s\S]*?href="\/" aria-current="page"[^>]*>GLUE<\/a>/.test(homeHtml)
   || !/GLUE \/ ALBUM &amp; TITLE TRACK/.test(homeHtml)
   || !/TITLE TRACK \/ 01/.test(homeHtml)
   || !/GREEN TO BLUE \/ CONCEPT/.test(homeHtml)
   || />GREEN\s*(?:→|TO)\s*BLUE<\/a>/i.test(homeHtml)
-  || !/class="wordmark"[^>]*>GLUEDLE<\/a>/.test(gameHtml)
 ) {
   errors.push("site identity: GLUE must lead the album site and Green to Blue must remain a concept chapter");
 }
 
 const sharedRoutes = ["/", "/concept/", "/visuals/", "/glue/", "/gluedle/"];
 if (
-  !/class="game-nav"/.test(gameHtml)
-  || sharedRoutes.some((href) => !gameHtml.includes(`href="${href}"`))
-  || !/href="\/gluedle\/" aria-current="page"[^>]*>Gluedle<\/a>/.test(gameHtml)
+  sharedRoutes.some((href) => !appShell.includes(`["${href}"`))
+  || !appShell.includes('link.setAttribute("aria-current", "page")')
+  || !gameHtml.includes("data-app-header")
 ) {
-  errors.push("standalone Gluedle: persistent five-route navigation and current tab are required");
+  errors.push("shared app shell: persistent five-route navigation and current tab are required");
+}
+
+if (
+  !appMain.includes("createAppShell")
+  || !/\.app-header\s*\{/.test(appShellStyles)
+  || !/@media\s*\(max-width:\s*760px\)/.test(appShellStyles)
+  || /\.site-header|\.section-header|\.game-header/.test(appShellStyles)
+) {
+  errors.push("the single shared header must own its desktop and mobile structure");
 }
 
 for (const { name, source } of gameStyleFiles) {
@@ -363,7 +375,8 @@ if (
 
 const standaloneLinks = homeHtml.match(/href="\/gluedle\/"/g) ?? [];
 if (
-  standaloneLinks.length < 2
+  standaloneLinks.length < 1
+  || !/PLAY GLUEDLE/.test(appShell)
   || /href="[^"]*gluedle\.html/.test(homeHtml)
   || homeHtml.includes('href="#gluedle"')
   || homeMain.includes("bindGameActions")

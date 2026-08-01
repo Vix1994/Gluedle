@@ -1,0 +1,213 @@
+:root {
+  --app-black: #050505;
+  --app-paper: #f4f3ed;
+  --app-lake: #87a8be;
+  --app-font-display: "Archivo", "Arial Narrow", sans-serif;
+  --app-font-mono: "IBM Plex Mono", "Courier New", monospace;
+  --app-page-pad: clamp(20px, 4vw, 64px);
+  --header-height: 72px;
+  --app-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-app-header] {
+  display: contents;
+}
+
+.app-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 1000;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  width: 100%;
+  height: var(--header-height);
+  padding: 0 var(--app-page-pad);
+  color: var(--app-paper);
+  border-bottom: 1px solid rgb(244 243 237 / 14%);
+  background: rgb(5 5 5 / 76%);
+  backdrop-filter: blur(16px);
+  transition:
+    color 260ms ease,
+    background 260ms ease,
+    border-color 260ms ease;
+}
+
+.app-header.is-scrolled {
+  background: rgb(5 5 5 / 92%);
+}
+
+.app-header.is-paper {
+  color: var(--app-black);
+  border-color: rgb(5 5 5 / 14%);
+  background: rgb(232 235 235 / 82%);
+}
+
+.app-header.is-paper.is-scrolled {
+  background: rgb(232 235 235 / 94%);
+}
+
+.app-wordmark {
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  min-width: 48px;
+  min-height: 44px;
+  font-family: var(--app-font-display);
+  font-size: 0.88rem;
+  font-stretch: condensed;
+  font-weight: 850;
+  letter-spacing: -0.05em;
+  text-decoration: none;
+}
+
+.app-nav {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  gap: clamp(18px, 3vw, 44px);
+}
+
+.app-nav a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding-top: 2px;
+  font: 500 0.67rem/1.4 var(--app-font-mono);
+  letter-spacing: 0.08em;
+  text-decoration: none;
+}
+
+.app-nav a::after {
+  position: absolute;
+  right: 0;
+  bottom: 7px;
+  left: 0;
+  height: 1px;
+  content: "";
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 220ms var(--app-ease-out);
+}
+
+.app-nav a:hover::after,
+.app-nav a:focus-visible::after,
+.app-nav a[aria-current="page"]::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.app-header-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: end;
+  gap: 9px;
+  min-width: 132px;
+  min-height: 44px;
+  padding: 0 16px;
+  color: inherit;
+  border: 1px solid currentColor;
+  border-radius: 0;
+  background: transparent;
+  font: 500 0.64rem/1.4 var(--app-font-mono);
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition:
+    color 180ms ease,
+    background 180ms ease,
+    transform 180ms var(--app-ease-out);
+}
+
+.app-header-action:hover {
+  color: var(--app-black);
+  background: var(--app-paper);
+  transform: translateY(-2px);
+}
+
+.app-header.is-paper .app-header-action:hover {
+  color: var(--app-paper);
+  background: var(--app-black);
+}
+
+.app-header-action:active {
+  transform: translateY(0);
+}
+
+.app-progress {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  overflow: hidden;
+}
+
+.app-progress span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--app-lake);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.route-view {
+  min-height: 100svh;
+}
+
+.route-view[aria-busy="true"] {
+  cursor: progress;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --header-height: 112px;
+    --app-page-pad: clamp(16px, 5vw, 28px);
+  }
+
+  .app-header {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 44px 50px;
+    align-content: center;
+    height: var(--header-height);
+    padding-top: 6px;
+  }
+
+  .app-nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: start;
+    width: calc(100vw - var(--app-page-pad) * 2);
+    gap: 22px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .app-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .app-nav a {
+    flex: 0 0 auto;
+  }
+
+  .app-header-action {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 116px;
+    min-height: 38px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-header,
+  .app-nav a::after,
+  .app-header-action {
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,5 +1,3 @@
-import "./route-transitions.js";
-
 import { siteContent, songs } from "./data/catalog.js";
 import {
   MAX_ATTEMPTS,
@@ -13,7 +11,9 @@ import {
 import { canonicalGameUrl } from "./share/qr-code.js";
 import { buildShareCardModel, canvasToBlob, renderShareCard } from "./share/share-card.js";
 
-document.documentElement.classList.add("js");
+export function mountGluedle() {
+const abortController = new AbortController();
+let dayCheckTimer = 0;
 
 const NO_RESULTS_MESSAGE = "没有找到可选歌曲，请换一个关键词。";
 const DAY_CHECK_INTERVAL_MS = 60_000;
@@ -440,6 +440,11 @@ function downloadBlob(blob, filename) {
 }
 
 function bindDialogs() {
+  document.addEventListener("glue:open-help", () => {
+    const dialog = document.querySelector("[data-route-view] #help-dialog");
+    if (dialog) openDialog(dialog);
+  }, { signal: abortController.signal });
+
   document.querySelectorAll("[data-open-dialog]").forEach((button) => {
     button.addEventListener("click", () => {
       const dialog = document.getElementById(button.dataset.openDialog);
@@ -461,14 +466,14 @@ function bindDialogs() {
     if (!dialog) return;
     event.preventDefault();
     closeDialog(dialog);
-  });
+  }, { signal: abortController.signal });
 }
 
 function bindDailyRollover() {
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "visible") checkForNewDay();
-  });
-  window.setInterval(checkForNewDay, DAY_CHECK_INTERVAL_MS);
+  }, { signal: abortController.signal });
+  dayCheckTimer = window.setInterval(checkForNewDay, DAY_CHECK_INTERVAL_MS);
 }
 
 function checkForNewDay() {
@@ -566,4 +571,13 @@ function createLocalDayKey(date) {
 function dateFromLocalDayKey(key) {
   const [year, month, day] = key.split("-").map(Number);
   return new Date(year, month - 1, day);
+}
+
+return () => {
+  abortController.abort();
+  window.clearInterval(dayCheckTimer);
+  window.clearTimeout(toastTimer);
+  document.body.classList.remove("dialog-open", "is-booting");
+  document.body.style.removeProperty("--attempt-progress");
+};
 }
