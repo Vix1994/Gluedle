@@ -1,5 +1,3 @@
-import "./styles/site.css";
-
 import { siteContent } from "./data/catalog.js";
 
 document.documentElement.classList.add("js");

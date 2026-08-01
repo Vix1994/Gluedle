@@ -54,6 +54,7 @@ const homeMain = readFileSync(join(root, "src", "main.js"), "utf8");
 const gameMain = readFileSync(join(root, "src", "gluedle.js"), "utf8");
 const editorialMain = readFileSync(join(root, "src", "editorial.js"), "utf8");
 const editorialStyles = readFileSync(join(root, "src", "styles", "editorial.css"), "utf8");
+const transitionStyles = readFileSync(join(root, "src", "styles", "transitions.css"), "utf8");
 const gameStyleDirectory = join(root, "src", "styles");
 const gameStyleFileNames = readdirSync(gameStyleDirectory)
   .filter((name) => /^gluedle.*\.css$/.test(name))
@@ -157,14 +158,31 @@ if (!homeHtml.includes('type="module" src="/src/main.js"')) {
 if (!gameHtml.includes('type="module" src="/src/gluedle.js"')) {
   errors.push(`${gameHtmlLabel}: missing Vite module entry`);
 }
-if (!homeMain.includes('import "./styles/site.css";')) {
-  errors.push("src/main.js: site.css must be imported from the entry module");
+const htmlStyleContracts = [
+  [homeHtml, "index.html", "/src/styles/site.css"],
+  [gameHtml, gameHtmlLabel, "/src/styles/gluedle.css"],
+  ...editorialHtmlFiles.map(({ label, source }) => [source, label, "/src/styles/editorial.css"]),
+];
+for (const [source, label, pageStyle] of htmlStyleContracts) {
+  if (
+    !source.includes(`<link rel="stylesheet" href="${pageStyle}"`)
+    || !source.includes('<link rel="stylesheet" href="/src/styles/transitions.css"')
+  ) {
+    errors.push(`${label}: page and transition styles must load directly in <head>`);
+  }
 }
-if (!gameMain.includes('import "./styles/gluedle.css";')) {
-  errors.push("src/gluedle.js: gluedle.css must be imported from the game entry");
+if (
+  /import\s+["']\.\/styles\/(?:site|gluedle|editorial)\.css["']/.test(
+    `${homeMain}\n${gameMain}\n${editorialMain}`,
+  )
+) {
+  errors.push("page styles must not wait for JavaScript module imports");
 }
-if (!editorialMain.includes('import "./styles/editorial.css";')) {
-  errors.push("src/editorial.js: editorial.css must be imported from the editorial entry");
+if (
+  !/@view-transition\s*\{[\s\S]*?navigation:\s*auto/.test(transitionStyles)
+  || !/prefers-reduced-motion:\s*reduce/.test(transitionStyles)
+) {
+  errors.push("shared transitions must enable cross-document navigation with reduced-motion support");
 }
 
 for (const { route, label, source } of editorialHtmlFiles) {

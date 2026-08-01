@@ -24,6 +24,7 @@ const gameMain = readFileSync(new URL("../src/gluedle.js", import.meta.url), "ut
 const editorialMain = readFileSync(new URL("../src/editorial.js", import.meta.url), "utf8");
 const gameStyles = gameStyleFiles.map(({ source }) => source).join("\n");
 const editorialStyles = readFileSync(new URL("../src/styles/editorial.css", import.meta.url), "utf8");
+const transitionStyles = readFileSync(new URL("../src/styles/transitions.css", import.meta.url), "utf8");
 const shareCardSource = readFileSync(new URL("../src/share/share-card.js", import.meta.url), "utf8");
 const viteConfig = readFileSync(new URL("../vite.config.js", import.meta.url), "utf8");
 
@@ -98,7 +99,6 @@ test("editorial routes share navigation, motion, responsive, and content boundar
     assert.doesNotMatch(source, /<audio\b|播放|试听|20\d{2}[-年/]|\b\d{1,2}:\d{2}\b/i);
   }
 
-  assert.match(editorialMain, /import "\.\/styles\/editorial\.css"/);
   assert.match(editorialMain, /IntersectionObserver/);
   assert.doesNotMatch(editorialMain, /scrollIntoView/);
   assert.match(editorialStyles, /@media \(max-width: 720px\)/);
@@ -106,6 +106,33 @@ test("editorial routes share navigation, motion, responsive, and content boundar
   for (const token of ["#050505", "#f4f3ed", "#e8ebeb", "#87a8be", "#537b98"]) {
     assert.match(editorialStyles, new RegExp(token, "i"));
   }
+});
+
+test("all page styles load before JavaScript and share native route transitions", () => {
+  const contracts = [
+    [homeHtml, "/src/styles/site.css"],
+    [gameHtml, "/src/styles/gluedle.css"],
+    [conceptHtml, "/src/styles/editorial.css"],
+    [visualsHtml, "/src/styles/editorial.css"],
+    [glueHtml, "/src/styles/editorial.css"],
+  ];
+
+  for (const [source, pageStyle] of contracts) {
+    const styleIndex = source.indexOf(`<link rel="stylesheet" href="${pageStyle}"`);
+    const transitionIndex = source.indexOf(
+      '<link rel="stylesheet" href="/src/styles/transitions.css"',
+    );
+    const scriptIndex = source.indexOf('<script type="module"');
+    assert.ok(styleIndex > -1 && styleIndex < scriptIndex);
+    assert.ok(transitionIndex > -1 && transitionIndex < scriptIndex);
+  }
+
+  assert.doesNotMatch(
+    `${homeMain}\n${gameMain}\n${editorialMain}`,
+    /import\s+["']\.\/styles\/(?:site|gluedle|editorial)\.css["']/,
+  );
+  assert.match(transitionStyles, /@view-transition\s*\{[\s\S]*?navigation:\s*auto/);
+  assert.match(transitionStyles, /prefers-reduced-motion:\s*reduce/);
 });
 
 test("home wheel navigation advances through explicit content anchors", () => {

@@ -1,5 +1,3 @@
-import "./styles/gluedle.css";
-
 import { siteContent, songs } from "./data/catalog.js";
 import {
   MAX_ATTEMPTS,
