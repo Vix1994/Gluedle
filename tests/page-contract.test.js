@@ -16,18 +16,21 @@ const gameStyleFiles = gameStyleFileNames.map((name) => ({
 const gameStyleEntry = gameStyleFiles.find(({ name }) => name === "gluedle.css")?.source ?? "";
 const homeHtml = readFileSync(new URL("../pages/index.html", import.meta.url), "utf8");
 const gameHtml = readFileSync(new URL("../pages/gluedle/index.html", import.meta.url), "utf8");
+const catalogHtml = readFileSync(new URL("../pages/catalog/index.html", import.meta.url), "utf8");
 const conceptHtml = readFileSync(new URL("../pages/concept/index.html", import.meta.url), "utf8");
 const visualsHtml = readFileSync(new URL("../pages/visuals/index.html", import.meta.url), "utf8");
 const glueHtml = readFileSync(new URL("../pages/glue/index.html", import.meta.url), "utf8");
 const homeMain = readFileSync(new URL("../src/main.js", import.meta.url), "utf8");
 const anchorNavigation = readFileSync(new URL("../src/anchor-wheel-navigation.js", import.meta.url), "utf8");
 const gameMain = readFileSync(new URL("../src/gluedle.js", import.meta.url), "utf8");
+const catalogMain = readFileSync(new URL("../src/catalog.js", import.meta.url), "utf8");
 const editorialMain = readFileSync(new URL("../src/editorial.js", import.meta.url), "utf8");
 const appMain = readFileSync(new URL("../src/app.js", import.meta.url), "utf8");
 const appShell = readFileSync(new URL("../src/app-shell.js", import.meta.url), "utf8");
 const appShellStyles = readFileSync(new URL("../src/styles/app-shell.css", import.meta.url), "utf8");
 const gameStyles = gameStyleFiles.map(({ source }) => source).join("\n");
 const editorialStyles = readFileSync(new URL("../src/styles/editorial.css", import.meta.url), "utf8");
+const catalogStyles = readFileSync(new URL("../src/styles/catalog.css", import.meta.url), "utf8");
 const transitionStyles = readFileSync(new URL("../src/styles/transitions.css", import.meta.url), "utf8");
 const shareCardSource = readFileSync(new URL("../src/share/share-card.js", import.meta.url), "utf8");
 const songCatalogLoader = readFileSync(new URL("../src/data/song-catalog.js", import.meta.url), "utf8");
@@ -84,15 +87,27 @@ test("GLUE leads the album identity while Green to Blue stays a concept chapter"
   assert.doesNotMatch(homeHtml, />GREEN\s*(?:→|TO)\s*BLUE<\/a>/i);
 });
 
-test("all five routes keep a persistent tab path, including Gluedle", () => {
-  const routes = ["/", "/concept/", "/visuals/", "/glue/", "/gluedle/"];
-  for (const source of [homeHtml, conceptHtml, visualsHtml, glueHtml, gameHtml]) {
+test("all six routes keep a persistent tab path, including the direct catalog route", () => {
+  const routes = ["/", "/concept/", "/visuals/", "/glue/", "/gluedle/", "/catalog/"];
+  for (const source of [homeHtml, conceptHtml, visualsHtml, glueHtml, gameHtml, catalogHtml]) {
     assert.match(source, /data-app-header/);
     assert.match(source, /data-route-view/);
     assert.match(source, /type="module" src="\/src\/app\.js"/);
   }
   for (const route of routes) assert.match(appShell, new RegExp(`\\["${route}"`));
   assert.match(appShell, /link\.setAttribute\("aria-current", "page"\)/);
+});
+
+test("catalog route is direct-access only and exposes its filters", () => {
+  assert.match(appShell, /\["\/catalog\/", \{ label: "曲库", controller: "catalog", nav: false \}\]/);
+  assert.match(appShell, /filter\(\(\[, route\]\) => route\.nav !== false\)/);
+  assert.doesNotMatch(homeHtml, /href="\/catalog\/"/);
+  for (const id of ["catalog-search", "catalog-project", "catalog-language", "catalog-credit", "catalog-results"]) {
+    assert.match(catalogHtml, new RegExp(`id="${id}"|data-catalog-${id.replace("catalog-", "")}`));
+  }
+  assert.match(catalogMain, /loadSongCatalog/);
+  assert.match(catalogMain, /normalizeSearchText/);
+  assert.match(catalogStyles, /@media\s*\(max-width:\s*680px\)/);
 });
 
 test("home exposes three clean editorial routes drawn from the original visual directions", () => {
@@ -130,6 +145,7 @@ test("all page styles load before JavaScript and use the persistent app router",
   const contracts = [
     [homeHtml, "/src/styles/site.css"],
     [gameHtml, "/src/styles/gluedle.css"],
+    [catalogHtml, "/src/styles/catalog.css"],
     [conceptHtml, "/src/styles/editorial.css"],
     [visualsHtml, "/src/styles/editorial.css"],
     [glueHtml, "/src/styles/editorial.css"],
@@ -166,6 +182,7 @@ test("all page styles load before JavaScript and use the persistent app router",
   assert.match(appMain, /createAppShell/);
   assert.match(appShellStyles, /\.app-header\s*\{/);
   assert.doesNotMatch(appShellStyles, /\.site-header|\.section-header|\.game-header/);
+  assert.match(appShellStyles, /@media \(max-width:\s*520px\)[\s\S]*?grid-template-columns:\s*48px minmax\(0, 1fr\)[\s\S]*?white-space:\s*nowrap/);
 });
 
 test("non-game routes share wheel navigation across explicit content anchors", () => {
@@ -289,7 +306,7 @@ test("game entry synchronizes progress, reloads JSON data, and randomizes each r
   assert.match(gameMain, /selectRandomAnswer\(choices\)/);
   assert.doesNotMatch(gameMain, /selectDailyAnswer|gluedle:daily|checkForNewDay/);
   const parsedCatalog = JSON.parse(songCatalogJson);
-  assert.ok(parsedCatalog.every((song) => ["zh", "en", "mixed", "ja"].includes(song.language)));
+  assert.ok(parsedCatalog.every((song) => ["zh", "en"].includes(song.language)));
   assert.ok(parsedCatalog.every((song) => song.project.type !== "single" || song.project.title === "单曲"));
 
   assert.match(gameMain, /activeSuggestion\s*===\s*-1/);
@@ -390,13 +407,14 @@ test("share card uses the home palette and Preview 5 result colors", () => {
   assert.doesNotMatch(shareCardSource, /#8e2638/i);
 });
 
-test("production build declares all five HTML entries", () => {
+test("production build declares all six HTML entries", () => {
   for (const entry of [
     "./pages/index.html",
     "./pages/concept/index.html",
     "./pages/visuals/index.html",
     "./pages/glue/index.html",
     "./pages/gluedle/index.html",
+    "./pages/catalog/index.html",
   ]) {
     assert.ok(viteConfig.includes(`"${entry}"`), `${entry} must be a Vite input`);
   }

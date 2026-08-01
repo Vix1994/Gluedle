@@ -4,9 +4,12 @@ const ROUTES = new Map([
   ["/visuals/", { label: "影像", controller: "editorial", paper: true }],
   ["/glue/", { label: "单曲", controller: "editorial" }],
   ["/gluedle/", { label: "Gluedle", controller: "gluedle" }],
+  ["/catalog/", { label: "曲库", controller: "catalog", nav: false }],
 ]);
 
-const NAV_ITEMS = [...ROUTES].map(([href, route]) => ({ href, label: route.label }));
+const NAV_ITEMS = [...ROUTES]
+  .filter(([, route]) => route.nav !== false)
+  .map(([href, route]) => ({ href, label: route.label }));
 
 export function createAppShell(mountController) {
   const host = document.querySelector("[data-app-header]");

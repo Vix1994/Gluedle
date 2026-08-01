@@ -1,5 +1,5 @@
 export const SONG_CATALOG_URL = "/data/gluedle-songs.json";
-export const SONG_LANGUAGES = Object.freeze(["zh", "en", "mixed", "ja"]);
+export const SONG_LANGUAGES = Object.freeze(["zh", "en"]);
 
 export async function loadSongCatalog({ signal, fetchImpl = globalThis.fetch } = {}) {
   if (typeof fetchImpl !== "function") {

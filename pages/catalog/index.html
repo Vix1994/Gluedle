@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#050505" />
+    <meta name="description" content="Gluedle 曲库：查看歌曲、项目、语言和创作信息。" />
+    <title>曲库 — GLUEDLE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,300..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles/app-shell.css" />
+    <link rel="stylesheet" href="/src/styles/catalog.css" data-route-style />
+    <link rel="stylesheet" href="/src/styles/transitions.css" />
+    <script type="module" src="/src/app.js"></script>
+  </head>
+  <body data-page="catalog">
+    <div data-app-header></div>
+
+    <div class="route-view" data-route-view>
+      <a class="skip-link" href="#catalog-content">跳至曲库内容</a>
+
+      <main class="catalog-shell" id="catalog-content" tabindex="-1">
+        <header class="catalog-hero">
+          <div>
+            <p class="catalog-kicker">GLUEDLE / CATALOG / QQ MUSIC</p>
+            <h1>曲库<span>/</span>索引</h1>
+          </div>
+          <p class="catalog-intro">把每一首歌放回它的项目、语言和创作关系里。<br />搜索、筛选，直接查看当前 JSON 题库。</p>
+        </header>
+
+        <section class="catalog-stats" aria-label="曲库统计">
+          <div><span>全部作品</span><strong data-catalog-total>—</strong></div>
+          <div><span>OST</span><strong data-catalog-ost>—</strong></div>
+          <div><span>有创作参与</span><strong data-catalog-created>—</strong></div>
+          <div><span>英文歌曲</span><strong data-catalog-english>—</strong></div>
+        </section>
+
+        <section class="catalog-workbench" aria-label="曲库筛选工具">
+          <div class="catalog-search-wrap">
+            <label for="catalog-search">搜索曲名 / 别名 / 项目</label>
+            <input id="catalog-search" type="search" placeholder="输入关键词" autocomplete="off" />
+          </div>
+          <label>
+            <span>项目</span>
+            <select id="catalog-project">
+              <option value="all">全部项目</option>
+              <option value="single">单曲</option>
+              <option value="ost">OST</option>
+              <option value="ep">EP</option>
+              <option value="album">专辑</option>
+            </select>
+          </label>
+          <label>
+            <span>语言</span>
+            <select id="catalog-language">
+              <option value="all">全部语言</option>
+              <option value="zh">中文</option>
+              <option value="en">英文</option>
+            </select>
+          </label>
+          <label>
+            <span>创作</span>
+            <select id="catalog-credit">
+              <option value="all">全部创作</option>
+              <option value="writing">创作参与</option>
+              <option value="both">词·曲参与</option>
+              <option value="lyrics">词参与</option>
+              <option value="composition">曲参与</option>
+              <option value="none">非创作</option>
+            </select>
+          </label>
+          <button id="catalog-clear" class="catalog-clear" type="button" hidden>清除筛选 ×</button>
+        </section>
+
+        <div class="catalog-list-head">
+          <p><span data-catalog-visible>—</span> / <span data-catalog-total>—</span> 首显示</p>
+          <p>按发行日由新到旧</p>
+        </div>
+
+        <p class="catalog-loading" data-catalog-loading role="status">正在读取曲库……</p>
+        <section class="catalog-results" data-catalog-results aria-live="polite" aria-label="曲目列表"></section>
+        <section class="catalog-empty" data-catalog-empty hidden aria-live="polite">
+          <span>NO MATCH</span>
+          <h2>没有符合条件的歌曲。</h2>
+          <p>试试清除筛选，或换一个曲名、别名或项目关键词。</p>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

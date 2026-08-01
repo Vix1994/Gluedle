@@ -54,6 +54,8 @@ const pagesDirectory = join(root, "pages");
 const homeHtml = readFileSync(join(pagesDirectory, "index.html"), "utf8");
 const gameHtmlLabel = "pages/gluedle/index.html";
 const gameHtml = readFileSync(join(pagesDirectory, "gluedle", "index.html"), "utf8");
+const catalogHtmlLabel = "pages/catalog/index.html";
+const catalogHtml = readFileSync(join(pagesDirectory, "catalog", "index.html"), "utf8");
 const editorialHtmlFiles = ["concept", "visuals", "glue"].map((route) => ({
   route,
   label: `pages/${route}/index.html`,
@@ -62,6 +64,7 @@ const editorialHtmlFiles = ["concept", "visuals", "glue"].map((route) => ({
 const homeMain = readFileSync(join(root, "src", "main.js"), "utf8");
 const anchorNavigation = readFileSync(join(root, "src", "anchor-wheel-navigation.js"), "utf8");
 const gameMain = readFileSync(join(root, "src", "gluedle.js"), "utf8");
+const catalogMain = readFileSync(join(root, "src", "catalog.js"), "utf8");
 const editorialMain = readFileSync(join(root, "src", "editorial.js"), "utf8");
 const appMain = readFileSync(join(root, "src", "app.js"), "utf8");
 const appShell = readFileSync(join(root, "src", "app-shell.js"), "utf8");
@@ -78,6 +81,7 @@ const gameStyleFiles = gameStyleFileNames.map((name) => ({
 }));
 const gameStyleEntry = gameStyleFiles.find(({ name }) => name === "gluedle.css")?.source ?? "";
 const gameStyles = gameStyleFiles.map(({ source }) => source).join("\n");
+const catalogStyles = readFileSync(join(root, "src", "styles", "catalog.css"), "utf8");
 const shareCardSource = readFileSync(join(root, "src", "share", "share-card.js"), "utf8");
 const songCatalogSource = readFileSync(join(root, "src", "data", "song-catalog.js"), "utf8");
 const songCatalogJson = readFileSync(join(root, "public", "data", "gluedle-songs.json"), "utf8");
@@ -152,6 +156,7 @@ const htmlForbidden = [
 for (const [file, source] of [
   ["index.html", homeHtml],
   [gameHtmlLabel, gameHtml],
+  [catalogHtmlLabel, catalogHtml],
   ...editorialHtmlFiles.map(({ label, source }) => [label, source]),
 ]) {
   for (const [pattern, message] of htmlForbidden) {
@@ -168,6 +173,7 @@ if (!gameHtml.includes('type="module" src="/src/app.js"')) {
 const htmlStyleContracts = [
   [homeHtml, "index.html", "/src/styles/site.css"],
   [gameHtml, gameHtmlLabel, "/src/styles/gluedle.css"],
+  [catalogHtml, catalogHtmlLabel, "/src/styles/catalog.css"],
   ...editorialHtmlFiles.map(({ label, source }) => [source, label, "/src/styles/editorial.css"]),
 ];
 for (const [source, label, pageStyle] of htmlStyleContracts) {
@@ -186,6 +192,19 @@ if (
   )
 ) {
   errors.push("page styles must not wait for JavaScript module imports");
+}
+
+if (
+  !catalogHtml.includes('type="module" src="/src/app.js"')
+  || !catalogHtml.includes("data-app-header")
+  || !catalogHtml.includes("data-route-view")
+  || !catalogHtml.includes('href="/src/styles/catalog.css"')
+  || !catalogMain.includes("loadSongCatalog")
+  || /scrollIntoView/.test(catalogMain)
+  || !/@media\s*\(max-width:\s*680px\)/.test(catalogStyles)
+  || !/@media\s*\(prefers-reduced-motion:\s*reduce\)/.test(catalogStyles)
+) {
+  errors.push("catalog page: shared shell, catalog controls, and responsive styles are incomplete");
 }
 if (
   !/@view-transition\s*\{[\s\S]*?navigation:\s*auto/.test(transitionStyles)
@@ -317,7 +336,7 @@ if (
   !songCatalogSource.includes('SONG_CATALOG_URL = "/data/gluedle-songs.json"')
   || !gameMain.includes("loadSongCatalog({ signal })")
   || !Array.isArray(parsedSongCatalog)
-  || parsedSongCatalog.some((song) => !["zh", "en", "mixed", "ja"].includes(song.language))
+  || parsedSongCatalog.some((song) => !["zh", "en"].includes(song.language))
   || parsedSongCatalog.some((song) => song.project?.type === "single" && song.project?.title !== "单曲")
   || parsedSongCatalog.some((song) => Object.hasOwn(song, "isLive"))
   || parsedSongCatalog.some((song) =>
@@ -483,14 +502,15 @@ const viteInputs = [
   "./pages/visuals/index.html",
   "./pages/glue/index.html",
   "./pages/gluedle/index.html",
+  "./pages/catalog/index.html",
 ];
 if (viteInputs.some((input) => !viteConfig.includes(`"${input}"`))) {
-  errors.push("vite.config.js: production build must include all five HTML entries");
+  errors.push("vite.config.js: production build must include all six HTML entries");
 }
 
 if (errors.length) {
   console.error(errors.join("\n\n"));
   process.exitCode = 1;
 } else {
-  console.log(`Lint passed: ${javaScriptFiles.length} JavaScript files and five-page HTML contracts checked.`);
+  console.log(`Lint passed: ${javaScriptFiles.length} JavaScript files and six-page HTML contracts checked.`);
 }

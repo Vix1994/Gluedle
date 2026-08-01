@@ -328,7 +328,7 @@ export function mountGluedle() {
       ? "↑"
       : comparison.direction === "down" ? "↓" : "";
     const displayValue = directionMark ? `${formattedValue} ${directionMark}` : formattedValue;
-    const helperText = comparisonHelper(comparison, field);
+    const helperText = comparisonHelper(comparison);
     cell.className = "comparison-cell";
     cell.dataset.field = field;
     cell.dataset.label = label;
@@ -530,9 +530,7 @@ function formatCellValue(value, field) {
   if (field === "language") {
     return {
       zh: "中文",
-      en: "English",
-      mixed: "中英混合",
-      ja: "日本語",
+      en: "英文",
     }[value] ?? value ?? "待核验";
   }
   if (field === "performance") {
@@ -551,7 +549,7 @@ function formatCellValue(value, field) {
   return String(value ?? "待核验");
 }
 
-function comparisonHelper(comparison, field) {
+function comparisonHelper(comparison) {
   const statusLabel = {
     match: "✓ 匹配",
     near: "≈ 接近",
@@ -559,12 +557,6 @@ function comparisonHelper(comparison, field) {
     miss: "× 不匹配",
     unknown: "— 待核验",
   }[comparison.status] ?? "";
-  if (comparison.direction === "up") {
-    return `${statusLabel} · ${field === "year" ? "答案更晚" : "答案更长"}`;
-  }
-  if (comparison.direction === "down") {
-    return `${statusLabel} · ${field === "year" ? "答案更早" : "答案更短"}`;
-  }
   return statusLabel;
 }
 

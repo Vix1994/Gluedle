@@ -170,12 +170,12 @@ test("compareSongs applies project, performance, and credits rules", () => {
 });
 
 test("compareSongs compares lyric language as an exact metadata field", () => {
-  const mixed = compareSongs(
-    song({ language: "mixed" }),
+  const nonEnglish = compareSongs(
+    song({ language: "zh" }),
     song({ language: "en" }),
   );
-  assert.deepEqual(mixed.language, {
-    value: "mixed",
+  assert.deepEqual(nonEnglish.language, {
+    value: "zh",
     status: COMPARISON_STATUS.MISS,
     direction: null,
   });

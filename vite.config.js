@@ -27,6 +27,7 @@ export default defineConfig({
         visuals: fileURLToPath(new URL("./pages/visuals/index.html", import.meta.url)),
         glue: fileURLToPath(new URL("./pages/glue/index.html", import.meta.url)),
         gluedle: fileURLToPath(new URL("./pages/gluedle/index.html", import.meta.url)),
+        catalog: fileURLToPath(new URL("./pages/catalog/index.html", import.meta.url)),
       },
     },
   },
