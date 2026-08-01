@@ -1,0 +1,591 @@
+:root {
+  color-scheme: dark;
+  --black: #050505;
+  --black-soft: #111211;
+  --white: #f4f3ed;
+  --white-cool: #e8ebeb;
+  --grey: #a7aaa8;
+  --grey-dark: #4d504e;
+  --lake: #87a8be;
+  --lake-dark: #537b98;
+  --green: #9cb59a;
+  --correct: #a6c7a2;
+  --near: #d5d0ad;
+  --wrong: #626a70;
+  --line-dark: rgb(244 243 237 / 22%);
+  --line-light: rgb(5 5 5 / 18%);
+  --font-display: "Archivo", "Arial Narrow", sans-serif;
+  --font-mono: "IBM Plex Mono", "Courier New", monospace;
+  --page-pad: clamp(20px, 4vw, 64px);
+  --header-height: 72px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --attempt-progress: 0;
+  font-family: var(--font-display);
+  font-synthesis: none;
+  background: var(--black);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  color: var(--white);
+  background: var(--black);
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  overflow-x: clip;
+  color: var(--white);
+  background: var(--black);
+  font-family: var(--font-display);
+  font-size: 16px;
+}
+
+body.dialog-open {
+  overflow: hidden;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a {
+  color: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+li,
+button,
+label {
+  text-wrap: pretty;
+}
+
+:focus-visible {
+  outline: 3px solid var(--lake);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 1000;
+  padding: 12px 16px;
+  color: var(--black);
+  background: var(--white);
+  font-weight: 700;
+  transform: translateY(-180%);
+  transition: transform 180ms var(--ease-out);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* The boot screen is present only while the module is unavailable or initializing. */
+.app-boot {
+  display: none;
+}
+
+body.is-booting .app-boot {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  align-content: center;
+  gap: 18px;
+  padding: var(--page-pad);
+  color: var(--white);
+  border: clamp(12px, 2vw, 28px) solid var(--lake);
+  background:
+    linear-gradient(90deg, rgb(5 5 5 / 84%), rgb(5 5 5 / 58%)),
+    url("/assets/glue/blue-noise-texture.jpg") center / cover,
+    var(--black);
+  font-family: var(--font-mono);
+  line-height: 1.65;
+}
+
+body.is-booting .app-boot::before {
+  width: 42px;
+  height: 42px;
+  content: "";
+  border: 1px solid var(--white);
+  border-radius: 50%;
+  box-shadow: 0 0 0 12px rgb(135 168 190 / 28%);
+}
+
+body.is-booting .app-boot strong,
+body.is-booting .app-boot h1,
+body.is-booting .app-boot h2 {
+  max-width: 720px;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 7vw, 6.5rem);
+  font-stretch: condensed;
+  font-weight: 600;
+  line-height: 0.88;
+  letter-spacing: -0.075em;
+}
+
+body.is-booting .app-boot p {
+  max-width: 62ch;
+  margin: 0;
+}
+
+.game-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 32px;
+  min-height: var(--header-height);
+  padding: 0 var(--page-pad);
+  color: var(--white);
+  border-bottom: 1px solid rgb(244 243 237 / 14%);
+  background: rgb(5 5 5 / 84%);
+  backdrop-filter: blur(16px);
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  min-height: 44px;
+  font-size: 0.85rem;
+  font-stretch: condensed;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  text-decoration: none;
+}
+
+.header-meta {
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 2.4vw, 36px);
+  color: var(--grey);
+  font: 500 0.66rem/1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+}
+
+.icon-button {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  place-items: center;
+  color: var(--white);
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: color 180ms ease, background 180ms ease, transform 180ms var(--ease-out);
+}
+
+.icon-button:hover {
+  color: var(--black);
+  background: var(--white);
+  transform: rotate(8deg);
+}
+
+.icon-button:active {
+  transform: rotate(0);
+}
+
+.game-shell {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.68fr) minmax(0, 1.32fr);
+  grid-template-rows: auto auto;
+  align-items: start;
+  gap: 28px clamp(24px, 3.4vw, 56px);
+  width: min(100%, 1540px);
+  min-width: 0;
+  margin: 0 auto;
+  padding: clamp(24px, 3vw, 48px) var(--page-pad) clamp(64px, 8vw, 112px);
+}
+
+.game-intro {
+  position: sticky;
+  top: calc(var(--header-height) + 24px);
+  display: flex;
+  flex-direction: column;
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  justify-content: flex-end;
+  min-width: 0;
+  min-height: calc(100svh - var(--header-height) - 48px);
+  padding: clamp(26px, 3.5vw, 54px);
+  overflow: hidden;
+  color: var(--white);
+  background: var(--black-soft);
+  isolation: isolate;
+}
+
+.game-intro::before,
+.game-intro::after {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  content: "";
+  pointer-events: none;
+}
+
+.game-intro::before {
+  background:
+    linear-gradient(180deg, rgb(5 5 5 / 8%) 0%, rgb(5 5 5 / 34%) 42%, rgb(5 5 5 / 94%) 100%),
+    linear-gradient(90deg, rgb(5 5 5 / 12%), transparent 62%),
+    url("/assets/glue/water-ripple.jpg") 57% center / cover no-repeat;
+  filter: grayscale(0.72) contrast(1.17) brightness(1.04);
+  transform: scale(1.015);
+}
+
+.game-intro::after {
+  z-index: -1;
+  inset: -3%;
+  opacity: 0.13;
+  background: url("/assets/glue/blue-noise-texture.jpg") center / cover;
+  mix-blend-mode: screen;
+  animation: grain-drift 2.4s steps(3) infinite;
+}
+
+.game-intro > * {
+  position: relative;
+  z-index: 2;
+}
+
+.intro-index,
+.kicker,
+.meta-label,
+.library-note > span {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+.intro-index {
+  position: absolute;
+  top: clamp(24px, 3.2vw, 48px);
+  right: clamp(24px, 3.2vw, 48px);
+  left: clamp(24px, 3.2vw, 48px);
+  display: flex;
+  justify-content: space-between;
+  color: rgb(244 243 237 / 66%);
+  font-size: 0.65rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.09em;
+}
+
+.kicker,
+.meta-label {
+  margin: 0;
+  color: var(--lake);
+  font-size: 0.67rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.1em;
+}
+
+.game-intro h1 {
+  max-width: 7ch;
+  margin: 18px 0 22px;
+  font-size: clamp(4rem, 6.1vw, 7.6rem);
+  font-stretch: condensed;
+  font-weight: 590;
+  line-height: 0.78;
+  letter-spacing: -0.085em;
+  text-wrap: balance;
+}
+
+.intro-copy {
+  max-width: 42ch;
+  margin: 0;
+  color: rgb(244 243 237 / 78%);
+  font-size: clamp(0.92rem, 1.2vw, 1.06rem);
+  line-height: 1.72;
+}
+
+.library-note {
+  display: grid;
+  gap: 7px;
+  width: min(100%, 420px);
+  margin: 28px 0 0;
+  padding: 16px 0 0;
+  border-top: 1px solid rgb(244 243 237 / 38%);
+  text-align: left;
+}
+
+.library-note > span {
+  color: rgb(244 243 237 / 58%);
+  font-size: 0.61rem;
+  letter-spacing: 0.1em;
+}
+
+.library-note strong {
+  font-size: 0.91rem;
+  font-weight: 560;
+}
+
+.game-signal {
+  position: absolute;
+  top: 19%;
+  right: -15%;
+  z-index: 1;
+  width: min(72%, 420px);
+  aspect-ratio: 1;
+  pointer-events: none;
+}
+
+.signal-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(18% + var(--ring-index, 0) * 13%);
+  aspect-ratio: 1;
+  border: 1px solid rgb(135 168 190 / 36%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: signal-ring 5.6s var(--ease-out) infinite alternate;
+  animation-delay: calc(var(--ring-index, 0) * -0.55s);
+}
+
+.signal-ring:nth-child(1) { --ring-index: 1; }
+.signal-ring:nth-child(2) { --ring-index: 2; }
+.signal-ring:nth-child(3) { --ring-index: 3; }
+.signal-ring:nth-child(4) { --ring-index: 4; }
+.signal-ring:nth-child(5) { --ring-index: 5; }
+.signal-ring:nth-child(6) { --ring-index: 6; }
+
+.game-panel {
+  grid-column: 2;
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  color: var(--black);
+  border: 1px solid var(--black);
+  border-radius: 0;
+  background: var(--white);
+  box-shadow: none;
+  transition: border-color 240ms ease, background 240ms ease;
+}
+
+.game-panel-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+  padding: clamp(18px, 2.4vw, 30px);
+  color: var(--white);
+  border-bottom: 1px solid var(--line-dark);
+  background: var(--black);
+}
+
+.game-panel-head > div {
+  min-width: 0;
+}
+
+.game-panel-head .meta-label {
+  color: var(--lake);
+}
+
+#game-status {
+  margin: 6px 0 0;
+  overflow-wrap: anywhere;
+  font-size: 0.92rem;
+  font-weight: 520;
+  line-height: 1.4;
+}
+
+.attempt-display {
+  display: flex;
+  flex: none;
+  align-items: baseline;
+  gap: 5px;
+  margin: 0;
+  font: 620 clamp(2.4rem, 4vw, 4rem)/0.8 var(--font-display);
+  letter-spacing: -0.07em;
+}
+
+.attempt-display small {
+  color: var(--grey);
+  font: 500 0.7rem/1 var(--font-mono);
+  letter-spacing: 0.04em;
+}
+
+.attempt-track {
+  position: relative;
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(6, minmax(20px, 1fr));
+  gap: 6px;
+  width: 100%;
+  padding-top: 8px;
+  overflow: hidden;
+}
+
+.attempt-track::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 2px;
+  content: "";
+  background: var(--lake);
+  transform: scaleX(var(--attempt-progress));
+  transform-origin: left;
+  transition: transform 320ms var(--ease-out), background 240ms ease;
+}
+
+[data-attempt-marker] {
+  display: grid;
+  min-height: 24px;
+  place-items: center;
+  color: var(--grey);
+  border: 1px solid rgb(244 243 237 / 24%);
+  font: 500 0.58rem/1 var(--font-mono);
+  transition: color 220ms ease, border-color 220ms ease, background 220ms ease;
+}
+
+body[data-attempts="1"] [data-attempt-marker]:nth-child(-n + 1),
+body[data-attempts="2"] [data-attempt-marker]:nth-child(-n + 2),
+body[data-attempts="3"] [data-attempt-marker]:nth-child(-n + 3),
+body[data-attempts="4"] [data-attempt-marker]:nth-child(-n + 4),
+body[data-attempts="5"] [data-attempt-marker]:nth-child(-n + 5),
+body[data-attempts="6"] [data-attempt-marker]:nth-child(-n + 6) {
+  color: var(--black);
+  border-color: var(--lake);
+  background: var(--lake);
+}
+
+body[data-game-state="won"] .attempt-track::before {
+  background: var(--correct);
+}
+
+body[data-game-state="won"] .game-panel,
+body[data-game-state="lost"] .game-panel {
+  border-color: var(--lake);
+}
+
+.guess-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 0;
+  padding: clamp(22px, 2.8vw, 34px) clamp(18px, 2.4vw, 30px) 0;
+}
+
+.search-field {
+  position: relative;
+  min-width: 0;
+}
+
+.search-field label {
+  display: block;
+  margin-bottom: 9px;
+  color: var(--grey-dark);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+}
+
+.search-field input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  color: var(--black);
+  border: 1px solid var(--black);
+  border-right: 0;
+  border-radius: 0;
+  background: transparent;
+  outline: 0;
+  transition: color 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+.search-field input::placeholder {
+  color: var(--grey-dark);
+}
+
+.search-field input:focus {
+  border-color: var(--lake-dark);
+  background: var(--white-cool);
+  box-shadow: inset 0 0 0 2px var(--lake-dark);
+}
+
+.search-field input:disabled {
+  cursor: not-allowed;
+  opacity: 0.52;
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  z-index: 30;
+  max-height: min(330px, 44vh);
+  margin: -1px 0 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+  color: var(--black);
+  border: 1px solid var(--black);
+  border-radius: 0;
+  background: var(--white);
+  box-shadow: none;
+}
+
+.suggestions[hidden] {
+  display: none;
+}
+
+.suggestion-option {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line-light);
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.suggestion-option:last-child {
+  border-bottom: 0;
+}
+
+.suggestion-option:hover,
+.suggestion-option.is-active,
+.suggestion-option[aria-selected="true"] {
+  color: var(--black);
+  background: var(--lake);
+}
+

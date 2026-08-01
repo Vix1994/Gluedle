@@ -35,20 +35,24 @@ These role labels are internal design guidance only; they do not identify the cr
 
 | Token | Value | Use |
 | --- | --- | --- |
-| `--color-ink` | `#0B1111` | near-black ground, primary type |
-| `--color-exposure` | `#F4F7F4` | exposed white, high-contrast type |
-| `--color-paper` | `#E9EEEA` | quiet editorial surface |
-| `--color-lake` | `#79C6D3` | primary lake blue |
-| `--color-lake-deep` | `#247D91` | depth, focus, active state |
-| `--color-green` | `#9BCB9A` | the “green” end of the concept gradient |
-| `--color-blue` | `#4A91B2` | the “blue” end of the concept gradient |
-| `--color-muted` | `#788380` | secondary metadata |
+| `--black` | `#050505` | near-black ground, primary type |
+| `--black-soft` | `#111211` | raised dark surface |
+| `--white` | `#F4F3ED` | exposed white, high-contrast type |
+| `--white-cool` | `#E8EBEB` | quiet editorial surface |
+| `--lake` | `#87A8BE` | primary lake blue |
+| `--lake-dark` | `#537B98` | depth, focus, active state |
+| `--green` | `#9CB59A` | the “green” end of the concept transition |
+| `--correct` | `#A6C7A2` | exact metadata match |
+| `--near` | `#D5D0AD` | near or partial metadata match |
+| `--wrong` | `#626A70` | metadata mismatch |
+| `--grey` | `#A7AAA8` | secondary metadata |
+| `--grey-dark` | `#4D504E` | quiet rules and inactive state |
 
 ### Typography
 
-- Display stack: `Manrope, "Noto Sans SC", sans-serif`
-- Editorial/body stack: `"Noto Sans SC", "PingFang SC", sans-serif`
-- Metadata stack: `"DM Mono", "SFMono-Regular", monospace`
+- Display stack: `Archivo, "Arial Narrow", sans-serif`
+- Editorial/body stack: `Archivo, "Noto Sans SC", "PingFang SC", sans-serif`
+- Metadata stack: `"IBM Plex Mono", "Courier New", monospace`
 - Display tracking: `-0.04em`
 - Metadata tracking: `0.08em`
 

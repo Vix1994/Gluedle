@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { extname, join, relative } from "node:path";
 import { parseAst } from "rolldown/parseAst";
 
@@ -15,7 +15,24 @@ function collectJavaScript(directory) {
   });
 }
 
+function extractFunction(source, name) {
+  const signature = new RegExp(`\\b(?:async\\s+)?function\\s+${name}\\s*\\(`).exec(source);
+  if (!signature) return null;
+  const openingBrace = source.indexOf("{", signature.index);
+  if (openingBrace < 0) return null;
+
+  let depth = 0;
+  for (let index = openingBrace; index < source.length; index += 1) {
+    if (source[index] === "{") depth += 1;
+    if (source[index] !== "}") continue;
+    depth -= 1;
+    if (depth === 0) return source.slice(signature.index, index + 1);
+  }
+  return null;
+}
+
 const javaScriptFiles = collectJavaScript(root);
+const sourceJavaScriptFiles = collectJavaScript(join(root, "src"));
 
 for (const file of javaScriptFiles) {
   try {
@@ -29,7 +46,17 @@ const homeHtml = readFileSync(join(root, "index.html"), "utf8");
 const gameHtml = readFileSync(join(root, "gluedle.html"), "utf8");
 const homeMain = readFileSync(join(root, "src", "main.js"), "utf8");
 const gameMain = readFileSync(join(root, "src", "gluedle.js"), "utf8");
-const gameStyles = readFileSync(join(root, "src", "styles", "gluedle.css"), "utf8");
+const gameStyleDirectory = join(root, "src", "styles");
+const gameStyleFileNames = readdirSync(gameStyleDirectory)
+  .filter((name) => /^gluedle.*\.css$/.test(name))
+  .sort();
+const gameStyleFiles = gameStyleFileNames.map((name) => ({
+  name,
+  source: readFileSync(join(gameStyleDirectory, name), "utf8"),
+}));
+const gameStyleEntry = gameStyleFiles.find(({ name }) => name === "gluedle.css")?.source ?? "";
+const gameStyles = gameStyleFiles.map(({ source }) => source).join("\n");
+const shareCardSource = readFileSync(join(root, "src", "share", "share-card.js"), "utf8");
 const viteConfig = readFileSync(join(root, "vite.config.js"), "utf8");
 const requiredIds = [
   "game-date",
@@ -75,21 +102,28 @@ if (homeHtml.includes("data-track-list") || homeMain.includes("function renderCa
 
 if (
   !gameMain.includes('attempt.comparison.live, "live"')
-  || !readFileSync(join(root, "src", "share", "share-card.js"), "utf8")
-    .includes('SHARE_FIELDS = ["year", "duration", "project", "language", "live"')
+  || !shareCardSource.includes('SHARE_FIELDS = ["year", "duration", "project", "language", "live"')
 ) {
   errors.push("standalone Gluedle: Live comparison must render and be included in shared results");
 }
 
-const suggestionsStart = gameMain.indexOf("function showSuggestions");
-const suggestionsEnd = gameMain.indexOf("function updateActiveSuggestion");
-const suggestionsSource = gameMain.slice(suggestionsStart, suggestionsEnd);
+const suggestionsSource = extractFunction(gameMain, "showSuggestions");
 if (
-  suggestionsStart < 0
-  || suggestionsEnd <= suggestionsStart
-  || /releaseYear|durationSec|formatDuration/.test(suggestionsSource)
+  !suggestionsSource
+  || /releaseYear|durationSec|formatDuration|\.project\b|\.languages?\b/.test(suggestionsSource)
+  || !/option\.textContent\s*=\s*song\.title\s*;/.test(suggestionsSource)
+  || /option\.(?:innerHTML|outerHTML|insertAdjacentHTML|append|prepend|replaceChildren)\b/
+    .test(suggestionsSource)
 ) {
   errors.push("src/gluedle.js: search suggestions must reveal song titles only");
+}
+
+if (
+  !suggestionsSource
+  || !/guessableSongs\.filter\([\s\S]*?!guessedIds\.has\(song\.id\)[\s\S]*?\)\.slice\(0,\s*8\)/
+    .test(suggestionsSource)
+) {
+  errors.push("src/gluedle.js: empty-query suggestions must exclude guessed songs before limiting results");
 }
 
 const htmlForbidden = [
@@ -117,8 +151,40 @@ if (!homeMain.includes('import "./styles/site.css";')) {
 if (!gameMain.includes('import "./styles/gluedle.css";')) {
   errors.push("src/gluedle.js: gluedle.css must be imported from the game entry");
 }
-if (`${homeMain}\n${gameMain}`.includes("scrollInto" + "View")) {
-  errors.push("entry modules: prohibited scrolling API found");
+
+for (const { name, source } of gameStyleFiles) {
+  if (source.split(/\r?\n/).length > 1000) {
+    errors.push(`src/styles/${name}: game stylesheet parts must not exceed 1000 lines`);
+  }
+}
+
+const importedGameStyles = [...gameStyleEntry
+  .matchAll(/@import\s+(?:url\(\s*)?["']([^"']+)["']\s*\)?\s*;/g)]
+  .map((match) => match[1]);
+const importedGameStyleNames = importedGameStyles.map((path) => path.slice(2)).sort();
+const expectedGameStyleNames = gameStyleFileNames.filter((name) => name !== "gluedle.css");
+const entryWithoutImports = gameStyleEntry
+  .replace(/\/\*[\s\S]*?\*\//g, "")
+  .replace(/@import\s+(?:url\(\s*)?["'][^"']+["']\s*\)?\s*;/g, "")
+  .trim();
+if (
+  gameStyleFiles.length < 2
+  || importedGameStyles.length === 0
+  || importedGameStyles.some((path) =>
+    !/^\.\/gluedle[^/]*\.css$/.test(path)
+    || !existsSync(join(gameStyleDirectory, path)))
+  || JSON.stringify(importedGameStyleNames) !== JSON.stringify(expectedGameStyleNames)
+  || entryWithoutImports !== ""
+) {
+  errors.push(
+    "src/styles/gluedle.css: entry must contain only imports for every existing local gluedle*.css part",
+  );
+}
+const prohibitedScrollingApi = "scrollInto" + "View";
+for (const file of sourceJavaScriptFiles) {
+  if (readFileSync(file, "utf8").includes(prohibitedScrollingApi)) {
+    errors.push(`${relative(root, file)}: prohibited scrolling API found`);
+  }
 }
 if (gameMain.includes("toISOString")) {
   errors.push("src/gluedle.js: daily keys must use the visitor's local calendar date");
@@ -130,6 +196,72 @@ if (
   || !gameMain.includes('const storageKey = `gluedle:daily:${dayKey}:${answer.id}`;')
 ) {
   errors.push("src/gluedle.js: display, answer selection, and storage must share one local day key");
+}
+
+const inputTag = /<input\b[^>]*\bid="song-input"[^>]*>/i.exec(gameHtml)?.[0] ?? "";
+const listboxTag = /<ul\b[^>]*\bid="song-suggestions"[^>]*>/i.exec(gameHtml)?.[0] ?? "";
+if (
+  !/\brole="combobox"/.test(inputTag)
+  || !/\baria-autocomplete="list"/.test(inputTag)
+  || !/\baria-controls="song-suggestions"/.test(inputTag)
+  || !/\baria-expanded="false"/.test(inputTag)
+  || !/\brole="listbox"/.test(listboxTag)
+) {
+  errors.push("gluedle.html: song search must expose an associated combobox and listbox");
+}
+
+if (
+  !/<body\b[^>]*\bdata-game-state="loading"[^>]*\bdata-attempts="0"/.test(gameHtml)
+  || !/\bdata-app-boot\b[^>]*\brole="status"/.test(gameHtml)
+  || !gameHtml.includes("<noscript>")
+) {
+  errors.push("gluedle.html: game shell must expose boot fallback and initial state hooks");
+}
+
+if (
+  (gameHtml.match(/\bdata-attempt-marker\b/g) ?? []).length !== 6
+  || !/class="game-signal"[^>]*\baria-hidden="true"/.test(gameHtml)
+  || (gameHtml.match(/class="signal-ring"/g) ?? []).length !== 6
+) {
+  errors.push("gluedle.html: game must expose six attempt markers and six decorative signal rings");
+}
+
+const removeStoredStateSource = extractFunction(gameMain, "removeStoredState") ?? "";
+const resetResult = /const\s+([A-Za-z_$][\w$]*)\s*=\s*removeStoredState\(\)/.exec(gameMain);
+if (
+  !resetResult
+  || !new RegExp(`if\\s*\\(\\s*${resetResult?.[1] ?? "__missing__"}\\s*\\)`).test(gameMain)
+  || !/return\s+true\s*;/.test(removeStoredStateSource)
+  || !/return\s+false\s*;/.test(removeStoredStateSource)
+) {
+  errors.push("src/gluedle.js: reset must branch on whether current-day storage was removed");
+}
+
+const dayCheckSource = extractFunction(gameMain, "checkForNewDay") ?? "";
+if (
+  !/addEventListener\(\s*["']visibilitychange["']/.test(gameMain)
+  || !/createLocalDayKey\(new Date\(/.test(dayCheckSource)
+  || !/dayKey/.test(dayCheckSource)
+  || !/location\.reload\(\)/.test(dayCheckSource)
+) {
+  errors.push("src/gluedle.js: visible pages must detect a local-calendar rollover and reload");
+}
+
+if (
+  !/document\.body\.dataset\.gameState\s*=\s*state\.status/.test(gameMain)
+  || !/document\.body\.dataset\.attempts\s*=\s*String\(/.test(gameMain)
+  || !/document\.body\.style\.setProperty\(\s*["']--attempt-progress["']/.test(gameMain)
+  || !/querySelectorAll\(\s*["']\[data-attempt-marker\]["']\s*\)/.test(gameMain)
+) {
+  errors.push("src/gluedle.js: rendered progress must synchronize data attributes, CSS progress, and markers");
+}
+
+if (
+  !/activeSuggestion\s*===\s*-1/.test(gameMain)
+  || !/event\.key\s*===\s*["']ArrowDown["']\s*\?\s*0\s*:\s*suggestionSongs\.length\s*-\s*1/
+    .test(gameMain)
+) {
+  errors.push("src/gluedle.js: ArrowUp from an unselected combobox must activate the last suggestion");
 }
 
 const standaloneLinks = homeHtml.match(/href="\/gluedle\.html"/g) ?? [];
@@ -170,6 +302,50 @@ for (const [status, mark] of [["match", "✓"], ["near", "≈"], ["miss", "×"]]
   ) {
     errors.push(`src/styles/gluedle.css: ${status} results need a strong color and non-color mark`);
   }
+}
+
+const visualTokens = [
+  ["black", "#050505"],
+  ["white", "#f4f3ed"],
+  ["lake", "#87a8be"],
+  ["correct", "#a6c7a2"],
+  ["near", "#d5d0ad"],
+  ["wrong", "#626a70"],
+];
+if (visualTokens.some(([name, value]) =>
+  !new RegExp(`--${name}:\\s*${value}`, "i").test(gameStyles))) {
+  errors.push("src/styles/gluedle.css: game must reuse the home black/paper/lake and muted state tokens");
+}
+
+const albumAssets = [...gameStyles.matchAll(/url\(["']?(\/assets\/glue\/[^"')]+)["']?\)/g)]
+  .map((match) => match[1]);
+if (
+  albumAssets.length === 0
+  || albumAssets.some((asset) => !existsSync(join(root, "public", asset.slice(1))))
+) {
+  errors.push("src/styles/gluedle.css: album image references must resolve under public/assets/glue");
+}
+
+if (
+  !/<meta\s+name="theme-color"\s+content="#050505"\s*\/>/i.test(gameHtml)
+  || !/@media\s*\([^)]*(?:min|max)-width[^)]*\)/.test(gameStyles)
+  || !/@media\s*\(prefers-reduced-motion:\s*reduce\)/.test(gameStyles)
+) {
+  errors.push("standalone Gluedle: theme color, responsive layout, and reduced motion are required");
+}
+
+const retiredNeonColors = /#22e6a7|#ffd166|#ff8ca1/i;
+if (retiredNeonColors.test(`${gameStyles}\n${shareCardSource}`)) {
+  errors.push("standalone Gluedle: retired neon state colors must not return");
+}
+
+for (const color of ["#050505", "#f4f3ed", "#87a8be", "#a6c7a2", "#d5d0ad", "#626a70"]) {
+  if (!shareCardSource.toLowerCase().includes(color)) {
+    errors.push(`src/share/share-card.js: missing restrained share-card color ${color}`);
+  }
+}
+if (/#8e2638/i.test(shareCardSource)) {
+  errors.push("src/share/share-card.js: saturated legacy miss color must not return");
 }
 
 if (!viteConfig.includes('"./index.html"') || !viteConfig.includes('"./gluedle.html"')) {

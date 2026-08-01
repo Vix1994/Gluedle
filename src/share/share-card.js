@@ -5,11 +5,11 @@ export const SHARE_CARD_HEIGHT = 1350;
 export const SHARE_FIELDS = ["year", "duration", "project", "language", "live", "performance", "credits"];
 
 const STATUS_STYLE = Object.freeze({
-  match: { fill: "#0b7a4b", mark: "✓", label: "匹配" },
-  near: { fill: "#b56a00", mark: "≈", label: "接近" },
-  partial: { fill: "#b56a00", mark: "≈", label: "接近" },
-  miss: { fill: "#8e2638", mark: "×", label: "不匹配" },
-  unknown: { fill: "#505969", mark: "?", label: "待核验" },
+  match: { fill: "#a6c7a2", ink: "#050505", mark: "✓", label: "匹配" },
+  near: { fill: "#d5d0ad", ink: "#050505", mark: "≈", label: "接近" },
+  partial: { fill: "#d5d0ad", ink: "#050505", mark: "≈", label: "接近" },
+  miss: { fill: "#626a70", ink: "#f4f3ed", mark: "×", label: "不匹配" },
+  unknown: { fill: "#4d504e", ink: "#f4f3ed", mark: "?", label: "待核验" },
 });
 
 export function buildShareCardModel({ dayKey, state, canonicalUrl }) {
@@ -57,25 +57,34 @@ export function renderShareCard(canvas, model) {
   const context = canvas.getContext("2d");
   if (!context) throw new Error("Canvas 2D context is unavailable.");
 
-  context.fillStyle = "#06131f";
+  context.fillStyle = "#050505";
   context.fillRect(0, 0, canvas.width, canvas.height);
-  context.fillStyle = "#0b2639";
+  context.save();
+  context.strokeStyle = "rgba(135,168,190,.22)";
+  context.lineWidth = 2;
+  for (const radius of [180, 260, 340]) {
+    context.beginPath();
+    context.arc(900, 560, radius, 0, Math.PI * 2);
+    context.stroke();
+  }
+  context.restore();
+  context.fillStyle = "#f4f3ed";
   context.fillRect(0, 0, canvas.width, 218);
-  context.fillStyle = "#22e6a7";
+  context.fillStyle = "#87a8be";
   context.fillRect(72, 72, 18, 74);
 
   setFont(context, 700, 72);
-  context.fillStyle = "#f6f2e8";
+  context.fillStyle = "#050505";
   context.fillText("GLUEDLE", 124, 136);
   setFont(context, 500, 24);
-  context.fillStyle = "#91aabd";
-  context.fillText("SONG DATA GUESSING GAME / NO AUDIO", 124, 177);
+  context.fillStyle = "#4d504e";
+  context.fillText("GREEN TO BLUE / DAILY DATA STUDY", 124, 177);
 
   setFont(context, 700, 52);
-  context.fillStyle = "#f6f2e8";
+  context.fillStyle = "#f4f3ed";
   context.fillText(model.outcome, 72, 310);
   setFont(context, 500, 25);
-  context.fillStyle = "#91aabd";
+  context.fillStyle = "#a7aaa8";
   context.textAlign = "right";
   context.fillText(model.dayKey, 1008, 295);
   context.fillText("DAILY RESULT", 1008, 330);
@@ -92,14 +101,13 @@ export function renderShareCard(canvas, model) {
       const style = STATUS_STYLE[status];
       const x = gridLeft + columnIndex * (cellSize + cellGap);
       const y = gridTop + rowIndex * (cellSize + rowGap);
-      roundedRect(context, x, y, cellSize, cellSize, 12);
       context.fillStyle = style.fill;
-      context.fill();
-      context.strokeStyle = "rgba(255,255,255,.48)";
+      context.fillRect(x, y, cellSize, cellSize);
+      context.strokeStyle = "rgba(244,243,237,.48)";
       context.lineWidth = 2;
-      context.stroke();
+      context.strokeRect(x, y, cellSize, cellSize);
       setFont(context, 800, 42);
-      context.fillStyle = "#ffffff";
+      context.fillStyle = style.ink;
       context.textAlign = "center";
       context.fillText(style.mark, x + cellSize / 2, y + 53);
     });
@@ -109,9 +117,9 @@ export function renderShareCard(canvas, model) {
   const qrMatrix = createQrMatrix(model.canonicalUrl);
   const { qrModule, quietModules, qrOuterSize, qrY } = layout;
   const qrX = 72;
-  context.fillStyle = "#ffffff";
+  context.fillStyle = "#f4f3ed";
   context.fillRect(qrX, qrY, qrOuterSize, qrOuterSize);
-  context.fillStyle = "#06131f";
+  context.fillStyle = "#050505";
   qrMatrix.forEach((row, rowIndex) => {
     row.forEach((dark, columnIndex) => {
       if (!dark) return;
@@ -127,14 +135,14 @@ export function renderShareCard(canvas, model) {
   const copyX = qrX + qrOuterSize + 46;
   const copyY = qrY + 46;
   setFont(context, 700, 30);
-  context.fillStyle = "#22e6a7";
+  context.fillStyle = "#87a8be";
   context.fillText("SCAN TO PLAY", copyX, copyY);
   setFont(context, 700, 44);
-  context.fillStyle = "#f6f2e8";
+  context.fillStyle = "#f4f3ed";
   context.fillText("不用听，", copyX, copyY + 72);
   context.fillText("也能猜到吗？", copyX, copyY + 124);
   setFont(context, 500, 22);
-  context.fillStyle = "#91aabd";
+  context.fillStyle = "#a7aaa8";
   drawWrappedText(context, displayUrl(model.canonicalUrl), copyX, copyY + 178, 470, 31);
 
   const { legendY } = layout;
@@ -144,7 +152,7 @@ export function renderShareCard(canvas, model) {
     context.fillStyle = style.fill;
     context.fillRect(legendX, legendY - 20, 28, 28);
     setFont(context, 600, 21);
-    context.fillStyle = "#dfeaf1";
+    context.fillStyle = "#e8ebeb";
     context.fillText(`${style.mark} ${style.label}`, legendX + 40, legendY + 2);
     legendX += 190;
   }
@@ -166,20 +174,6 @@ function normalizeStatus(status) {
 
 function setFont(context, weight, size) {
   context.font = `${weight} ${size}px Archivo, "Noto Sans SC", sans-serif`;
-}
-
-function roundedRect(context, x, y, width, height, radius) {
-  context.beginPath();
-  context.moveTo(x + radius, y);
-  context.lineTo(x + width - radius, y);
-  context.quadraticCurveTo(x + width, y, x + width, y + radius);
-  context.lineTo(x + width, y + height - radius);
-  context.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-  context.lineTo(x + radius, y + height);
-  context.quadraticCurveTo(x, y + height, x, y + height - radius);
-  context.lineTo(x, y + radius);
-  context.quadraticCurveTo(x, y, x + radius, y);
-  context.closePath();
 }
 
 function drawWrappedText(context, text, x, y, maxWidth, lineHeight) {
