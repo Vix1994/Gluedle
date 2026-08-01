@@ -208,6 +208,15 @@ test("home exposes the verified artist destinations safely", () => {
   }
 });
 
+test("home hero links directly to the verified Glue song on QQ Music", () => {
+  assert.match(
+    homeHtml,
+    /class="listen-link"[\s\S]*?href="https:\/\/y\.qq\.com\/n\/ryqq\/songDetail\/000Q9lzD0ag0YJ"[\s\S]*?target="_blank"[\s\S]*?rel="noopener noreferrer"/,
+  );
+  assert.match(homeHtml, /<span class="listen-link-label">立即收听<\/span>/);
+  assert.match(homeHtml, /<span class="listen-link-platform">QQ音乐<\/span>/);
+});
+
 test("standalone game keeps title-only suggestions, Live clues, and image sharing", () => {
   for (const id of [
     "guess-form",

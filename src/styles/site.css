@@ -312,8 +312,72 @@ a:focus-visible {
   line-height: 1.75;
 }
 
-.hero-intro + .text-link {
+.hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  width: min(38%, 520px);
   margin-left: 62%;
+}
+
+.listen-link {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "label arrow"
+    "platform arrow";
+  align-items: center;
+  gap: 1px 28px;
+  min-width: 194px;
+  min-height: 58px;
+  padding: 9px 16px;
+  color: var(--black);
+  border: 1px solid var(--lake);
+  background: var(--lake);
+  font-family: var(--font-mono);
+  text-decoration: none;
+  transition:
+    color 180ms ease,
+    background 180ms ease,
+    box-shadow 220ms var(--ease-out),
+    transform 220ms var(--ease-out);
+}
+
+.listen-link-label {
+  grid-area: label;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+.listen-link-platform {
+  grid-area: platform;
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  opacity: 0.62;
+  text-transform: uppercase;
+}
+
+.listen-link-arrow {
+  grid-area: arrow;
+  font-size: 1rem;
+  transition: transform 220ms var(--ease-out);
+}
+
+.listen-link:hover {
+  background: var(--white);
+  box-shadow: 0 14px 40px rgb(0 0 0 / 24%);
+  transform: translateY(-2px);
+}
+
+.listen-link:hover .listen-link-arrow {
+  transform: translate(3px, -3px);
+}
+
+.listen-link:active {
+  box-shadow: none;
+  transform: translateY(0);
 }
 
 .text-link {
@@ -882,7 +946,8 @@ a:focus-visible {
     box-shadow: 20px 24px 56px rgb(5 5 5 / 24%);
   }
 
-  .hero-intro + .text-link {
+  .hero-actions {
+    width: min(50%, 480px);
     margin-left: 50%;
   }
 }
@@ -898,8 +963,11 @@ a:focus-visible {
   .hero h1 span + span { margin-left: 0.16em; }
   .hero-intro { margin-top: 30px; }
   .hero-intro,
-  .hero-intro + .text-link { margin-left: 0; }
+  .hero-actions { margin-left: 0; }
   .hero-intro { width: min(100%, 430px); }
+  .hero-actions { width: min(100%, 430px); }
+  .hero-actions .text-link { flex: 1 1 160px; }
+  .listen-link { flex: 1 1 194px; }
   .hero-caption { display: none; }
   .concept { display: block; padding-top: 150px; }
   .concept-heading { max-width: 600px; }

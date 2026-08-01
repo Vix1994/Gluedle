@@ -412,6 +412,14 @@ if (
 }
 
 if (
+  !/class="listen-link"[\s\S]*?href="https:\/\/y\.qq\.com\/n\/ryqq\/songDetail\/000Q9lzD0ag0YJ"[\s\S]*?target="_blank"[\s\S]*?rel="noopener noreferrer"/.test(homeHtml)
+  || !/<span class="listen-link-label">立即收听<\/span>/.test(homeHtml)
+  || !/<span class="listen-link-platform">QQ音乐<\/span>/.test(homeHtml)
+) {
+  errors.push("index.html: hero must expose the verified Glue QQ Music song link as its primary listen action");
+}
+
+if (
   !gameMain.includes("renderShareCard(elements.shareCanvas, model)")
   || !gameMain.includes("navigator.canShare({ files: [file] })")
   || !gameMain.includes("downloadBlob(blob, filename)")
