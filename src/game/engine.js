@@ -43,6 +43,16 @@ export function formatDuration(seconds) {
   return `${minutes}:${remainder}`;
 }
 
+export function formatReleaseDate(value) {
+  const timestamp = toReleaseTimestamp(value);
+  if (timestamp === null) return PENDING_VERIFICATION;
+  const date = new Date(timestamp);
+  const year = String(date.getUTCFullYear()).padStart(4, "0");
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 export function findSongMatches(query, catalog, limit = 8) {
   const normalizedQuery = normalizeSearchText(query);
   const resultLimit = Number.isFinite(Number(limit))
@@ -61,38 +71,43 @@ export function findSongMatches(query, catalog, limit = 8) {
     .map(({ song }) => song);
 }
 
-export function selectDailyAnswer(catalog, date = new Date()) {
+export function selectRandomAnswer(catalog, random = Math.random) {
   const songs = validateCatalog(catalog);
   if (songs.length === 0) {
     throw new GameEngineError("EMPTY_CATALOG", "Cannot select an answer from an empty catalog.");
   }
-
-  const day = toDayKey(date);
-  const orderedSongs = [...songs].sort((left, right) =>
-    readSongId(left).localeCompare(readSongId(right), "en"),
-  );
-  return orderedSongs[stableHash(day) % orderedSongs.length];
+  if (typeof random !== "function") {
+    throw new GameEngineError("INVALID_RANDOM", "random must be a function.");
+  }
+  const value = Number(random());
+  if (!Number.isFinite(value) || value < 0 || value >= 1) {
+    throw new GameEngineError("INVALID_RANDOM", "random must return a number from 0 up to 1.");
+  }
+  return songs[Math.floor(value * songs.length)];
 }
 
 export function compareSongs(guess, target) {
   assertSong(guess, "INVALID_GUESS");
   assertSong(target, "INVALID_TARGET");
 
-  const guessYear = readReleaseYear(guess);
-  const targetYear = readReleaseYear(target);
+  const guessReleaseDate = readReleaseDate(guess);
+  const targetReleaseDate = readReleaseDate(target);
   const guessDuration = readDuration(guess);
   const targetDuration = readDuration(target);
   const guessProject = readProject(guess);
   const targetProject = readProject(target);
-  const guessLanguages = readLanguages(guess);
-  const targetLanguages = readLanguages(target);
   const guessLive = readLiveStatus(guess);
   const targetLive = readLiveStatus(target);
   const guessPerformance = guess.performanceType ?? null;
   const targetPerformance = target.performanceType ?? null;
 
   return {
-    year: numericComparison(guessYear, targetYear, 2, guessYear ?? PENDING_VERIFICATION),
+    year: numericComparison(
+      guessReleaseDate,
+      targetReleaseDate,
+      365 * 24 * 60 * 60 * 1000,
+      formatReleaseDate(guessReleaseDate),
+    ),
     duration: numericComparison(
       guessDuration,
       targetDuration,
@@ -100,7 +115,6 @@ export function compareSongs(guess, target) {
       formatDuration(guessDuration),
     ),
     project: projectComparison(guessProject, targetProject),
-    language: languageComparison(guessLanguages, targetLanguages),
     live: equalityComparison(guessLive, targetLive),
     performance: equalityComparison(guessPerformance, targetPerformance),
     credits: creditsComparison(guess.curleyCredits ?? null, target.curleyCredits ?? null),
@@ -245,25 +259,6 @@ function projectComparison(guess, target) {
   return cell(value, COMPARISON_STATUS.MISS, null);
 }
 
-function languageComparison(guess, target) {
-  const value = guess === null ? PENDING_VERIFICATION : [...guess];
-  if (guess === null || target === null) {
-    return cell(value, COMPARISON_STATUS.UNKNOWN, null);
-  }
-
-  const guessSet = normalizedSet(guess);
-  const targetSet = normalizedSet(target);
-  const same = guessSet.size === targetSet.size
-    && [...guessSet].every((language) => targetSet.has(language));
-  if (same) {
-    return cell(value, COMPARISON_STATUS.MATCH, null);
-  }
-  if ([...guessSet].some((language) => targetSet.has(language))) {
-    return cell(value, COMPARISON_STATUS.PARTIAL, null);
-  }
-  return cell(value, COMPARISON_STATUS.MISS, null);
-}
-
 function equalityComparison(guess, target) {
   const value = guess ?? PENDING_VERIFICATION;
   if (guess === null || target === null) {
@@ -313,8 +308,11 @@ function readDuration(song) {
   return toFiniteNumber(song.durationSec ?? song.durationSeconds ?? song.duration);
 }
 
-function readReleaseYear(song) {
-  return toFiniteNumber(song.releaseYear ?? song.year);
+function readReleaseDate(song) {
+  const exactDate = toReleaseTimestamp(song.releaseDate);
+  if (exactDate !== null) return exactDate;
+  const year = toFiniteNumber(song.releaseYear ?? song.year);
+  return year === null ? null : Date.UTC(Math.trunc(year), 0, 1);
 }
 
 function readSongId(song) {
@@ -334,19 +332,8 @@ function readProject(song) {
   };
 }
 
-function readLanguages(song) {
-  if (!Array.isArray(song.languages)) {
-    return null;
-  }
-  return song.languages.filter((language) => language !== null && language !== undefined);
-}
-
 function readLiveStatus(song) {
   return typeof song.isLive === "boolean" ? song.isLive : null;
-}
-
-function normalizedSet(values) {
-  return new Set(values.map(normalizedMetadataValue));
 }
 
 function normalizedMetadataValue(value) {
@@ -371,21 +358,19 @@ function toFiniteNumber(value) {
   return Number.isFinite(number) ? number : null;
 }
 
-function toDayKey(value) {
-  const date = value instanceof Date ? new Date(value.getTime()) : new Date(value);
-  if (Number.isNaN(date.getTime())) {
-    throw new GameEngineError("INVALID_DATE", "A valid date is required.");
-  }
-  return date.toISOString().slice(0, 10);
-}
-
-function stableHash(value) {
-  let hash = 0x811c9dc5;
-  for (let index = 0; index < value.length; index += 1) {
-    hash ^= value.charCodeAt(index);
-    hash = Math.imul(hash, 0x01000193);
-  }
-  return hash >>> 0;
+function toReleaseTimestamp(value) {
+  if (value === null || value === undefined || value === "") return null;
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value).trim());
+  if (!match) return null;
+  const [, year, month, day] = match.map(Number);
+  const timestamp = Date.UTC(year, month - 1, day);
+  const parsed = new Date(timestamp);
+  return parsed.getUTCFullYear() === year
+    && parsed.getUTCMonth() === month - 1
+    && parsed.getUTCDate() === day
+    ? timestamp
+    : null;
 }
 
 function validateCatalog(catalog) {

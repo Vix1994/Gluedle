@@ -2,22 +2,22 @@ import { createQrMatrix } from "./qr-code.js";
 
 export const SHARE_CARD_WIDTH = 1080;
 export const SHARE_CARD_HEIGHT = 1350;
-export const SHARE_FIELDS = ["year", "duration", "project", "language", "live", "performance", "credits"];
+export const SHARE_FIELDS = ["year", "duration", "project", "live", "performance", "credits"];
 
 const STATUS_STYLE = Object.freeze({
-  match: { fill: "#a6c7a2", ink: "#050505", mark: "✓", label: "匹配" },
-  near: { fill: "#d5d0ad", ink: "#050505", mark: "≈", label: "接近" },
-  partial: { fill: "#d5d0ad", ink: "#050505", mark: "≈", label: "接近" },
-  miss: { fill: "#626a70", ink: "#f4f3ed", mark: "×", label: "不匹配" },
+  match: { fill: "#49e99b", ink: "#050505", mark: "✓", label: "匹配" },
+  near: { fill: "#ffd75b", ink: "#050505", mark: "≈", label: "接近" },
+  partial: { fill: "#ffd75b", ink: "#050505", mark: "≈", label: "接近" },
+  miss: { fill: "#ff5964", ink: "#050505", mark: "×", label: "不匹配" },
   unknown: { fill: "#4d504e", ink: "#f4f3ed", mark: "?", label: "待核验" },
 });
 
-export function buildShareCardModel({ dayKey, state, canonicalUrl }) {
+export function buildShareCardModel({ roundLabel, state, canonicalUrl }) {
   const outcome = state.status === "won"
     ? `${state.attempts.length} / 6`
     : state.status === "lost" ? "X / 6" : `${state.attempts.length} / …`;
   return {
-    dayKey,
+    roundLabel,
     outcome,
     canonicalUrl,
     rows: state.attempts.map((attempt) =>
@@ -78,7 +78,7 @@ export function renderShareCard(canvas, model) {
   context.fillText("GLUEDLE", 124, 136);
   setFont(context, 500, 24);
   context.fillStyle = "#4d504e";
-  context.fillText("GLUE / CURLEY G / DAILY DATA STUDY", 124, 177);
+  context.fillText("GLUE / CURLEY G / RANDOM DATA STUDY", 124, 177);
 
   setFont(context, 700, 52);
   context.fillStyle = "#f4f3ed";
@@ -86,8 +86,8 @@ export function renderShareCard(canvas, model) {
   setFont(context, 500, 25);
   context.fillStyle = "#a7aaa8";
   context.textAlign = "right";
-  context.fillText(model.dayKey, 1008, 295);
-  context.fillText("DAILY RESULT", 1008, 330);
+  context.fillText(model.roundLabel, 1008, 295);
+  context.fillText("ROUND RESULT", 1008, 330);
   context.textAlign = "left";
 
   const layout = shareCardLayout(model.rows.length);

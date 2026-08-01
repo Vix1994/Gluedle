@@ -8,9 +8,10 @@ import {
   createInitialState,
   findSongMatches,
   formatDuration,
+  formatReleaseDate,
   normalizeSearchText,
   restoreGameState,
-  selectDailyAnswer,
+  selectRandomAnswer,
   serializeGameState,
   submitGuess,
 } from "../src/game/engine.js";
@@ -23,7 +24,6 @@ function song(overrides = {}) {
     releaseYear: 2024,
     durationSec: 210,
     project: { title: "Project A", type: "album" },
-    languages: ["中文", "English"],
     isLive: false,
     performanceType: "solo",
     curleyCredits: { lyrics: true, composition: true },
@@ -40,7 +40,6 @@ const catalog = [
     releaseYear: 2022,
     durationSec: 195,
     project: { title: "Project B", type: "album" },
-    languages: ["English"],
     curleyCredits: { lyrics: true, composition: false },
   }),
   song({
@@ -50,7 +49,6 @@ const catalog = [
     releaseYear: 2019,
     durationSec: 250,
     project: { title: "Single Two", type: "single" },
-    languages: ["日本語"],
     performanceType: "duet",
     curleyCredits: { lyrics: false, composition: false },
   }),
@@ -72,6 +70,12 @@ test("formatDuration renders minutes and zero-padded seconds", () => {
   assert.equal(formatDuration(null), "待核验");
 });
 
+test("formatReleaseDate renders and validates day-precision dates", () => {
+  assert.equal(formatReleaseDate("2024-03-18"), "2024-03-18");
+  assert.equal(formatReleaseDate(Date.UTC(2023, 4, 31)), "2023-05-31");
+  assert.equal(formatReleaseDate("2024-02-31"), "待核验");
+});
+
 test("findSongMatches searches aliases, normalizes queries, ranks title matches, and limits results", () => {
   assert.deepEqual(findSongMatches(" 第一 束光！ ", catalog).map(({ id }) => id), ["one"]);
   assert.deepEqual(findSongMatches("light", catalog).map(({ id }) => id), ["one"]);
@@ -79,13 +83,12 @@ test("findSongMatches searches aliases, normalizes queries, ranks title matches,
   assert.deepEqual(findSongMatches("   ", catalog), []);
 });
 
-test("selectDailyAnswer is deterministic for a day and independent of catalog order", () => {
-  const date = new Date("2026-08-01T18:30:00.000Z");
-  const first = selectDailyAnswer(catalog, date);
-  const second = selectDailyAnswer([...catalog].reverse(), date);
-  assert.equal(first.id, second.id);
-  assert.equal(selectDailyAnswer(catalog, date), first);
-  assert.throws(() => selectDailyAnswer([], date), { code: "EMPTY_CATALOG" });
+test("selectRandomAnswer maps a valid random value across the whole catalog", () => {
+  assert.equal(selectRandomAnswer(catalog, () => 0).id, "target");
+  assert.equal(selectRandomAnswer(catalog, () => 0.999999).id, "six");
+  assert.equal(selectRandomAnswer(catalog, () => 2 / catalog.length).id, "two");
+  assert.throws(() => selectRandomAnswer([], () => 0), { code: "EMPTY_CATALOG" });
+  assert.throws(() => selectRandomAnswer(catalog, () => 1), { code: "INVALID_RANDOM" });
 });
 
 test("canonical metadata fields take precedence while legacy fields remain supported", () => {
@@ -98,7 +101,7 @@ test("canonical metadata fields take precedence while legacy fields remain suppo
     durationSeconds: 20,
   });
   const comparison = compareSongs(canonicalGuess, song());
-  assert.deepEqual(comparison.year, { value: 2022, status: "near", direction: "up" });
+  assert.deepEqual(comparison.year, { value: "2022-01-01", status: "miss", direction: "up" });
   assert.deepEqual(comparison.duration, { value: "03:15", status: "near", direction: "up" });
 
   const submitted = submitGuess(createInitialState("target"), "canonical-id", [song(), canonicalGuess]);
@@ -109,29 +112,34 @@ test("canonical metadata fields take precedence while legacy fields remain suppo
   );
 
   const legacySong = song({ id: undefined, songId: "legacy-only", releaseYear: undefined, year: 2023 });
-  assert.equal(selectDailyAnswer([legacySong], new Date("2026-08-01")).songId, "legacy-only");
-  assert.equal(compareSongs(legacySong, song()).year.value, 2023);
+  assert.equal(selectRandomAnswer([legacySong], () => 0).songId, "legacy-only");
+  assert.equal(compareSongs(legacySong, song()).year.value, "2023-01-01");
 });
 
-test("compareSongs applies year and duration match/near/miss thresholds and directions", () => {
+test("compareSongs applies day-precision release-date and duration thresholds", () => {
   const exact = compareSongs(song(), song());
-  assert.deepEqual(exact.year, { value: 2024, status: "match", direction: null });
+  assert.deepEqual(exact.year, { value: "2024-01-01", status: "match", direction: null });
   assert.deepEqual(exact.duration, { value: "03:30", status: "match", direction: null });
 
-  const nearUp = compareSongs(song({ releaseYear: 2022, durationSec: 195 }), song());
-  assert.deepEqual(nearUp.year, { value: 2022, status: "near", direction: "up" });
+  const nearUp = compareSongs(
+    song({ releaseDate: "2024-03-01", durationSec: 195 }),
+    song({ releaseDate: "2024-06-15" }),
+  );
+  assert.deepEqual(nearUp.year, { value: "2024-03-01", status: "near", direction: "up" });
   assert.deepEqual(nearUp.duration, { value: "03:15", status: "near", direction: "up" });
 
-  const missDown = compareSongs(song({ releaseYear: 2027, durationSec: 226 }), song());
-  assert.deepEqual(missDown.year, { value: 2027, status: "miss", direction: "down" });
+  const missDown = compareSongs(
+    song({ releaseDate: "2026-08-01", durationSec: 226 }),
+    song({ releaseDate: "2024-06-15" }),
+  );
+  assert.deepEqual(missDown.year, { value: "2026-08-01", status: "miss", direction: "down" });
   assert.deepEqual(missDown.duration, { value: "03:46", status: "miss", direction: "down" });
 });
 
-test("compareSongs applies project, language, live, performance, and credits rules", () => {
+test("compareSongs applies project, live, performance, and credits rules", () => {
   const comparison = compareSongs(
     song({
       project: { title: "Other Album", type: "album" },
-      languages: ["English", "Français"],
       isLive: true,
       performanceType: "duet",
       curleyCredits: { lyrics: true, composition: false },
@@ -141,11 +149,6 @@ test("compareSongs applies project, language, live, performance, and credits rul
 
   assert.deepEqual(comparison.project, {
     value: "Other Album",
-    status: COMPARISON_STATUS.PARTIAL,
-    direction: null,
-  });
-  assert.deepEqual(comparison.language, {
-    value: ["English", "Français"],
     status: COMPARISON_STATUS.PARTIAL,
     direction: null,
   });
@@ -160,22 +163,27 @@ test("compareSongs applies project, language, live, performance, and credits rul
   const misses = compareSongs(
     song({
       project: { title: "Single", type: "single" },
-      languages: ["日本語"],
       curleyCredits: { lyrics: false, composition: false },
     }),
     song(),
   );
   assert.equal(misses.project.status, COMPARISON_STATUS.MISS);
-  assert.equal(misses.language.status, COMPARISON_STATUS.MISS);
   assert.equal(misses.credits.status, COMPARISON_STATUS.MISS);
-
-  const reorderedLanguages = compareSongs(song({ languages: ["English", "中文"] }), song());
-  assert.equal(reorderedLanguages.language.status, COMPARISON_STATUS.MATCH);
 
   const unknownLive = compareSongs(song({ isLive: null }), song());
   assert.deepEqual(unknownLive.live, {
     value: "待核验",
     status: COMPARISON_STATUS.UNKNOWN,
+    direction: null,
+  });
+});
+
+test("independent singles share the same project value and match", () => {
+  const target = song({ project: { title: "单曲", type: "single" } });
+  const guess = song({ id: "another-single", project: { title: "单曲", type: "single" } });
+  assert.deepEqual(compareSongs(guess, target).project, {
+    value: "单曲",
+    status: COMPARISON_STATUS.MATCH,
     direction: null,
   });
 });

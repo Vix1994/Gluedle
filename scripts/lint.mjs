@@ -372,8 +372,10 @@ if (
   !/activeSuggestion\s*===\s*-1/.test(gameMain)
   || !/event\.key\s*===\s*["']ArrowDown["']\s*\?\s*0\s*:\s*suggestionSongs\.length\s*-\s*1/
     .test(gameMain)
+  || !/activeSuggestion\s*=\s*0;[\s\S]*?updateActiveSuggestion\(\)/.test(suggestionsSource)
+  || !/exactMatch[\s\S]*?elements\.form\.requestSubmit\(\)/.test(gameMain)
 ) {
-  errors.push("src/gluedle.js: ArrowUp from an unselected combobox must activate the last suggestion");
+  errors.push("src/gluedle.js: search must default-select the first result and submit exact matches on Enter");
 }
 
 const standaloneLinks = homeHtml.match(/href="\/gluedle\/"/g) ?? [];
@@ -424,7 +426,7 @@ if (
 for (const [status, mark] of [["match", "✓"], ["near", "≈"], ["miss", "×"]]) {
   if (
     !gameStyles.includes(`.comparison-cell[data-status="${status}"]`)
-    || !gameStyles.includes(`content: "${mark}"`)
+    || !gameMain.includes(`${status}: "${mark}`)
   ) {
     errors.push(`src/styles/gluedle.css: ${status} results need a strong color and non-color mark`);
   }
@@ -434,9 +436,9 @@ const visualTokens = [
   ["black", "#050505"],
   ["white", "#f4f3ed"],
   ["lake", "#87a8be"],
-  ["correct", "#a6c7a2"],
-  ["near", "#d5d0ad"],
-  ["wrong", "#626a70"],
+  ["correct", "#49e99b"],
+  ["near", "#ffd75b"],
+  ["wrong", "#ff5964"],
 ];
 if (visualTokens.some(([name, value]) =>
   !new RegExp(`--${name}:\\s*${value}`, "i").test(gameStyles))) {
@@ -460,12 +462,7 @@ if (
   errors.push("standalone Gluedle: theme color, responsive layout, and reduced motion are required");
 }
 
-const retiredNeonColors = /#22e6a7|#ffd166|#ff8ca1/i;
-if (retiredNeonColors.test(`${gameStyles}\n${shareCardSource}`)) {
-  errors.push("standalone Gluedle: retired neon state colors must not return");
-}
-
-for (const color of ["#050505", "#f4f3ed", "#87a8be", "#a6c7a2", "#d5d0ad", "#626a70"]) {
+for (const color of ["#050505", "#f4f3ed", "#87a8be", "#49e99b", "#ffd75b", "#ff5964"]) {
   if (!shareCardSource.toLowerCase().includes(color)) {
     errors.push(`src/share/share-card.js: missing restrained share-card color ${color}`);
   }

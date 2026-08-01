@@ -266,6 +266,7 @@ test("the standalone shell exposes accessible dynamic-game integration points", 
   assert.match(gameHtml, /<noscript>/);
   assert.equal((gameHtml.match(/\bdata-attempt-marker\b/g) ?? []).length, 6);
   assert.match(gameHtml, /<th\b[^>]*\bdata-live-column[^>]*>Live<\/th>/);
+  assert.match(gameHtml, /<th\b[^>]*>发行日<\/th>/);
   assert.doesNotMatch(gameHtml, />语言<\/th>/);
 });
 
@@ -291,6 +292,8 @@ test("game entry synchronizes progress, reloads JSON data, and randomizes each r
     gameMain,
     /event\.key\s*===\s*["']ArrowDown["']\s*\?\s*0\s*:\s*suggestionSongs\.length\s*-\s*1/,
   );
+  assert.match(gameMain, /activeSuggestion\s*=\s*0;[\s\S]*?updateActiveSuggestion\(\)/);
+  assert.match(gameMain, /exactMatch[\s\S]*?elements\.form\.requestSubmit\(\)/);
   const suggestionsSource = extractFunction(gameMain, "showSuggestions");
   assert.match(suggestionsSource, /songs\.filter\([\s\S]*?!guessedIds\.has\(song\.id\)/);
 
@@ -310,8 +313,10 @@ test("responsive game ledger exposes every field without horizontal scrolling", 
 test("result states use high-contrast colors plus non-color marks", () => {
   for (const [status, mark] of [["match", "✓"], ["near", "≈"], ["miss", "×"]]) {
     assert.ok(gameStyles.includes(`.comparison-cell[data-status="${status}"]`));
-    assert.ok(gameStyles.includes(`content: "${mark}"`));
+    assert.ok(gameMain.includes(`${status}: "${mark}`));
   }
+  assert.match(gameMain, /directionMark[\s\S]*?"↑"[\s\S]*?"↓"/);
+  assert.match(gameMain, /attempt\.comparison\.year, "year", "发行日"/);
 });
 
 test("game visuals reuse the album image language and restrained home-page tokens", () => {
@@ -319,9 +324,9 @@ test("game visuals reuse the album image language and restrained home-page token
     ["black", "#050505"],
     ["white", "#f4f3ed"],
     ["lake", "#87a8be"],
-    ["correct", "#a6c7a2"],
-    ["near", "#d5d0ad"],
-    ["wrong", "#626a70"],
+    ["correct", "#49e99b"],
+    ["near", "#ffd75b"],
+    ["wrong", "#ff5964"],
   ];
   for (const [name, value] of tokenContracts) {
     assert.match(gameStyles, new RegExp(`--${name}:\\s*${value}`, "i"));
@@ -337,7 +342,7 @@ test("game visuals reuse the album image language and restrained home-page token
   assert.match(gameHtml, /<meta\s+name="theme-color"\s+content="#050505"\s*\/>/i);
   assert.match(gameStyles, /@media\s*\([^)]*(?:min|max)-width[^)]*\)/);
   assert.match(gameStyles, /@media\s*\(prefers-reduced-motion:\s*reduce\)/);
-  assert.doesNotMatch(`${gameStyles}\n${shareCardSource}`, /#22e6a7|#ffd166|#ff8ca1/i);
+  assert.match(gameStyles, /\.deduction-panel\s*\{[\s\S]*?background:\s*rgb\(14 16 16 \/ 83%\)/);
 });
 
 test("the game stylesheet entry imports every bounded local style part", () => {
@@ -370,11 +375,11 @@ test("the game stylesheet entry imports every bounded local style part", () => {
   assert.equal(entryWithoutImports, "", "gluedle.css may contain only local imports and comments");
 });
 
-test("share card uses the home black, paper, lake, and muted result palette", () => {
-  for (const color of ["#050505", "#f4f3ed", "#87a8be", "#a6c7a2", "#d5d0ad", "#626a70"]) {
+test("share card uses the home palette and Preview 5 result colors", () => {
+  for (const color of ["#050505", "#f4f3ed", "#87a8be", "#49e99b", "#ffd75b", "#ff5964"]) {
     assert.match(shareCardSource, new RegExp(color, "i"));
   }
-  assert.doesNotMatch(shareCardSource, /#22e6a7|#ffd166|#ff8ca1|#8e2638/i);
+  assert.doesNotMatch(shareCardSource, /#8e2638/i);
 });
 
 test("production build declares all five HTML entries", () => {

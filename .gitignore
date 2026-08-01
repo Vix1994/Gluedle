@@ -5,6 +5,10 @@ node_modules/
 dist/
 .vite/
 
+# Exploratory visual preview exports
+gameplay-preview-v*/
+visual-previews-v*/
+
 # Local configuration
 .env
 .env.*

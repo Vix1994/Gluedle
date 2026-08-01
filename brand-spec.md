@@ -42,9 +42,9 @@ These role labels are internal design guidance only; they do not identify the cr
 | `--lake` | `#87A8BE` | primary lake blue |
 | `--lake-dark` | `#537B98` | depth, focus, active state |
 | `--green` | `#9CB59A` | secondary accent used only inside the Green to Blue concept chapter |
-| `--correct` | `#A6C7A2` | exact metadata match |
-| `--near` | `#D5D0AD` | near or partial metadata match |
-| `--wrong` | `#626A70` | metadata mismatch |
+| `--correct` | `#49E99B` | exact metadata match, aligned with Preview 5 |
+| `--near` | `#FFD75B` | near or partial metadata match, aligned with Preview 5 |
+| `--wrong` | `#FF5964` | metadata mismatch, aligned with Preview 5 |
 | `--grey` | `#A7AAA8` | secondary metadata |
 | `--grey-dark` | `#4D504E` | quiet rules and inactive state |
 

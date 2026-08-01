@@ -15,7 +15,7 @@ const comparison = Object.fromEntries(
 
 test("share-card model contains only result statuses, not answer or song IDs", () => {
   const model = buildShareCardModel({
-    dayKey: "2026-08-01",
+    roundLabel: "ROUND 01",
     canonicalUrl: "https://example.com/gluedle/",
     state: {
       status: "playing",
@@ -24,13 +24,13 @@ test("share-card model contains only result statuses, not answer or song IDs", (
     },
   });
   assert.equal(model.outcome, "1 / …");
-  assert.deepEqual(model.rows[0], ["match", "near", "miss", "match", "near", "miss", "match"]);
+  assert.deepEqual(model.rows[0], ["match", "near", "miss", "match", "near", "miss"]);
   const serialized = JSON.stringify(model);
   assert.doesNotMatch(serialized, /secret-answer|secret-guess/);
 });
 
 test("won and lost outcomes use stable six-attempt notation", () => {
-  const base = { dayKey: "2026-08-01", canonicalUrl: "https://example.com/gluedle/" };
+  const base = { roundLabel: "ROUND 01", canonicalUrl: "https://example.com/gluedle/" };
   assert.equal(buildShareCardModel({
     ...base,
     state: { status: "won", attempts: [{ comparison }] },
