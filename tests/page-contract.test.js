@@ -14,11 +14,11 @@ const gameStyleFiles = gameStyleFileNames.map((name) => ({
   source: readFileSync(join(gameStyleDirectory, name), "utf8"),
 }));
 const gameStyleEntry = gameStyleFiles.find(({ name }) => name === "gluedle.css")?.source ?? "";
-const homeHtml = readFileSync(new URL("../index.html", import.meta.url), "utf8");
-const gameHtml = readFileSync(new URL("../gluedle/index.html", import.meta.url), "utf8");
-const conceptHtml = readFileSync(new URL("../concept/index.html", import.meta.url), "utf8");
-const visualsHtml = readFileSync(new URL("../visuals/index.html", import.meta.url), "utf8");
-const glueHtml = readFileSync(new URL("../glue/index.html", import.meta.url), "utf8");
+const homeHtml = readFileSync(new URL("../pages/index.html", import.meta.url), "utf8");
+const gameHtml = readFileSync(new URL("../pages/gluedle/index.html", import.meta.url), "utf8");
+const conceptHtml = readFileSync(new URL("../pages/concept/index.html", import.meta.url), "utf8");
+const visualsHtml = readFileSync(new URL("../pages/visuals/index.html", import.meta.url), "utf8");
+const glueHtml = readFileSync(new URL("../pages/glue/index.html", import.meta.url), "utf8");
 const homeMain = readFileSync(new URL("../src/main.js", import.meta.url), "utf8");
 const anchorNavigation = readFileSync(new URL("../src/anchor-wheel-navigation.js", import.meta.url), "utf8");
 const gameMain = readFileSync(new URL("../src/gluedle.js", import.meta.url), "utf8");
@@ -98,7 +98,7 @@ test("all five routes keep a persistent tab path, including Gluedle", () => {
 test("home exposes three clean editorial routes drawn from the original visual directions", () => {
   for (const route of ["/concept/", "/visuals/", "/glue/"]) {
     assert.match(homeHtml, new RegExp(`href="${route}"`));
-    assert.match(viteConfig, new RegExp(`\\.${route}index\\.html`));
+    assert.match(viteConfig, new RegExp(`\\.\\/pages${route}index\\.html`));
   }
 
   assert.match(conceptHtml, /<title>CONCEPT — GLUE \/ CURLEY G<\/title>/);
@@ -384,11 +384,11 @@ test("share card uses the home palette and Preview 5 result colors", () => {
 
 test("production build declares all five HTML entries", () => {
   for (const entry of [
-    "./index.html",
-    "./concept/index.html",
-    "./visuals/index.html",
-    "./glue/index.html",
-    "./gluedle/index.html",
+    "./pages/index.html",
+    "./pages/concept/index.html",
+    "./pages/visuals/index.html",
+    "./pages/glue/index.html",
+    "./pages/gluedle/index.html",
   ]) {
     assert.ok(viteConfig.includes(`"${entry}"`), `${entry} must be a Vite input`);
   }

@@ -4,7 +4,15 @@ import { parseAst } from "rolldown/parseAst";
 
 const root = process.cwd();
 const errors = [];
-const ignoredDirectories = new Set([".git", "dist", "node_modules", "visual-previews-v2"]);
+const ignoredDirectories = new Set([
+  ".git",
+  "dist",
+  "node_modules",
+  "gameplay-preview-v3",
+  "gameplay-preview-v4",
+  "gameplay-preview-v5",
+  "visual-previews-v2",
+]);
 
 function collectJavaScript(directory) {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -42,13 +50,14 @@ for (const file of javaScriptFiles) {
   }
 }
 
-const homeHtml = readFileSync(join(root, "index.html"), "utf8");
-const gameHtmlLabel = "gluedle/index.html";
-const gameHtml = readFileSync(join(root, "gluedle", "index.html"), "utf8");
+const pagesDirectory = join(root, "pages");
+const homeHtml = readFileSync(join(pagesDirectory, "index.html"), "utf8");
+const gameHtmlLabel = "pages/gluedle/index.html";
+const gameHtml = readFileSync(join(pagesDirectory, "gluedle", "index.html"), "utf8");
 const editorialHtmlFiles = ["concept", "visuals", "glue"].map((route) => ({
   route,
-  label: `${route}/index.html`,
-  source: readFileSync(join(root, route, "index.html"), "utf8"),
+  label: `pages/${route}/index.html`,
+  source: readFileSync(join(pagesDirectory, route, "index.html"), "utf8"),
 }));
 const homeMain = readFileSync(join(root, "src", "main.js"), "utf8");
 const anchorNavigation = readFileSync(join(root, "src", "anchor-wheel-navigation.js"), "utf8");
@@ -472,11 +481,11 @@ if (/#8e2638/i.test(shareCardSource)) {
 }
 
 const viteInputs = [
-  "./index.html",
-  "./concept/index.html",
-  "./visuals/index.html",
-  "./glue/index.html",
-  "./gluedle/index.html",
+  "./pages/index.html",
+  "./pages/concept/index.html",
+  "./pages/visuals/index.html",
+  "./pages/glue/index.html",
+  "./pages/gluedle/index.html",
 ];
 if (viteInputs.some((input) => !viteConfig.includes(`"${input}"`))) {
   errors.push("vite.config.js: production build must include all five HTML entries");
