@@ -11,7 +11,7 @@ export const siteContent = {
     { label: "首页", href: "#home" },
     { label: "Green to Blue", href: "#concept" },
     { label: "Glue", href: "#story" },
-    { label: "Gluedle", href: "#game" },
+    { label: "Gluedle", href: "/gluedle.html" },
     { label: "Credits", href: "#credits" },
   ],
   hero: {

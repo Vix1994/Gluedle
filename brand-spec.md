@@ -4,27 +4,28 @@
 
 Gluedle is an independent, non-audio song-guessing prototype built around publicly verifiable metadata for songs performed by 希林娜依高 (Curley G / Curley Gao). The `Green to Blue` and `Glue` language used by this project is concept copy unless a cited public source says otherwise.
 
-The images listed below are **user-provided project materials**. They are not described as official artist, label, album, or campaign assets, and their presence in this repository does not imply endorsement or authorization by any artist, label, photographer, designer, or other rights holder.
+The runtime images listed below are original AI-generated replacements created for this repository. They are not official artist, label, album, or campaign assets, and their presence does not imply endorsement by any artist, label, or platform.
 
 ## Asset provenance and manifest
 
-- Source status: user-provided, untracked reference material supplied with this project.
-- Source directory (read-only): `visual-previews-v2/assets/glue-brand/`
+- Source status: newly generated project artwork; no pixels copied from the untracked reference material.
+- Generation path: Codex built-in `image_gen`, `stylized-concept` prompts, 2026-08-01.
+- Untracked references: `visual-previews-v2/` remains untouched and is not consumed at runtime.
 - Runtime directory: `public/assets/glue/`
-- Transfer method: byte-for-byte copy; source files remain in place and are not committed.
-- File format: the supplied JPEG format is preserved.
+- Output constraints: anonymous subjects; no celebrity likeness; no text, letters, numbers, logos, watermark, signature, social-media mark, brand mark, or readable symbols.
+- File format: JPEG, resized to the existing runtime dimensions so layout contracts remain stable.
 
-| User-provided source | Runtime copy | Intended prototype role |
+| Runtime asset | Dimensions | Intended prototype role |
 | --- | --- | --- |
-| `visual-previews-v2/assets/glue-brand/glue-blue-noise.jpg` | `public/assets/glue/blue-noise-texture.jpg` | lake-blue grain / atmosphere |
-| `visual-previews-v2/assets/glue-brand/glue-body-detail.jpg` | `public/assets/glue/body-detail-editorial.jpg` | editorial detail crop |
-| `visual-previews-v2/assets/glue-brand/glue-collage.jpg` | `public/assets/glue/editorial-collage.jpg` | layered collage |
-| `visual-previews-v2/assets/glue-brand/glue-introduction.jpg` | `public/assets/glue/introduction-spread.jpg` | introduction spread |
-| `visual-previews-v2/assets/glue-brand/glue-motion.jpg` | `public/assets/glue/motion-blur-portrait.jpg` | motion / transition image |
-| `visual-previews-v2/assets/glue-brand/glue-orbit.jpg` | `public/assets/glue/orbit-graphic.jpg` | orbit motif |
-| `visual-previews-v2/assets/glue-brand/glue-portrait.jpg` | `public/assets/glue/portrait-editorial.jpg` | editorial portrait |
-| `visual-previews-v2/assets/glue-brand/glue-ripple.jpg` | `public/assets/glue/water-ripple.jpg` | ripple motif |
-| `visual-previews-v2/assets/glue-brand/glue-top-view.jpg` | `public/assets/glue/top-view-portrait.jpg` | top-view portrait |
+| `public/assets/glue/blue-noise-texture.jpg` | 2362 × 2362 | lake-blue grain / atmosphere |
+| `public/assets/glue/body-detail-editorial.jpg` | 2160 × 2160 | clothed hand-and-sleeve detail |
+| `public/assets/glue/editorial-collage.jpg` | 2160 × 2160 | layered anonymous portrait collage |
+| `public/assets/glue/introduction-spread.jpg` | 1256 × 2760 | vertical figure and water spread |
+| `public/assets/glue/motion-blur-portrait.jpg` | 2362 × 2362 | anonymous motion / transition image |
+| `public/assets/glue/orbit-graphic.jpg` | 2160 × 2160 | figure-and-orbit motif |
+| `public/assets/glue/portrait-editorial.jpg` | 2362 × 2362 | anonymous overexposed editorial portrait |
+| `public/assets/glue/water-ripple.jpg` | 2362 × 2362 | fingertip-and-ripple motif |
+| `public/assets/glue/top-view-portrait.jpg` | 2362 × 2362 | anonymous top-view composition |
 
 These role labels are internal design guidance only; they do not identify the creator, subject, publication, or original campaign.
 
@@ -70,12 +71,10 @@ Font names are direction tokens, not bundled font licenses. Any production build
 
 Before any public or commercial release, confirm and document:
 
-1. the copyright owner and reuse license for each of the nine JPEG files;
-2. portrait/model releases and publicity rights for every identifiable person;
-3. photographer, art director, designer, label, and campaign usage permissions where applicable;
-4. territory, duration, media, derivative-work, promotional, and commercial-use scope;
-5. permission for any artist name, album name, logo, wordmark, or trade-dress usage;
-6. webfont and other third-party asset licenses; and
-7. the accuracy and publication status of all 2026 album or campaign claims.
+1. the applicable image-generation service terms and intended commercial-use scope;
+2. that generated subjects remain anonymous and do not create a misleading real-person likeness;
+3. permission for any artist name, album name, wordmark, or trade-dress usage;
+4. webfont and other third-party asset licenses; and
+5. the accuracy and publication status of all 2026 album or campaign claims.
 
-Until those checks are complete, use these images only as user-provided prototype references. Do not label them “official,” recreate an official logo from them, or infer credits and release facts from the artwork alone.
+Do not label the generated artwork “official,” use it to imply endorsement, recreate an official logo from it, or infer credits and release facts from visual style alone.
