@@ -16,9 +16,14 @@ const gameStyleFiles = gameStyleFileNames.map((name) => ({
 const gameStyleEntry = gameStyleFiles.find(({ name }) => name === "gluedle.css")?.source ?? "";
 const homeHtml = readFileSync(new URL("../index.html", import.meta.url), "utf8");
 const gameHtml = readFileSync(new URL("../gluedle/index.html", import.meta.url), "utf8");
+const conceptHtml = readFileSync(new URL("../concept/index.html", import.meta.url), "utf8");
+const visualsHtml = readFileSync(new URL("../visuals/index.html", import.meta.url), "utf8");
+const glueHtml = readFileSync(new URL("../glue/index.html", import.meta.url), "utf8");
 const homeMain = readFileSync(new URL("../src/main.js", import.meta.url), "utf8");
 const gameMain = readFileSync(new URL("../src/gluedle.js", import.meta.url), "utf8");
+const editorialMain = readFileSync(new URL("../src/editorial.js", import.meta.url), "utf8");
 const gameStyles = gameStyleFiles.map(({ source }) => source).join("\n");
+const editorialStyles = readFileSync(new URL("../src/styles/editorial.css", import.meta.url), "utf8");
 const shareCardSource = readFileSync(new URL("../src/share/share-card.js", import.meta.url), "utf8");
 const viteConfig = readFileSync(new URL("../vite.config.js", import.meta.url), "utf8");
 
@@ -68,6 +73,39 @@ test("GLUE leads the album identity while Green to Blue stays a concept chapter"
   assert.match(homeHtml, /GREEN TO BLUE \/ CONCEPT/);
   assert.doesNotMatch(homeHtml, />GREEN\s*(?:→|TO)\s*BLUE<\/a>/i);
   assert.match(gameHtml, /class="wordmark"[^>]*>GLUEDLE<\/a>/);
+});
+
+test("home exposes three clean editorial routes drawn from the original visual directions", () => {
+  for (const route of ["/concept/", "/visuals/", "/glue/"]) {
+    assert.match(homeHtml, new RegExp(`href="${route}"`));
+    assert.match(viteConfig, new RegExp(`\\.${route}index\\.html`));
+  }
+
+  assert.match(conceptHtml, /<title>CONCEPT — GLUE \/ CURLEY G<\/title>/);
+  assert.match(conceptHtml, /01 \/ ECHO ORBIT/);
+  assert.match(visualsHtml, /<title>VISUALS — GLUE \/ CURLEY G<\/title>/);
+  assert.match(visualsHtml, /02 \/ CONTACT LAKE/);
+  assert.match(glueHtml, /<title>GLUE 01 — CURLEY G<\/title>/);
+  assert.match(glueHtml, /03 \/ BLUE NOISE/);
+});
+
+test("editorial routes share navigation, motion, responsive, and content boundaries", () => {
+  for (const source of [conceptHtml, visualsHtml, glueHtml]) {
+    assert.match(source, /type="module" src="\/src\/editorial\.js"/);
+    for (const route of ["/", "/concept/", "/visuals/", "/glue/", "/gluedle/"]) {
+      assert.match(source, new RegExp(`href="${route}"`));
+    }
+    assert.doesNotMatch(source, /<audio\b|播放|试听|20\d{2}[-年/]|\b\d{1,2}:\d{2}\b/i);
+  }
+
+  assert.match(editorialMain, /import "\.\/styles\/editorial\.css"/);
+  assert.match(editorialMain, /IntersectionObserver/);
+  assert.doesNotMatch(editorialMain, /scrollIntoView/);
+  assert.match(editorialStyles, /@media \(max-width: 720px\)/);
+  assert.match(editorialStyles, /@media \(prefers-reduced-motion: reduce\)/);
+  for (const token of ["#050505", "#f4f3ed", "#e8ebeb", "#87a8be", "#537b98"]) {
+    assert.match(editorialStyles, new RegExp(token, "i"));
+  }
 });
 
 test("home wheel navigation advances through explicit content anchors", () => {
@@ -246,7 +284,14 @@ test("share card uses the home black, paper, lake, and muted result palette", ()
   assert.doesNotMatch(shareCardSource, /#22e6a7|#ffd166|#ff8ca1|#8e2638/i);
 });
 
-test("production build declares both HTML entries", () => {
-  assert.match(viteConfig, /\.\/index\.html/);
-  assert.match(viteConfig, /\.\/gluedle\/index\.html/);
+test("production build declares all five HTML entries", () => {
+  for (const entry of [
+    "./index.html",
+    "./concept/index.html",
+    "./visuals/index.html",
+    "./glue/index.html",
+    "./gluedle/index.html",
+  ]) {
+    assert.ok(viteConfig.includes(`"${entry}"`), `${entry} must be a Vite input`);
+  }
 });

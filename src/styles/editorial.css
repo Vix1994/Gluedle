@@ -404,8 +404,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   .visual-collage { min-height: 1120px; padding-top: calc(var(--header-height) + 40px); }
   .visual-heading { display: block; }
   .visual-heading > p:last-child { width: min(100%, 430px); margin-top: 36px; }
-  .visual-frame--detail { top: 33%; left: 0; width: 67%; height: 27%; }
-  .visual-frame--portrait { top: 51%; width: 72%; height: 33%; }
+  .visual-frame--detail { top: 40%; left: 0; width: 67%; height: 25%; }
+  .visual-frame--portrait { top: 57%; width: 72%; height: 30%; }
   .visual-frame--orbit { right: 8%; bottom: 3%; width: 48%; }
   .visual-type { bottom: 17%; }
   .lake-shape { bottom: 6%; left: 3%; width: 70%; height: 22%; }
@@ -416,8 +416,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   .sequence-item, .sequence-item--wide, .sequence-item--tall { grid-column: span 12; }
   .sequence-item img, .sequence-item--wide img, .sequence-item--tall img { aspect-ratio: 1.1; }
   .track-hero { display: block; padding-top: var(--header-height); }
-  .track-portrait { min-height: 62svh; }
-  .track-panel { min-height: 92svh; }
+  .track-portrait { min-height: 48svh; }
+  .track-panel { min-height: 84svh; padding-top: 48px; }
   .track-side-note { top: calc(var(--header-height) + 26px); bottom: auto; }
   .track-image-field { min-height: 1100px; }
   .track-ripple { top: 42%; width: 86%; height: 38%; }
@@ -431,10 +431,10 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   .orbit-caption { display: none; }
   .orbit-image { width: 88vw; }
   .statement-title h2, .contact-copy h2, .next-page h2, .sequence-head h2, .track-image-copy h2, .game-bridge-copy h2 { font-size: clamp(2.8rem, 14vw, 4.6rem); }
-  .visual-collage { min-height: 980px; }
+  .visual-collage { min-height: 1160px; }
   .visual-heading h1 { font-size: 25vw; }
-  .visual-frame--detail { top: 34%; }
-  .visual-frame--portrait { top: 49%; }
+  .visual-frame--detail { top: 43%; }
+  .visual-frame--portrait { top: 60%; }
   .visual-type { font-size: 20vw; bottom: 18%; }
   .track-panel h1 { font-size: 27vw; }
   .track-image-field { min-height: 960px; }

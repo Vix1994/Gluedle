@@ -45,8 +45,15 @@ for (const file of javaScriptFiles) {
 const homeHtml = readFileSync(join(root, "index.html"), "utf8");
 const gameHtmlLabel = "gluedle/index.html";
 const gameHtml = readFileSync(join(root, "gluedle", "index.html"), "utf8");
+const editorialHtmlFiles = ["concept", "visuals", "glue"].map((route) => ({
+  route,
+  label: `${route}/index.html`,
+  source: readFileSync(join(root, route, "index.html"), "utf8"),
+}));
 const homeMain = readFileSync(join(root, "src", "main.js"), "utf8");
 const gameMain = readFileSync(join(root, "src", "gluedle.js"), "utf8");
+const editorialMain = readFileSync(join(root, "src", "editorial.js"), "utf8");
+const editorialStyles = readFileSync(join(root, "src", "styles", "editorial.css"), "utf8");
 const gameStyleDirectory = join(root, "src", "styles");
 const gameStyleFileNames = readdirSync(gameStyleDirectory)
   .filter((name) => /^gluedle.*\.css$/.test(name))
@@ -134,7 +141,11 @@ const htmlForbidden = [
   [/<script(?![^>]*\bsrc=)[^>]*>/i, "inline scripts are not allowed"],
 ];
 
-for (const [file, source] of [["index.html", homeHtml], [gameHtmlLabel, gameHtml]]) {
+for (const [file, source] of [
+  ["index.html", homeHtml],
+  [gameHtmlLabel, gameHtml],
+  ...editorialHtmlFiles.map(({ label, source }) => [label, source]),
+]) {
   for (const [pattern, message] of htmlForbidden) {
     if (pattern.test(source)) errors.push(`${file}: ${message}`);
   }
@@ -151,6 +162,33 @@ if (!homeMain.includes('import "./styles/site.css";')) {
 }
 if (!gameMain.includes('import "./styles/gluedle.css";')) {
   errors.push("src/gluedle.js: gluedle.css must be imported from the game entry");
+}
+if (!editorialMain.includes('import "./styles/editorial.css";')) {
+  errors.push("src/editorial.js: editorial.css must be imported from the editorial entry");
+}
+
+for (const { route, label, source } of editorialHtmlFiles) {
+  if (
+    !source.includes('type="module" src="/src/editorial.js"')
+    || !source.includes('class="section-wordmark"')
+    || !source.includes(`href="/${route}/"`)
+    || ["/", "/concept/", "/visuals/", "/glue/", "/gluedle/"]
+      .some((href) => !source.includes(`href="${href}"`))
+  ) {
+    errors.push(`${label}: missing shared editorial entry, identity, or clean-route navigation`);
+  }
+
+  if (/<audio\b|播放|试听|20\d{2}[-年/]|\b\d{1,2}:\d{2}\b/i.test(source)) {
+    errors.push(`${label}: must not fabricate or expose audio, dates, years, or duration metadata`);
+  }
+}
+
+if (
+  !/@media\s*\(max-width:\s*720px\)/.test(editorialStyles)
+  || !/@media\s*\(prefers-reduced-motion:\s*reduce\)/.test(editorialStyles)
+  || /scrollIntoView/.test(editorialMain)
+) {
+  errors.push("editorial pages: shared motion must remain responsive, reduced-motion safe, and iframe safe");
 }
 
 const homeAnchorIds = ["home", "concept", "story", "visuals", "release", "play", "listen"];
@@ -373,13 +411,20 @@ if (/#8e2638/i.test(shareCardSource)) {
   errors.push("src/share/share-card.js: saturated legacy miss color must not return");
 }
 
-if (!viteConfig.includes('"./index.html"') || !viteConfig.includes('"./gluedle/index.html"')) {
-  errors.push("vite.config.js: production build must include both HTML entries");
+const viteInputs = [
+  "./index.html",
+  "./concept/index.html",
+  "./visuals/index.html",
+  "./glue/index.html",
+  "./gluedle/index.html",
+];
+if (viteInputs.some((input) => !viteConfig.includes(`"${input}"`))) {
+  errors.push("vite.config.js: production build must include all five HTML entries");
 }
 
 if (errors.length) {
   console.error(errors.join("\n\n"));
   process.exitCode = 1;
 } else {
-  console.log(`Lint passed: ${javaScriptFiles.length} JavaScript files and two-page HTML contracts checked.`);
+  console.log(`Lint passed: ${javaScriptFiles.length} JavaScript files and five-page HTML contracts checked.`);
 }

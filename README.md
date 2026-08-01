@@ -10,6 +10,9 @@
 - `#concept`：Green to Blue、涟漪与轨道概念说明；
 - `#story`：编辑式影像拼贴与当前唯一公开曲目《Glue》；
 - 首页居中的 Gluedle 入口：前往干净路由 `/gluedle/`；
+- `/concept/`：Echo Orbit 方向的接触、涟漪与回声概念页；
+- `/visuals/`：Contact Lake 方向的非对称影像档案；
+- `/glue/`：Blue Noise 方向的同名首曲视觉页；
 
 ## 游戏规则
 
@@ -29,7 +32,7 @@ npm install
 npm run dev
 ```
 
-Vite 通常会在 `http://localhost:5173` 提供首页，独立游戏位于 `http://localhost:5173/gluedle/`。该目录型入口在生产构建中输出为 `dist/gluedle/index.html`，因此链接、直接访问和分享二维码都不暴露 `.html` 文件名。
+Vite 通常会在 `http://localhost:5173` 提供首页。三个专辑章节分别位于 `/concept/`、`/visuals/`、`/glue/`，独立游戏位于 `/gluedle/`。这些目录型入口在生产构建中都输出为各自的 `index.html`，因此链接和直接访问不暴露 `.html` 文件名。
 
 请通过 Vite 开发服务器或 `npm run build` 后的构建产物访问，不要直接双击源码 HTML。游戏入口依赖 ES modules、CSS 模块导入和浏览器本地存储；加载失败时页面会保留可见的启动提示，而不会伪装成可操作的静态界面。
 
@@ -58,6 +61,9 @@ Vite 通常会在 `http://localhost:5173` 提供首页，独立游戏位于 `htt
 ├── src/gluedle.js           # 独立游戏、每日状态、动态反馈与分享流程
 ├── tests/                   # 游戏引擎与内容边界测试
 ├── index.html               # GLUE 专辑视觉首页
+├── concept/index.html       # `/concept/` Echo Orbit 概念页
+├── visuals/index.html       # `/visuals/` Contact Lake 影像档案
+├── glue/index.html          # `/glue/` Blue Noise 单曲视觉页
 └── gluedle/index.html       # `/gluedle/` 独立游戏路由入口
 ```
 

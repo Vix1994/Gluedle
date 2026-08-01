@@ -494,6 +494,10 @@ a:focus-visible {
   line-height: 1.45;
 }
 
+.concept-deep-link {
+  margin-top: 30px;
+}
+
 .vertical-note {
   position: absolute;
   right: var(--page-pad);
@@ -611,6 +615,32 @@ a:focus-visible {
   color: var(--white);
 }
 
+.collage-deep-link {
+  position: absolute;
+  right: var(--page-pad);
+  bottom: 5%;
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 42px;
+  min-height: 48px;
+  padding: 0 14px;
+  color: var(--white);
+  border: 1px solid rgb(244 243 237 / 48%);
+  background: rgb(5 5 5 / 72%);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  transition: color 180ms ease, background 180ms ease;
+}
+
+.collage-deep-link:hover {
+  color: var(--black);
+  background: var(--white);
+}
+
 .release {
   margin-top: clamp(90px, 12vw, 170px);
 }
@@ -664,6 +694,27 @@ a:focus-visible {
   font-weight: 650;
   line-height: 0.68;
   letter-spacing: -0.095em;
+}
+
+.released-track-identity h4 a {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: clamp(18px, 3vw, 48px);
+  text-decoration: none;
+}
+
+.released-track-identity h4 small {
+  margin-top: 0.15em;
+  font-family: var(--font-mono);
+  font-size: clamp(0.72rem, 1.2vw, 1rem);
+  font-stretch: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  transition: transform 220ms var(--ease-out);
+}
+
+.released-track-identity h4 a:hover small {
+  transform: translate(5px, -5px);
 }
 
 .game-entry {
@@ -925,6 +976,7 @@ a:focus-visible {
   .collage-frame--motion { top: 31%; right: 0; width: 72%; height: 36%; }
   .collage-frame--top { right: 6%; bottom: 2%; width: 55%; height: 27%; }
   .collage-blue { bottom: 10%; left: 0; width: 52%; height: 33%; padding: 22px; }
+  .collage-deep-link { right: 16px; bottom: 2%; }
   .released-track { grid-template-columns: 38px minmax(0, 1fr); gap: 12px; }
   .game-entry { min-height: auto; }
   .artist-links > a { min-height: 68px; }

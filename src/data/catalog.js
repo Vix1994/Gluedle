@@ -8,9 +8,10 @@
 
 export const siteContent = {
   navigation: [
-    { label: "首页", href: "#home" },
-    { label: "Green to Blue", href: "#concept" },
-    { label: "视觉", href: "#story" },
+    { label: "首页", href: "/" },
+    { label: "概念", href: "/concept/" },
+    { label: "影像", href: "/visuals/" },
+    { label: "单曲", href: "/glue/" },
     { label: "Gluedle", href: "/gluedle/" },
   ],
   hero: {
