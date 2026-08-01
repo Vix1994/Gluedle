@@ -31,6 +31,8 @@ npm run dev
 
 Vite 通常会在 `http://localhost:5173` 提供首页，独立游戏位于 `http://localhost:5173/gluedle.html`。
 
+请通过 Vite 开发服务器或 `npm run build` 后的构建产物访问，不要直接双击源码 HTML。游戏入口依赖 ES modules、CSS 模块导入和浏览器本地存储；加载失败时页面会保留可见的启动提示，而不会伪装成可操作的静态界面。
+
 ## 工程命令
 
 | 命令 | 用途 |
@@ -53,7 +55,7 @@ Vite 通常会在 `http://localhost:5173` 提供首页，独立游戏位于 `htt
 ├── src/share/               # 本地 QR 编码与分享卡绘制
 ├── src/styles/              # 首页与独立游戏的响应式视觉
 ├── src/main.js              # 首页内容与滚动展示
-├── src/gluedle.js           # 独立游戏与分享流程
+├── src/gluedle.js           # 独立游戏、每日状态、动态反馈与分享流程
 ├── tests/                   # 游戏引擎与内容边界测试
 ├── index.html               # GLUE / Green to Blue 首页
 └── gluedle.html             # 独立 Gluedle 游戏页

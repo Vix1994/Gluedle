@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#06131f" />
+    <meta name="theme-color" content="#050505" />
     <meta name="description" content="Gluedle：每天六次机会，只用歌曲资料推理答案。" />
     <title>GLUEDLE — 每日歌曲资料推理</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -14,26 +14,44 @@
     />
     <script type="module" src="/src/gluedle.js"></script>
   </head>
-  <body>
+  <body class="is-booting" data-game-state="loading" data-attempts="0">
     <a class="skip-link" href="#game-panel">跳至游戏</a>
 
+    <div class="app-boot" data-app-boot role="status" aria-live="polite">
+      <span>GLUEDLE / CONNECTING</span>
+      <strong>正在连接今日题目</strong>
+      <p>如果这里一直没有消失，请在项目目录运行 <code>npm run dev</code>，再通过本地地址打开游戏。</p>
+      <noscript><p>Gluedle 需要启用 JavaScript 才能进行每日推理。</p></noscript>
+    </div>
+
     <header class="game-header">
-      <a class="wordmark" href="/" aria-label="返回项目首页">GLUEDLE</a>
+      <a class="wordmark" href="/" aria-label="返回 GLUE 项目首页">GREEN→BLUE</a>
       <div class="header-meta" aria-label="游戏特征">
-        <span>DAILY</span><span>NO AUDIO</span><span>06 TRIES</span>
+        <span>GLUEDLE</span><span>DAILY</span><span>06 TRIES</span>
       </div>
       <button class="icon-button" type="button" data-open-dialog="help-dialog" aria-label="打开玩法说明">?</button>
     </header>
 
     <main class="game-shell">
       <section class="game-intro" aria-labelledby="game-title">
-        <div class="intro-index" aria-hidden="true"><span>01</span><span>CONNECT THE DATA</span></div>
-        <p class="kicker" id="game-date">TODAY / —</p>
-        <h1 id="game-title">不用听，<br />也能猜到吗？</h1>
-        <p class="intro-copy">每天从希林娜依高过往作品题库中抽取一题。六次选择，用资料的偏差推回那一首歌。</p>
-        <div class="library-note" aria-label="游戏题库说明">
-          <span>GAME LIBRARY</span>
-          <strong><span data-game-song-count>—</span> 首 · 希林娜依高过往作品题库</strong>
+        <div class="game-signal" aria-hidden="true">
+          <span class="signal-ring"></span>
+          <span class="signal-ring"></span>
+          <span class="signal-ring"></span>
+          <span class="signal-ring"></span>
+          <span class="signal-ring"></span>
+          <span class="signal-ring"></span>
+          <span class="signal-core"></span>
+        </div>
+        <div class="game-intro-copy">
+          <div class="intro-index" aria-hidden="true"><span>01 / DAILY GLUEDLE</span><span>CONNECT THE DATA</span></div>
+          <p class="kicker" id="game-date">TODAY / —</p>
+          <h1 id="game-title">不用听，<br />也能猜到吗？</h1>
+          <p class="intro-copy">六次选择。沿着资料的偏差，让今天的答案从水面浮出来。</p>
+          <div class="library-note" aria-label="游戏题库规模">
+            <span>GAME LIBRARY</span>
+            <strong><span data-game-song-count>—</span> 首 · 希林娜依高过往作品</strong>
+          </div>
         </div>
       </section>
 
@@ -43,7 +61,17 @@
             <p class="meta-label" id="game-state-title">CURRENT STATE</p>
             <p id="game-status" aria-live="polite">准备今日题目</p>
           </div>
-          <p class="attempt-display"><span id="attempt-count">0</span><small>/ 06</small></p>
+          <div class="attempt-meter">
+            <p class="attempt-display"><span id="attempt-count">0</span><small>/ 06</small></p>
+            <ol class="attempt-track" aria-label="六次尝试进度">
+              <li data-attempt-marker aria-label="第 1 次，尚未使用"></li>
+              <li data-attempt-marker aria-label="第 2 次，尚未使用"></li>
+              <li data-attempt-marker aria-label="第 3 次，尚未使用"></li>
+              <li data-attempt-marker aria-label="第 4 次，尚未使用"></li>
+              <li data-attempt-marker aria-label="第 5 次，尚未使用"></li>
+              <li data-attempt-marker aria-label="第 6 次，尚未使用"></li>
+            </ol>
+          </div>
         </div>
 
         <form id="guess-form" class="guess-form" novalidate>
@@ -53,6 +81,7 @@
               id="song-input"
               name="song"
               type="search"
+              role="combobox"
               inputmode="search"
               autocomplete="off"
               aria-autocomplete="list"

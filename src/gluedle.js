@@ -15,6 +15,9 @@ import { buildShareCardModel, canvasToBlob, renderShareCard } from "./share/shar
 
 document.documentElement.classList.add("js");
 
+const NO_RESULTS_MESSAGE = "没有找到可选歌曲，请换一个关键词。";
+const DAY_CHECK_INTERVAL_MS = 60_000;
+
 const elements = {
   gameSongCount: document.querySelector("[data-game-song-count]"),
   gameDate: document.querySelector("#game-date"),
@@ -34,6 +37,7 @@ const elements = {
   resultShare: document.querySelector("[data-result-share]"),
   shareCanvas: document.querySelector("[data-share-canvas]"),
   toast: document.querySelector("[data-toast]"),
+  appBoot: document.querySelector("[data-app-boot]"),
 };
 
 const guessableSongs = songs.filter((song) => song.guessable !== false);
@@ -49,12 +53,16 @@ let activeSuggestion = -1;
 let toastTimer;
 let lastDialogTrigger = null;
 let isSharing = false;
+let lastDayCheck = Date.now();
+let dayReloadScheduled = false;
 
 hydrateContent();
 renderGame();
 bindSearch();
 bindGameActions();
 bindDialogs();
+bindDailyRollover();
+finishBoot();
 
 function hydrateContent() {
   elements.gameSongCount.textContent = String(guessableSongs.length).padStart(2, "0");
@@ -85,8 +93,14 @@ function bindSearch() {
 
     if (event.key === "ArrowDown" || event.key === "ArrowUp") {
       event.preventDefault();
-      const delta = event.key === "ArrowDown" ? 1 : -1;
-      activeSuggestion = (activeSuggestion + delta + suggestionSongs.length) % suggestionSongs.length;
+      if (activeSuggestion === -1) {
+        activeSuggestion = event.key === "ArrowDown" ? 0 : suggestionSongs.length - 1;
+      } else {
+        const delta = event.key === "ArrowDown" ? 1 : -1;
+        activeSuggestion = (
+          activeSuggestion + delta + suggestionSongs.length
+        ) % suggestionSongs.length;
+      }
       updateActiveSuggestion();
       return;
     }
@@ -98,19 +112,28 @@ function bindSearch() {
 }
 
 function showSuggestions(query) {
-  if (state.status !== "playing") return;
+  if (state.status !== "playing" || elements.input.disabled) {
+    closeSuggestions();
+    return;
+  }
   const guessedIds = new Set(state.attempts.map((attempt) => attempt.songId));
   const matches = query.trim()
     ? findSongMatches(query, guessableSongs, 8)
-    : guessableSongs.slice(0, 8);
-  suggestionSongs = matches.filter((song) => !guessedIds.has(song.id));
+    : guessableSongs.filter((song) => !guessedIds.has(song.id)).slice(0, 8);
+  suggestionSongs = query.trim()
+    ? matches.filter((song) => !guessedIds.has(song.id))
+    : matches;
   activeSuggestion = -1;
   elements.suggestions.replaceChildren();
 
   if (!suggestionSongs.length) {
     closeSuggestions();
-    if (query.trim()) setFeedback("没有找到可选歌曲，请换一个关键词。", true);
+    if (query.trim()) setFeedback(NO_RESULTS_MESSAGE, true);
     return;
+  }
+
+  if (elements.feedback.textContent === NO_RESULTS_MESSAGE) {
+    setFeedback("搜索并选择一首歌；列表只显示歌名。");
   }
 
   suggestionSongs.forEach((song, index) => {
@@ -195,24 +218,36 @@ function bindGameActions() {
   elements.share.addEventListener("click", shareResultImage);
   elements.resultShare.addEventListener("click", shareResultImage);
   elements.reset.addEventListener("click", () => {
-    removeStoredState();
+    const storageCleared = removeStoredState();
     state = createInitialState(answer.id);
     selectedSong = null;
     elements.input.value = "";
+    closeSuggestions();
     renderGame();
-    setFeedback("已清除今天这一题的进度，可以重新开始。");
-    showToast("今日进度已清除");
+    if (storageCleared) {
+      setFeedback("已清除今天这一题的进度，可以重新开始。");
+      showToast("今日进度已清除");
+    } else {
+      setFeedback("本页进度已重置，但浏览器存储未能清除。", true);
+      showToast("无法清除浏览器存储");
+    }
   });
 }
 
 function renderGame() {
   const finished = state.status !== "playing";
+  const attemptTotal = state.attempts.length;
+  document.body.dataset.gameState = state.status;
+  document.body.dataset.attempts = String(attemptTotal);
+  document.body.style.setProperty("--attempt-progress", String(attemptTotal / MAX_ATTEMPTS));
+  updateAttemptMarkers(attemptTotal);
   elements.attemptCount.textContent = String(state.attempts.length);
   elements.input.disabled = finished;
   elements.submit.disabled = finished || !selectedSong;
   elements.share.disabled = state.attempts.length === 0 || isSharing;
   elements.reset.disabled = state.attempts.length === 0 || isSharing;
   elements.resultShare.disabled = isSharing;
+  if (finished) closeSuggestions();
 
   if (state.status === "won") {
     elements.gameStatus.textContent = `连接成功 · ${answer.title}`;
@@ -236,10 +271,14 @@ function renderGame() {
     return;
   }
 
-  state.attempts.forEach((attempt) => {
+  state.attempts.forEach((attempt, attemptIndex) => {
     const song = guessableSongs.find((item) => item.id === attempt.songId);
     if (!song) return;
     const row = document.createElement("tr");
+    row.className = "guess-row";
+    row.dataset.attemptIndex = String(attemptIndex + 1);
+    row.style.setProperty("--row-index", String(attemptIndex));
+    if (attemptIndex === state.attempts.length - 1) row.classList.add("is-new");
     appendComparisonCell(
       row,
       { value: song.title, status: song.id === answer.id ? "match" : "miss", direction: null },
@@ -253,6 +292,21 @@ function renderGame() {
     appendComparisonCell(row, attempt.comparison.performance, "performance");
     appendComparisonCell(row, attempt.comparison.credits, "credits");
     elements.board.append(row);
+  });
+}
+
+function updateAttemptMarkers(attemptTotal) {
+  document.querySelectorAll("[data-attempt-marker]").forEach((marker, index) => {
+    const complete = index < attemptTotal;
+    const current = state.status === "playing" && index === attemptTotal;
+    const markerState = complete ? "complete" : current ? "current" : "pending";
+    const stateLabel = complete ? "已完成" : current ? "当前机会" : "未使用";
+    marker.classList.toggle("is-complete", complete);
+    marker.classList.toggle("is-current", current);
+    marker.dataset.markerState = markerState;
+    marker.setAttribute("aria-label", `第 ${index + 1} 次机会，${stateLabel}`);
+    if (current) marker.setAttribute("aria-current", "step");
+    else marker.removeAttribute("aria-current");
   });
 }
 
@@ -410,6 +464,29 @@ function bindDialogs() {
   });
 }
 
+function bindDailyRollover() {
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") checkForNewDay();
+  });
+  window.setInterval(checkForNewDay, DAY_CHECK_INTERVAL_MS);
+}
+
+function checkForNewDay() {
+  const now = Date.now();
+  if (document.visibilityState === "hidden" || now - lastDayCheck < DAY_CHECK_INTERVAL_MS) return;
+  lastDayCheck = now;
+  if (createLocalDayKey(new Date(now)) === dayKey || dayReloadScheduled) return;
+  dayReloadScheduled = true;
+  showToast("新的一天已经开始，正在载入今日题目");
+  window.setTimeout(() => window.location.reload(), 500);
+}
+
+function finishBoot() {
+  document.documentElement.classList.remove("is-booting");
+  document.body.classList.remove("is-booting");
+  elements.appBoot?.remove();
+}
+
 function openDialog(dialog) {
   lastDialogTrigger = document.activeElement;
   document.body.classList.add("dialog-open");
@@ -473,8 +550,9 @@ function storeState() {
 function removeStoredState() {
   try {
     window.localStorage.removeItem(storageKey);
+    return true;
   } catch {
-    showToast("无法清除浏览器存储，但本页进度已重置");
+    return false;
   }
 }
 
