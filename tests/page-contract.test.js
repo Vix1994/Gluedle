@@ -313,6 +313,7 @@ test("the standalone shell exposes accessible dynamic-game integration points", 
   assert.doesNotMatch(gameHtml, /<th\b[^>]*>发行日<\/th>|<th\b[^>]*>时长<\/th>/);
   assert.match(gameHtml, />收藏数<\/th>/);
   assert.match(gameHtml, />专辑<\/th>/);
+  assert.match(gameHtml, />原唱\/翻唱<\/th>/);
   assert.doesNotMatch(gameHtml, />项目<\/th>/);
   assert.match(gameHtml, />语言<\/th>/);
 });
@@ -356,15 +357,16 @@ test("responsive game ledger exposes every field without horizontal scrolling", 
   assert.match(gameStyles, /\.guess-desk\s*\{[\s\S]*?position:\s*fixed[\s\S]*?bottom:\s*var\(--mobile-keyboard-offset/);
   assert.match(gameStyles, /\.game-shell\s*\{[\s\S]*?max-width:\s*1540px/);
   assert.match(gameStyles, /@media\s*\(max-width:\s*1240px\)/);
-  for (const field of ["favoriteCount", "language", "project", "performance", "featuredArtistGender", "credits"]) {
+  for (const field of ["favoriteCount", "language", "project", "performance", "originType", "featuredArtistGender", "credits"]) {
     assert.match(gameMain, new RegExp(`, "${field}",`));
   }
   assert.match(gameMain, /attempt\.comparison\.favoriteCount, "favoriteCount", "收藏数"/);
+  assert.match(gameMain, /attempt\.comparison\.originType, "originType", "原唱\/翻唱"/);
   assert.match(gameMain, /attempt\.comparison\.featuredArtistGender, "featuredArtistGender", "合作对象"/);
-  assert.match(gameMain, /cell\.colSpan = 7/);
+  assert.match(gameMain, /cell\.colSpan = 8/);
   assert.match(gameMain, /appendSongComparisonCell\(row, song, attempt/);
   assert.match(gameMain, /formatReleaseDate\(comparison\.value\)/);
-  assert.match(gameStyles, /#guess-board th:nth-child\(2\) \{ width: 10%; \}/);
+  assert.match(gameStyles, /#guess-board th:nth-child\(8\) \{ width: 8%; \}/);
   assert.match(
     gameStyles,
     /@media\s*\(min-width:\s*721px\)[\s\S]*?\.suggestion-option\s*\{[\s\S]*?font-size:\s*clamp\(0\.95rem/,

@@ -1,5 +1,6 @@
 import { createQrMatrix } from "./qr-code.js";
 import { getProjectDisplay } from "../data/project-categories.js";
+import { SONG_ORIGIN_LABELS } from "../data/song-provenance.js";
 import { formatDuration, formatFavoriteCount } from "../game/engine.js";
 
 export const SHARE_CARD_WIDTH = 1080;
@@ -11,11 +12,12 @@ export const SHARE_FIELDS = [
   "language",
   "project",
   "performance",
+  "originType",
   "featuredArtistGender",
   "credits",
 ];
 
-const SHARE_FIELD_LABELS = ["发行日", "时长", "收藏", "语言", "专辑", "演唱", "合作", "创作"];
+const SHARE_FIELD_LABELS = ["发行日", "时长", "收藏", "语言", "专辑", "演唱", "版本", "合作", "创作"];
 
 const STATUS_STYLE = Object.freeze({
   match: { fill: "#49e99b", ink: "#050505", mark: "✓", label: "匹配" },
@@ -181,7 +183,7 @@ export function renderShareCard(canvas, model) {
     context.fillStyle = "#a7aaa8";
     drawWrappedText(
       context,
-      [model.song.language, model.song.performance, model.song.featuredArtists].join(" / "),
+      [model.song.language, model.song.performance, model.song.origin, model.song.featuredArtists].join(" / "),
       answerX,
       answerY + 134,
       answerWidth,
@@ -252,6 +254,7 @@ function normalizeSongInfo(song) {
       collaboration: "合作",
       duet: "合唱",
     }[song.performanceType] ?? "待核验",
+    origin: SONG_ORIGIN_LABELS[song.originType] ?? "待核验",
     featuredArtists: featuredArtists.length ? `合作：${featuredArtists.join("、")}` : "无合作对象",
     credits: formatCredits(song.curleyCredits),
   };

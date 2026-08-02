@@ -26,7 +26,7 @@ test("share-card model keeps guesses private while adding finished song info", (
   });
   assert.equal(model.outcome, "1 / …");
   assert.equal(model.song, null);
-  assert.deepEqual(model.rows[0], ["match", "near", "miss", "match", "near", "miss", "match", "near"]);
+  assert.deepEqual(model.rows[0], ["match", "near", "miss", "match", "near", "miss", "match", "near", "miss"]);
   const serialized = JSON.stringify(model);
   assert.doesNotMatch(serialized, /secret-answer|secret-title|secret-guess/);
 });
@@ -45,6 +45,7 @@ test("finished share cards include the answer song metadata", () => {
       favoriteCountDisplay: "5w+",
       language: "zh",
       performanceType: "collaboration",
+      originType: "cover",
       featuredArtists: ["合作歌手"],
       curleyCredits: { lyrics: true, composition: false },
     },
@@ -58,6 +59,7 @@ test("finished share cards include the answer song metadata", () => {
     favoriteCount: "5w+",
     language: "中文",
     performance: "合作",
+    origin: "翻唱",
     featuredArtists: "合作：合作歌手",
     credits: "词参与",
   });

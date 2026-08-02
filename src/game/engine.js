@@ -153,6 +153,8 @@ export function compareSongs(guess, target) {
   const targetProject = readProject(target);
   const guessPerformance = guess.performanceType ?? null;
   const targetPerformance = target.performanceType ?? null;
+  const guessOriginType = readSongOriginType(guess);
+  const targetOriginType = readSongOriginType(target);
   const guessFeaturedArtistGender = readFeaturedArtistGender(guess);
   const targetFeaturedArtistGender = readFeaturedArtistGender(target);
   const guessLanguage = readLanguage(guess);
@@ -179,6 +181,7 @@ export function compareSongs(guess, target) {
     ),
     project: projectComparison(guessProject, targetProject),
     performance: equalityComparison(guessPerformance, targetPerformance),
+    originType: equalityComparison(guessOriginType, targetOriginType),
     featuredArtistGender: equalityComparison(
       guessFeaturedArtistGender,
       targetFeaturedArtistGender,
@@ -495,6 +498,12 @@ function readLanguage(song) {
 function readFeaturedArtistGender(song) {
   return typeof song.featuredArtistGender === "string" && song.featuredArtistGender.trim()
     ? song.featuredArtistGender.trim().toLowerCase()
+    : null;
+}
+
+function readSongOriginType(song) {
+  return typeof song.originType === "string" && song.originType.trim()
+    ? song.originType.trim().toLowerCase()
     : null;
 }
 
