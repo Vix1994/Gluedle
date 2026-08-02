@@ -10,6 +10,7 @@
     "test": "node --test",
     "build": "vite build",
     "preview": "vite preview",
+    "sync:origin-config": "node scripts/sync-song-origin-overrides.mjs",
     "check": "npm run lint && npm run test && npm run build"
   },
   "engines": {

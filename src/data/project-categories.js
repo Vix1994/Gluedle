@@ -30,13 +30,12 @@ const SONG_CATEGORY_OVERRIDES = Object.freeze({
   "猜": "film",
   "陷入爱情": "film",
   "为我们失去的": "film",
+  "危爱": "film",
   "Stay With Me (原创版)": "live",
 });
 
-export const SONG_ORIGIN_OVERRIDES = Object.freeze({
-  "歌曲名": "original",
-  "歌曲名 (Live)": "cover",
-});
+// 保留旧的导出位置，来源配置的实际定义统一放在 song-provenance.js。
+export { SONG_ORIGIN_OVERRIDES } from "./song-provenance.js";
 
 export function getSongProjectOverride(songTitle) {
   const title = typeof songTitle === "string" ? songTitle.trim() : "";

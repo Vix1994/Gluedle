@@ -8,7 +8,13 @@ import {
   getSongProjectCategory,
   PROJECT_CATEGORY_VALUES,
 } from "../src/data/project-categories.js";
-import { SONG_ORIGIN_VALUES } from "../src/data/song-provenance.js";
+import {
+  DEFAULT_SONG_ORIGIN_TYPE,
+  getSongOriginType,
+  SONG_ORIGIN_LABELS,
+  SONG_ORIGIN_OVERRIDES,
+  SONG_ORIGIN_VALUES,
+} from "../src/data/song-provenance.js";
 import {
   SONG_CATALOG_URL,
   SONG_LANGUAGES,
@@ -99,6 +105,22 @@ test("the guessing catalog uses QQ Music sources and has resolved creation credi
     songs.find((song) => song.title === "于是我这样生活")?.curleyCredits,
     { lyrics: false, composition: false },
   );
+});
+
+test("the song origin config is initialized for every catalog title", () => {
+  assert.deepEqual(
+    Object.keys(SONG_ORIGIN_OVERRIDES),
+    songs.map((song) => song.title),
+  );
+  const acceptedOriginValues = new Set([
+    null,
+    ...SONG_ORIGIN_VALUES,
+    ...Object.values(SONG_ORIGIN_LABELS),
+  ]);
+  assert.ok(Object.values(SONG_ORIGIN_OVERRIDES)
+    .every((originType) => acceptedOriginValues.has(originType)));
+  assert.equal(DEFAULT_SONG_ORIGIN_TYPE, "original");
+  assert.equal(getSongOriginType("尚未配置的歌曲"), DEFAULT_SONG_ORIGIN_TYPE);
 });
 
 test("the catalog sync starts from the maintained QQ Music playlist", () => {

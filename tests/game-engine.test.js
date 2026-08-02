@@ -30,6 +30,7 @@ function song(overrides = {}) {
     project: { title: "Project A", type: "album" },
     language: "zh",
     performanceType: "solo",
+    originType: "original",
     featuredArtistGender: "none",
     favoriteCount: 10000,
     curleyCredits: { lyrics: true, composition: true },
@@ -285,6 +286,38 @@ test("compareSongs applies project, performance, and credits rules", () => {
   assert.equal(misses.project.status, COMPARISON_STATUS.MISS);
   assert.equal(misses.credits.status, COMPARISON_STATUS.MISS);
 
+});
+
+test("compareSongs compares manually maintained song origin", () => {
+  const match = compareSongs(
+    song({ originType: "original" }),
+    song({ originType: "original" }),
+  );
+  assert.deepEqual(match.originType, {
+    value: "original",
+    status: COMPARISON_STATUS.MATCH,
+    direction: null,
+  });
+
+  const miss = compareSongs(
+    song({ originType: "cover" }),
+    song({ originType: "original" }),
+  );
+  assert.deepEqual(miss.originType, {
+    value: "cover",
+    status: COMPARISON_STATUS.MISS,
+    direction: null,
+  });
+
+  const unknown = compareSongs(
+    song({ originType: undefined }),
+    song({ originType: "original" }),
+  );
+  assert.deepEqual(unknown.originType, {
+    value: "待核验",
+    status: COMPARISON_STATUS.UNKNOWN,
+    direction: null,
+  });
 });
 
 test("compareSongs compares lyric language as an exact metadata field", () => {

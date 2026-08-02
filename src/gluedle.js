@@ -1,6 +1,7 @@
 import { siteContent } from "./data/catalog.js";
 import { FEATURED_ARTIST_GENDER_LABELS } from "./data/collaborator-genders.js";
 import { loadSongCatalog } from "./data/song-catalog.js";
+import { SONG_ORIGIN_LABELS } from "./data/song-provenance.js";
 import {
   MAX_ATTEMPTS,
   createInitialState,
@@ -295,7 +296,7 @@ export function mountGluedle() {
       const row = document.createElement("tr");
       const cell = document.createElement("td");
       row.className = "empty-row";
-      cell.colSpan = 7;
+      cell.colSpan = 8;
       cell.textContent = "输入歌名，第一条推理会出现在这里";
       row.append(cell);
       elements.board.append(row);
@@ -315,6 +316,7 @@ export function mountGluedle() {
       appendComparisonCell(row, attempt.comparison.language, "language", "语言");
       appendComparisonCell(row, attempt.comparison.project, "project", "专辑");
       appendComparisonCell(row, attempt.comparison.performance, "performance", "演唱");
+      appendComparisonCell(row, attempt.comparison.originType, "originType", "原唱/翻唱");
       appendComparisonCell(row, attempt.comparison.featuredArtistGender, "featuredArtistGender", "合作对象");
       appendComparisonCell(row, attempt.comparison.credits, "credits", "创作");
       elements.board.append(row);
@@ -676,6 +678,9 @@ function formatCellValue(value, field) {
   }
   if (field === "performance") {
     return { solo: "独唱", collaboration: "合作", duet: "合唱" }[value] ?? value ?? "待核验";
+  }
+  if (field === "originType") {
+    return SONG_ORIGIN_LABELS[value] ?? value ?? "待核验";
   }
   if (field === "featuredArtistGender") {
     return FEATURED_ARTIST_GENDER_LABELS[value] ?? value ?? "待核验";
