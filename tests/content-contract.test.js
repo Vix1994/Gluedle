@@ -5,6 +5,11 @@ import { readFileSync } from "node:fs";
 import { siteContent } from "../src/data/catalog.js";
 import { FEATURED_ARTIST_GENDER_VALUES } from "../src/data/collaborator-genders.js";
 import {
+  getSongProjectCategory,
+  PROJECT_CATEGORY_VALUES,
+} from "../src/data/project-categories.js";
+import { SONG_ORIGIN_VALUES } from "../src/data/song-provenance.js";
+import {
   SONG_CATALOG_URL,
   SONG_LANGUAGES,
   normalizeProject,
@@ -39,6 +44,12 @@ test("the guessing catalog uses QQ Music sources and has resolved creation credi
     && typeof song.curleyCredits?.composition === "boolean"
   )));
   assert.ok(songs.every((song) => (
+    Array.isArray(song.hintLyrics)
+    && song.hintLyrics.length <= 3
+    && song.hintLyrics.every((hint) => typeof hint === "string" && hint.trim())
+  )));
+  assert.ok(songs.some((song) => song.hintLyrics.length > 0));
+  assert.ok(songs.every((song) => (
     Array.isArray(song.featuredArtists)
     && song.featuredArtists.every((artist) => typeof artist === "string" && artist.trim())
   )));
@@ -57,6 +68,33 @@ test("the guessing catalog uses QQ Music sources and has resolved creation credi
   assert.ok(songs.every((song) => /^\d{4}-\d{2}-\d{2}$/u.test(song.releaseDate)));
   assert.ok(songs.every((song) => song.sources.every((source) => source.name.startsWith("QQ音乐"))));
   assert.ok(songs.some((song) => song.project.type === "ost"));
+  assert.ok(songs.every((song) => PROJECT_CATEGORY_VALUES.includes(song.project.category)));
+  assert.ok(songs.every((song) => song.originType === null || SONG_ORIGIN_VALUES.includes(song.originType)));
+  assert.ok(songs.some((song) => song.project.category === "film"));
+  assert.ok(songs.some((song) => song.project.category === "album"));
+  assert.ok(songs.some((song) => song.project.category === "single"));
+  assert.equal(
+    songs.find((song) => song.title === "烬火 Emberfire")?.project.category,
+    "game",
+  );
+  assert.equal(
+    getSongProjectCategory({
+      title: "烬火 Emberfire",
+      project: { title: "原神-「烬火 Emberfire」游戏原声EP专辑", type: "ost" },
+    }),
+    "game",
+  );
+  assert.equal(
+    getSongProjectCategory({
+      title: "同项目的其他歌曲",
+      project: { title: "原神-「烬火 Emberfire」游戏原声EP专辑", type: "ost" },
+    }),
+    "film",
+  );
+  assert.equal(
+    songs.find((song) => song.title === "母系社会 (Live)")?.project.category,
+    "live",
+  );
   assert.deepEqual(
     songs.find((song) => song.title === "于是我这样生活")?.curleyCredits,
     { lyrics: false, composition: false },
@@ -67,6 +105,12 @@ test("the catalog sync starts from the maintained QQ Music playlist", () => {
   assert.match(syncSource, /fcg_v8_playlist_cp\.fcg/);
   assert.match(syncSource, /playlistId = "9756927982"/);
   assert.match(syncSource, /loadPlaylistSongs/);
+  assert.match(syncSource, /const livePattern = \/live\|现场\|演唱会\|音乐会/);
+  assert.match(syncSource, /songname: songInfo\?\.title \?\? songInfo\?\.name/);
+  assert.match(syncSource, /getSongProjectOverride\(title\)/);
+  assert.match(syncSource, /originType: getSongOriginType\(title\)/);
+  assert.match(syncSource, /extractHintLyrics/);
+  assert.match(syncSource, /--refresh-hints/);
   assert.doesNotMatch(syncSource, /GetSingerSongList|blockedTitlePattern|candidateByTitle/);
 });
 
@@ -84,9 +128,28 @@ test("the game reads one lyric-classified JSON catalog with normalized singles",
   assert.deepEqual(normalizeProject({ title: "独立发行名", type: "soundtrack single" }), {
     title: "单曲",
     type: "single",
+    category: "single",
+    display: "单曲",
   });
   assert.deepEqual(normalizeProject({ title: "电影原声带", type: "ost" }), {
     title: "电影原声带",
     type: "ost",
+    category: "film",
+    display: "影视",
+  });
+  assert.deepEqual(normalizeProject({
+    title: "原神-「烬火 Emberfire」游戏原声EP专辑",
+    type: "ost",
+  }, "烬火 Emberfire"), {
+    title: "原神-「烬火 Emberfire」游戏原声EP专辑",
+    type: "ost",
+    category: "game",
+    display: "游戏",
+  });
+  assert.deepEqual(normalizeProject({ title: "某某 Live Sessions", type: "album" }), {
+    title: "某某 Live Sessions",
+    type: "album",
+    category: "live",
+    display: "Live",
   });
 });

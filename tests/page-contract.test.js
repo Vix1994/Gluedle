@@ -252,37 +252,47 @@ test("home hero links directly to the verified Glue song on QQ Music", () => {
   assert.match(appShellStyles, /@media \(max-width:\s*760px\)[\s\S]*?\.app-listen-action,\s*\.app-header-action\s*\{[\s\S]*?min-height:\s*44px/);
 });
 
-test("standalone game keeps title-only suggestions, metadata clues, and image sharing", () => {
+test("standalone game keeps informative suggestions, metadata clues, and image sharing", () => {
   for (const id of [
     "guess-form",
     "song-input",
     "song-suggestions",
     "guess-board",
     "share-button",
+    "hint-button",
     "result-dialog",
   ]) assert.match(gameHtml, new RegExp(`id="${id}"`));
+  assert.match(gameHtml, /data-hint-stack/);
 
   const suggestionSource = extractFunction(gameMain, "showSuggestions");
   assert.doesNotMatch(
     suggestionSource,
-    /releaseYear|durationSec|formatDuration|\.project\b|\.languages?\b/,
+    /releaseYear|\.project\b|\.languages?\b/,
   );
-  assert.match(suggestionSource, /option\.textContent\s*=\s*song\.title\s*;/);
+  assert.match(suggestionSource, /title\.textContent\s*=\s*song\.title\s*;/);
+  assert.match(suggestionSource, /metadata\.textContent\s*=\s*`\$\{formatDuration\(song\.durationSec\)\}/);
   assert.doesNotMatch(
     suggestionSource,
-    /option\.(?:innerHTML|outerHTML|insertAdjacentHTML|append|prepend|replaceChildren)\b/,
+    /(?:option|title|metadata)\.(?:innerHTML|outerHTML|insertAdjacentHTML)\b/,
   );
   assert.doesNotMatch(gameMain, /attempt\.comparison\.live|data-live-column/);
   assert.match(gameMain, /renderShareCard\(elements\.shareCanvas, model\)/);
   assert.match(gameHtml, /data-share-preview/);
   assert.match(gameHtml, /data-share-confirm/);
   assert.match(gameHtml, /data-share-download/);
+  assert.doesNotMatch(gameHtml, /data-answer-reveal|data-answer-featured-artists|data-answer-source/);
+  assert.doesNotMatch(gameHtml, /data-result-share/);
   assert.match(gameMain, /navigator\.canShare/);
   assert.match(gameMain, /已自动保存图片/);
   assert.match(gameHtml, /data-result-reset/);
   assert.match(gameMain, /state = submitGuess\(state, selectedSong\.id, songs\);[\s\S]*?resetSharePreview\(\);/);
+  assert.doesNotMatch(gameMain, /renderAnswerReveal|answerReveal|resultShare/);
+  assert.match(gameMain, /openResultDialog\(\);\s*void prepareSharePreview\(\);/);
   assert.match(gameMain, /navigator\.canShare\(\{ files: \[file\] \}\)/);
   assert.match(gameMain, /downloadBlob\(blob, filename\)/);
+  assert.match(gameMain, /getHintStatus/);
+  assert.match(gameMain, /revealNextHint/);
+  assert.match(gameMain, /hintOrder = shuffleHints/);
 });
 
 test("the standalone shell exposes accessible dynamic-game integration points", () => {
@@ -299,7 +309,8 @@ test("the standalone shell exposes accessible dynamic-game integration points", 
   assert.match(gameHtml, /<noscript>/);
   assert.equal((gameHtml.match(/\bdata-attempt-marker\b/g) ?? []).length, 8);
   assert.doesNotMatch(gameHtml, /data-live-column|>Live<\/th>/);
-  assert.match(gameHtml, /<th\b[^>]*>发行日<\/th>/);
+  assert.match(gameHtml, /<th\b[^>]*>歌曲<\/th>/);
+  assert.doesNotMatch(gameHtml, /<th\b[^>]*>发行日<\/th>|<th\b[^>]*>时长<\/th>/);
   assert.match(gameHtml, />收藏数<\/th>/);
   assert.match(gameHtml, />专辑<\/th>/);
   assert.doesNotMatch(gameHtml, />项目<\/th>/);
@@ -345,22 +356,40 @@ test("responsive game ledger exposes every field without horizontal scrolling", 
   assert.match(gameStyles, /\.guess-desk\s*\{[\s\S]*?position:\s*fixed[\s\S]*?bottom:\s*var\(--mobile-keyboard-offset/);
   assert.match(gameStyles, /\.game-shell\s*\{[\s\S]*?max-width:\s*1540px/);
   assert.match(gameStyles, /@media\s*\(max-width:\s*1240px\)/);
-  for (const field of ["song", "year", "duration", "favoriteCount", "language", "project", "performance", "featuredArtistGender", "credits"]) {
+  for (const field of ["favoriteCount", "language", "project", "performance", "featuredArtistGender", "credits"]) {
     assert.match(gameMain, new RegExp(`, "${field}",`));
   }
   assert.match(gameMain, /attempt\.comparison\.favoriteCount, "favoriteCount", "收藏数"/);
   assert.match(gameMain, /attempt\.comparison\.featuredArtistGender, "featuredArtistGender", "合作对象"/);
-  assert.match(gameMain, /cell\.colSpan = 9/);
-  assert.match(gameMain, /field === "year"[\s\S]*?match\[2\].*?match\[3\].*?match\[1\]/);
-  assert.match(gameMain, /match\[2\]\}-\$\{match\[3\]\}/);
-  assert.match(gameStyles, /#guess-board th:nth-child\(2\) \{ width: 8%; \}/);
+  assert.match(gameMain, /cell\.colSpan = 7/);
+  assert.match(gameMain, /appendSongComparisonCell\(row, song, attempt/);
+  assert.match(gameMain, /formatReleaseDate\(comparison\.value\)/);
+  assert.match(gameStyles, /#guess-board th:nth-child\(2\) \{ width: 10%; \}/);
+  assert.match(
+    gameStyles,
+    /@media\s*\(min-width:\s*721px\)[\s\S]*?\.suggestion-option\s*\{[\s\S]*?font-size:\s*clamp\(0\.95rem/,
+  );
+  assert.match(
+    gameStyles,
+    /@media\s*\(min-width:\s*721px\)[\s\S]*?\.suggestion-meta\s*\{[\s\S]*?font-size:\s*clamp\(0\.68rem/,
+  );
+  assert.match(
+    gameStyles,
+    /@media\s*\(min-width:\s*721px\)[\s\S]*?\.comparison-cell\s*\{[\s\S]*?--cell-value-size:\s*clamp\(0\.88rem/,
+  );
+  assert.match(
+    gameStyles,
+    /@media\s*\(min-width:\s*721px\)[\s\S]*?\.song-meta-item\s*\{[\s\S]*?font-size:\s*clamp\(0\.62rem/,
+  );
   const visibleComparisonHelper = extractFunction(gameMain, "comparisonHelper");
   assert.doesNotMatch(visibleComparisonHelper, /匹配|接近/);
   assert.match(gameMain, /cell\.dataset\.direction = comparison\.direction/);
   assert.match(gameMain, /value\.textContent = formattedValue/);
   assert.match(gameStyles, /\.comparison-cell\[data-direction="up"\]::after/);
   assert.match(gameStyles, /\.comparison-cell\[data-direction="down"\]::after/);
-  assert.match(gameStyles, /@media\s*\(max-width:\s*480px\)[\s\S]*?\.comparison-cell\s*\{ height: 44px; \}/);
+  assert.match(gameStyles, /\.song-meta-item\[data-status="near"\]/);
+  assert.match(gameStyles, /@media\s*\(max-width:\s*480px\)[\s\S]*?\.comparison-cell\s*\{ height: 52px; \}/);
+  assert.doesNotMatch(gameStyles, /answer-reveal|answer-details/);
   assert.doesNotMatch(gameMain, /, "live",/);
 });
 
@@ -374,7 +403,7 @@ test("result states use high-contrast colors plus non-color marks", () => {
   assert.match(gameStyles, /\.comparison-cell\[data-direction="down"\]::after[\s\S]*?bottom:\s*5px[\s\S]*?content:\s*"▼"/);
   assert.match(gameStyles, /font:\s*700 var\(--cell-value-size\)/);
   assert.doesNotMatch(gameStyles, /\.comparison-cell\[data-field="(?:song|year|language|featuredArtistGender|credits)"\]\s*\{\s*--cell-value-size/);
-  assert.match(gameMain, /attempt\.comparison\.year, "year", "发行日"/);
+  assert.match(gameMain, /createSongMetaItem\(attempt\.comparison\.year, "year", "发行日"\)/);
 });
 
 test("game visuals reuse the album image language and restrained home-page tokens", () => {

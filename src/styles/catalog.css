@@ -202,7 +202,9 @@ body[data-page="catalog"] {
 .entry-title-row { display: flex; align-items: start; gap: 12px; }
 .entry-title-row h2 { margin: 0; color: var(--catalog-paper); font-size: clamp(1.18rem, 2.1vw, 1.8rem); font-weight: 520; letter-spacing: -0.045em; line-height: 1.05; text-wrap: pretty; }
 .entry-type { flex: 0 0 auto; margin-top: 2px; padding: 4px 6px; color: var(--catalog-black); background: var(--catalog-lake); font-size: 0.5rem; line-height: 1; }
-.entry-type--ost { background: var(--catalog-green); }
+.entry-type--film { background: var(--catalog-green); }
+.entry-type--game { background: var(--catalog-lake); }
+.entry-type--live { background: var(--catalog-paper); }
 .entry-project { margin: 9px 0 0; color: var(--catalog-grey); font-size: 0.82rem; }
 .entry-aliases { max-width: 54em; margin: 12px 0 0; color: var(--catalog-grey); font: 0.62rem/1.5 var(--catalog-font-mono); }
 

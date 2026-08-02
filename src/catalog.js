@@ -1,12 +1,6 @@
 import { loadSongCatalog } from "./data/song-catalog.js";
+import { PROJECT_CATEGORY_LABELS } from "./data/project-categories.js";
 import { normalizeSearchText } from "./game/engine.js";
-
-const PROJECT_LABELS = Object.freeze({
-  album: "专辑",
-  ep: "EP",
-  ost: "OST",
-  single: "单曲",
-});
 
 const LANGUAGE_LABELS = Object.freeze({ zh: "中文", en: "英文" });
 
@@ -74,7 +68,7 @@ export function mountCatalog() {
 
   function updateStats() {
     const stats = {
-      ost: songs.filter((song) => song.project.type === "ost").length,
+      ost: songs.filter((song) => ["film", "game"].includes(song.project.category)).length,
       created: songs.filter((song) => song.curleyCredits.lyrics || song.curleyCredits.composition).length,
       english: songs.filter((song) => song.language === "en").length,
     };
@@ -87,7 +81,7 @@ export function mountCatalog() {
     const query = normalizeSearchText(filters.query);
     return songs
       .filter((song) => {
-        if (filters.project !== "all" && song.project.type !== filters.project) return false;
+        if (filters.project !== "all" && song.project.category !== filters.project) return false;
         if (filters.language !== "all" && song.language !== filters.language) return false;
         if (!matchesCredit(song, filters.credit)) return false;
         if (!query) return true;
@@ -138,8 +132,8 @@ export function mountCatalog() {
     const title = document.createElement("h2");
     title.textContent = song.title;
     const projectType = document.createElement("span");
-    projectType.className = `entry-type entry-type--${song.project.type}`;
-    projectType.textContent = PROJECT_LABELS[song.project.type] ?? song.project.type;
+    projectType.className = `entry-type entry-type--${song.project.category}`;
+    projectType.textContent = PROJECT_CATEGORY_LABELS[song.project.category] ?? song.project.category;
     titleRow.append(title, projectType);
     main.append(titleRow);
 

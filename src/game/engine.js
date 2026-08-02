@@ -1,4 +1,10 @@
+import {
+  getProjectCategory,
+  getProjectDisplay,
+} from "../data/project-categories.js";
+
 export const MAX_ATTEMPTS = 8;
+export const HINT_UNLOCK_ATTEMPTS = Object.freeze([2, 4, 6]);
 
 export const COMPARISON_STATUS = Object.freeze({
   MATCH: "match",
@@ -7,6 +13,39 @@ export const COMPARISON_STATUS = Object.freeze({
   MISS: "miss",
   UNKNOWN: "unknown",
 });
+
+export function getHintUnlockCount(attemptCount) {
+  const safeAttemptCount = Number.isFinite(Number(attemptCount))
+    ? Math.max(0, Math.floor(Number(attemptCount)))
+    : 0;
+  return HINT_UNLOCK_ATTEMPTS.filter((threshold) => safeAttemptCount >= threshold).length;
+}
+
+export function getHintStatus({ attemptCount, revealedHintCount = 0, hintCount = 0 } = {}) {
+  const safeHintCount = Number.isFinite(Number(hintCount))
+    ? Math.max(0, Math.floor(Number(hintCount)))
+    : 0;
+  const safeRevealedHintCount = Number.isFinite(Number(revealedHintCount))
+    ? Math.max(0, Math.floor(Number(revealedHintCount)))
+    : 0;
+  const unlockedCount = Math.min(getHintUnlockCount(attemptCount), safeHintCount);
+  const nextHintIndex = safeRevealedHintCount < unlockedCount ? safeRevealedHintCount : -1;
+  const nextUnlockAttempt = HINT_UNLOCK_ATTEMPTS[safeRevealedHintCount] ?? null;
+  const safeAttemptCount = Number.isFinite(Number(attemptCount))
+    ? Math.max(0, Math.floor(Number(attemptCount)))
+    : 0;
+
+  return {
+    unlockedCount,
+    nextHintIndex,
+    nextUnlockAttempt,
+    attemptsUntilNext: nextHintIndex >= 0 || nextUnlockAttempt === null
+      ? 0
+      : Math.max(0, nextUnlockAttempt - safeAttemptCount),
+    hasAvailableHint: nextHintIndex >= 0,
+    hasMoreHints: safeRevealedHintCount < safeHintCount,
+  };
+}
 
 const GAME_STATE_VERSION = 1;
 const PENDING_VERIFICATION = "待核验";
@@ -288,18 +327,26 @@ function favoriteCountComparison(guess, target, displayValue, targetDisplayValue
 }
 
 function projectComparison(guess, target) {
-  const value = guess.title ?? PENDING_VERIFICATION;
-  if (guess.title === null || target.title === null) {
+  const value = guess.display ?? guess.title ?? PENDING_VERIFICATION;
+  if (guess.title === null || target.title === null || guess.category === null || target.category === null) {
     return cell(value, COMPARISON_STATUS.UNKNOWN, null);
   }
-  if (normalizedMetadataValue(guess.title) === normalizedMetadataValue(target.title)) {
+  if (isAlbumFamily(guess) && isAlbumFamily(target) && guess.type !== target.type) {
+    return cell(value, COMPARISON_STATUS.PARTIAL, null);
+  }
+  if (guess.category === "album" && target.category === "album") {
+    return cell(
+      value,
+      normalizedMetadataValue(guess.title) === normalizedMetadataValue(target.title)
+        ? COMPARISON_STATUS.MATCH
+        : COMPARISON_STATUS.MISS,
+      null,
+    );
+  }
+  if (guess.category === target.category) {
     return cell(value, COMPARISON_STATUS.MATCH, null);
   }
-  if (
-    guess.type !== null
-    && target.type !== null
-    && normalizedMetadataValue(guess.type) === normalizedMetadataValue(target.type)
-  ) {
+  if (isOstCategory(guess.category) && isOstCategory(target.category)) {
     return cell(value, COMPARISON_STATUS.PARTIAL, null);
   }
   return cell(value, COMPARISON_STATUS.MISS, null);
@@ -322,19 +369,31 @@ function creditsComparison(guess, target) {
     return cell(value, COMPARISON_STATUS.UNKNOWN, null);
   }
 
-  const keys = [...new Set([...Object.keys(guess), ...Object.keys(target)])].sort();
-  if (
-    keys.length !== 2
-    || keys.some((key) => guess[key] === null || guess[key] === undefined)
-    || keys.some((key) => target[key] === null || target[key] === undefined)
-  ) {
+  const keys = ["lyrics", "composition"];
+  const hasExpectedShape = (credits) => (
+    Object.keys(credits).length === keys.length
+    && keys.every((key) => typeof credits[key] === "boolean")
+  );
+  if (!hasExpectedShape(guess) || !hasExpectedShape(target)) {
     return cell(value, COMPARISON_STATUS.UNKNOWN, null);
   }
 
-  const matchingFields = keys.filter((key) => Object.is(guess[key], target[key])).length;
-  const status = matchingFields === 2
+  const exactMatch = keys.every((key) => guess[key] === target[key]);
+  const bothParticipate = (
+    (guess.lyrics || guess.composition)
+    && (target.lyrics || target.composition)
+  );
+  const guessIsSubset = (
+    (!guess.lyrics || target.lyrics)
+    && (!guess.composition || target.composition)
+  );
+  const targetIsSubset = (
+    (!target.lyrics || guess.lyrics)
+    && (!target.composition || guess.composition)
+  );
+  const status = exactMatch
     ? COMPARISON_STATUS.MATCH
-    : matchingFields === 1
+    : bothParticipate && (guessIsSubset || targetIsSubset)
       ? COMPARISON_STATUS.PARTIAL
       : COMPARISON_STATUS.MISS;
   return cell(value, status, null);
@@ -397,15 +456,34 @@ function readSongId(song) {
 
 function readProject(song) {
   if (typeof song.project === "string") {
-    return { title: song.project, type: song.projectType ?? null };
+    const project = { title: song.project, type: song.projectType ?? null };
+    return {
+      ...project,
+      category: getProjectCategory(project),
+      display: getProjectDisplay(project),
+    };
   }
   if (!isPlainObject(song.project)) {
-    return { title: null, type: song.projectType ?? null };
+    return { title: null, type: song.projectType ?? null, category: null, display: PENDING_VERIFICATION };
   }
-  return {
+  const project = {
     title: song.project.title ?? song.project.name ?? null,
     type: song.project.type ?? song.projectType ?? null,
+    category: song.project.category ?? null,
   };
+  return {
+    ...project,
+    category: project.title === null ? null : getProjectCategory(project),
+    display: project.title === null ? PENDING_VERIFICATION : getProjectDisplay(project),
+  };
+}
+
+function isOstCategory(category) {
+  return category === "film" || category === "game";
+}
+
+function isAlbumFamily(project) {
+  return project.category === "album" && ["album", "ep"].includes(project.type);
 }
 
 function readLanguage(song) {

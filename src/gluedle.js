@@ -5,6 +5,9 @@ import {
   MAX_ATTEMPTS,
   createInitialState,
   findSongMatches,
+  formatDuration,
+  formatReleaseDate,
+  getHintStatus,
   normalizeSearchText,
   selectRandomAnswer,
   submitGuess,
@@ -20,6 +23,8 @@ export function mountGluedle() {
   let songs = [];
   let answer = null;
   let state = null;
+  let hintOrder = [];
+  let revealedHintCount = 0;
   let selectedSong = null;
   let suggestionSongs = [];
   let activeSuggestion = -1;
@@ -55,10 +60,14 @@ export function mountGluedle() {
       : songs;
     answer = selectRandomAnswer(choices);
     state = createInitialState(answer.id);
+    hintOrder = shuffleHints(answer.hintLyrics);
+    revealedHintCount = 0;
     roundNumber += 1;
     selectedSong = null;
     resetSharePreview();
     elements.input.value = "";
+    elements.hintStack.replaceChildren();
+    elements.hintStack.hidden = true;
     closeSuggestions();
     hydrateContent();
     renderGame();
@@ -141,9 +150,15 @@ export function mountGluedle() {
       option.role = "option";
       option.ariaSelected = "false";
       option.dataset.index = String(index);
-      option.textContent = song.title;
+      const title = document.createElement("span");
+      const metadata = document.createElement("span");
+      title.className = "suggestion-title";
+      metadata.className = "suggestion-meta";
+      title.textContent = song.title;
+      metadata.textContent = `${formatDuration(song.durationSec)} · ${formatReleaseDate(song.releaseDate)}`;
       option.addEventListener("pointerdown", (event) => event.preventDefault(), { signal });
       option.addEventListener("click", () => selectSuggestion(song, { submit: true }), { signal });
+      option.append(title, metadata);
       elements.suggestions.append(option);
     });
     elements.suggestions.hidden = false;
@@ -220,7 +235,10 @@ export function mountGluedle() {
         if (state.status === "playing") {
           setFeedback(`第 ${state.attempts.length} 条推理已记录。`);
           if (!window.matchMedia("(max-width: 720px)").matches) elements.input.focus();
-        } else openResultDialog();
+        } else {
+          openResultDialog();
+          void prepareSharePreview();
+        }
       } catch (error) {
         const messages = {
           DUPLICATE_GUESS: "这首歌已经猜过了，请换一首。",
@@ -234,9 +252,9 @@ export function mountGluedle() {
       openResultDialog();
       void prepareSharePreview();
     }, { signal });
-    elements.resultShare.addEventListener("click", () => void prepareSharePreview(), { signal });
     elements.shareConfirm.addEventListener("click", () => void sharePreparedImage(), { signal });
     elements.shareDownload.addEventListener("click", downloadPreparedImage, { signal });
+    elements.hintButton.addEventListener("click", revealNextHint, { signal });
     const resetRound = () => {
       closeDialog(elements.resultDialog);
       startRound();
@@ -259,8 +277,8 @@ export function mountGluedle() {
     elements.submit.disabled = finished || !selectedSong;
     elements.share.disabled = attemptTotal === 0 || isSharing;
     elements.reset.disabled = isSharing;
-    elements.resultShare.disabled = isSharing;
     if (finished) closeSuggestions();
+    renderHintControl();
 
     if (state.status === "won") {
       elements.gameStatus.textContent = `连接成功 · ${answer.title}`;
@@ -277,7 +295,7 @@ export function mountGluedle() {
       const row = document.createElement("tr");
       const cell = document.createElement("td");
       row.className = "empty-row";
-      cell.colSpan = 9;
+      cell.colSpan = 7;
       cell.textContent = "输入歌名，第一条推理会出现在这里";
       row.append(cell);
       elements.board.append(row);
@@ -292,13 +310,7 @@ export function mountGluedle() {
       row.dataset.attemptIndex = String(attemptIndex + 1);
       row.style.setProperty("--row-index", String(attemptIndex));
       if (attemptIndex === attemptTotal - 1) row.classList.add("is-new");
-      appendComparisonCell(row, {
-        value: song.title,
-        status: song.id === answer.id ? "match" : "miss",
-        direction: null,
-      }, "song", "歌曲");
-      appendComparisonCell(row, attempt.comparison.year, "year", "发行日");
-      appendComparisonCell(row, attempt.comparison.duration, "duration", "时长");
+      appendSongComparisonCell(row, song, attempt, song.id === answer.id ? "match" : "miss");
       appendComparisonCell(row, attempt.comparison.favoriteCount, "favoriteCount", "收藏数");
       appendComparisonCell(row, attempt.comparison.language, "language", "语言");
       appendComparisonCell(row, attempt.comparison.project, "project", "专辑");
@@ -307,6 +319,104 @@ export function mountGluedle() {
       appendComparisonCell(row, attempt.comparison.credits, "credits", "创作");
       elements.board.append(row);
     });
+  }
+
+  function appendSongComparisonCell(row, song, attempt, songStatus) {
+    const cell = document.createElement("td");
+    const title = document.createElement("span");
+    const metadata = document.createElement("div");
+    const releaseDate = createSongMetaItem(attempt.comparison.year, "year", "发行日");
+    const duration = createSongMetaItem(attempt.comparison.duration, "duration", "时长");
+    const releaseLabel = formatSongMetaValue(attempt.comparison.year, "year");
+    const durationLabel = formatSongMetaValue(attempt.comparison.duration, "duration");
+
+    cell.className = "comparison-cell song-comparison-cell";
+    cell.dataset.field = "song";
+    cell.dataset.status = songStatus;
+    cell.setAttribute(
+      "aria-label",
+      `歌曲：${song.title}，发行日：${releaseLabel}，时长：${durationLabel}`,
+    );
+    title.className = "cell-value song-title";
+    title.textContent = song.title;
+    metadata.className = "song-meta";
+    metadata.append(releaseDate, duration);
+    cell.append(title, metadata);
+    row.append(cell);
+  }
+
+  function renderHintControl() {
+    const status = getHintStatus({
+      attemptCount: state?.attempts.length ?? 0,
+      revealedHintCount,
+      hintCount: hintOrder.length,
+    });
+    const unavailable = hintOrder.length === 0;
+    const disabled = unavailable || state?.status !== "playing" || !status.hasAvailableHint;
+
+    elements.hintButton.disabled = disabled;
+    elements.hintButton.classList.toggle("is-available", !disabled && status.hasAvailableHint);
+    if (unavailable) {
+      elements.hintButton.textContent = "本题暂无歌词提示";
+    } else if (status.hasAvailableHint) {
+      elements.hintButton.textContent = `解锁歌词提示 ${String(status.nextHintIndex + 1).padStart(2, "0")}`;
+    } else if (status.hasMoreHints) {
+      const nextNumber = String(revealedHintCount + 1).padStart(2, "0");
+      elements.hintButton.textContent = status.attemptsUntilNext > 0
+        ? `歌词提示 ${nextNumber} · 还需 ${status.attemptsUntilNext} 次`
+        : `歌词提示 ${nextNumber} · 已解锁`;
+    } else {
+      elements.hintButton.textContent = "歌词提示 · 已查看";
+    }
+  }
+
+  function revealNextHint() {
+    if (!state || state.status !== "playing") return;
+    const status = getHintStatus({
+      attemptCount: state.attempts.length,
+      revealedHintCount,
+      hintCount: hintOrder.length,
+    });
+    const hint = status.hasAvailableHint ? hintOrder[status.nextHintIndex] : "";
+    if (!hint) return;
+
+    const card = document.createElement("article");
+    const label = document.createElement("p");
+    const quote = document.createElement("p");
+    card.className = "hint-card";
+    card.dataset.hintIndex = String(status.nextHintIndex + 1);
+    label.className = "hint-card-label";
+    label.textContent = `LYRIC CLUE ${String(status.nextHintIndex + 1).padStart(2, "0")}`;
+    quote.className = "hint-card-quote";
+    quote.textContent = `“${hint}”`;
+    card.append(label, quote);
+    elements.hintStack.append(card);
+    elements.hintStack.hidden = false;
+    revealedHintCount += 1;
+    renderHintControl();
+  }
+
+  function createSongMetaItem(comparison, field, label) {
+    const item = document.createElement("span");
+    const formattedValue = formatSongMetaValue(comparison, field);
+    const directionMark = comparison.direction === "up"
+      ? "▲"
+      : comparison.direction === "down" ? "▼" : "";
+    item.className = "song-meta-item";
+    item.dataset.field = field;
+    item.dataset.status = comparison.status;
+    if (comparison.direction) item.dataset.direction = comparison.direction;
+    item.setAttribute(
+      "aria-label",
+      `${label}：${formattedValue}${directionMark ? ` ${directionMark}` : ""}，${comparisonAccessibilityHelper(comparison)}`,
+    );
+    item.textContent = directionMark ? `${formattedValue} ${directionMark}` : formattedValue;
+    return item;
+  }
+
+  function formatSongMetaValue(comparison, field) {
+    if (field === "year") return formatReleaseDate(comparison.value);
+    return formatCellValue(comparison.value, field).replace(/\s+/gu, " ");
   }
 
   function updateAttemptMarkers(attemptTotal) {
@@ -353,12 +463,14 @@ export function mountGluedle() {
     resetSharePreview();
     elements.resultTitle.textContent = state.status === "won"
       ? siteContent.game.successTitle
-      : siteContent.game.failureTitle;
+      : state.status === "lost" ? siteContent.game.failureTitle : "当前推理";
     elements.resultSummary.replaceChildren();
     const outcome = document.createElement("p");
     outcome.textContent = state.status === "won"
       ? `你用 ${state.attempts.length} / ${MAX_ATTEMPTS} 次找到了「${answer.title}」。`
-      : `本轮答案是「${answer.title}」。`;
+      : state.status === "lost"
+        ? `本轮答案是「${answer.title}」。`
+        : `已记录 ${state.attempts.length} 条推理，继续寻找答案。`;
     elements.resultSummary.append(outcome);
     openDialog(elements.resultDialog);
   }
@@ -371,13 +483,13 @@ export function mountGluedle() {
       const model = buildShareCardModel({
         roundLabel: `ROUND ${String(roundNumber).padStart(2, "0")}`,
         state,
+        answer,
         canonicalUrl: canonicalGameUrl(window.location),
       });
       renderShareCard(elements.shareCanvas, model);
       shareBlob = await canvasToBlob(elements.shareCanvas);
       shareFilename = `gluedle-round-${roundNumber}.png`;
       elements.sharePreview.hidden = false;
-      elements.resultShare.hidden = true;
       showToast("结果图片已生成，可选择分享或保存");
     } catch (error) {
       setFeedback("结果图片生成失败，请稍后再试。", true);
@@ -432,18 +544,15 @@ export function mountGluedle() {
     shareBlob = null;
     shareFilename = "";
     elements.sharePreview.hidden = true;
-    elements.resultShare.hidden = false;
   }
 
   function setShareButtonsBusy(busy) {
     elements.share.disabled = busy || !state.attempts.length;
-    elements.resultShare.disabled = busy;
     elements.shareConfirm.disabled = busy || !shareBlob;
     elements.shareDownload.disabled = busy || !shareBlob;
     elements.reset.disabled = busy;
     elements.resultReset.disabled = busy;
     elements.share.textContent = busy ? "正在生成…" : "分享结果";
-    elements.resultShare.textContent = busy ? "正在生成…" : "生成分享图片";
   }
 
   function bindDialogs() {
@@ -527,13 +636,14 @@ function collectElements() {
     feedback: document.querySelector("#guess-feedback"),
     board: document.querySelector("[data-guess-rows]"),
     attemptCount: document.querySelector("#attempt-count"),
+    hintButton: document.querySelector("#hint-button"),
+    hintStack: document.querySelector("[data-hint-stack]"),
     share: document.querySelector("#share-button"),
     reset: document.querySelector("#reset-button"),
     helpDialog: document.querySelector("#help-dialog"),
     resultDialog: document.querySelector("#result-dialog"),
     resultTitle: document.querySelector("#result-title"),
     resultSummary: document.querySelector("[data-result-summary]"),
-    resultShare: document.querySelector("[data-result-share]"),
     resultReset: document.querySelector("[data-result-reset]"),
     sharePreview: document.querySelector("[data-share-preview]"),
     shareConfirm: document.querySelector("[data-share-confirm]"),
@@ -542,6 +652,15 @@ function collectElements() {
     toast: document.querySelector("[data-toast]"),
     appBoot: document.querySelector("[data-app-boot]"),
   };
+}
+
+function shuffleHints(hints) {
+  const values = Array.isArray(hints) ? hints.filter(Boolean) : [];
+  for (let index = values.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [values[index], values[swapIndex]] = [values[swapIndex], values[index]];
+  }
+  return values;
 }
 
 function formatCellValue(value, field) {

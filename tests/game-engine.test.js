@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 
 import {
   COMPARISON_STATUS,
+  HINT_UNLOCK_ATTEMPTS,
   MAX_ATTEMPTS,
   compareSongs,
   createInitialState,
@@ -10,6 +11,8 @@ import {
   formatDuration,
   formatFavoriteCount,
   formatReleaseDate,
+  getHintStatus,
+  getHintUnlockCount,
   normalizeSearchText,
   restoreGameState,
   selectRandomAnswer,
@@ -67,6 +70,41 @@ test("normalizeSearchText normalizes case, width, whitespace, and Chinese/Englis
   assert.equal(normalizeSearchText("  Ｆｉｒｓｔ， LIGHT！ "), "firstlight");
   assert.equal(normalizeSearchText("你 好，世界！"), "你好世界");
   assert.equal(normalizeSearchText(null), "");
+});
+
+test("lyric hints unlock in three deliberate steps without changing game attempts", () => {
+  assert.deepEqual(HINT_UNLOCK_ATTEMPTS, [2, 4, 6]);
+  assert.equal(getHintUnlockCount(0), 0);
+  assert.equal(getHintUnlockCount(1), 0);
+  assert.equal(getHintUnlockCount(2), 1);
+  assert.equal(getHintUnlockCount(4), 2);
+  assert.equal(getHintUnlockCount(6), 3);
+
+  assert.deepEqual(getHintStatus({ attemptCount: 1, hintCount: 3 }), {
+    unlockedCount: 0,
+    nextHintIndex: -1,
+    nextUnlockAttempt: 2,
+    attemptsUntilNext: 1,
+    hasAvailableHint: false,
+    hasMoreHints: true,
+  });
+  assert.deepEqual(getHintStatus({ attemptCount: 2, hintCount: 3 }), {
+    unlockedCount: 1,
+    nextHintIndex: 0,
+    nextUnlockAttempt: 2,
+    attemptsUntilNext: 0,
+    hasAvailableHint: true,
+    hasMoreHints: true,
+  });
+  assert.deepEqual(getHintStatus({ attemptCount: 6, revealedHintCount: 2, hintCount: 3 }), {
+    unlockedCount: 3,
+    nextHintIndex: 2,
+    nextUnlockAttempt: 6,
+    attemptsUntilNext: 0,
+    hasAvailableHint: true,
+    hasMoreHints: true,
+  });
+  assert.equal(getHintStatus({ attemptCount: 8, revealedHintCount: 3, hintCount: 3 }).hasMoreHints, false);
 });
 
 test("formatDuration renders minutes and zero-padded seconds", () => {
@@ -208,12 +246,34 @@ test("compareSongs applies project, performance, and credits rules", () => {
 
   assert.deepEqual(comparison.project, {
     value: "Other Album",
-    status: COMPARISON_STATUS.PARTIAL,
+    status: COMPARISON_STATUS.MISS,
     direction: null,
   });
   assert.equal(comparison.performance.status, COMPARISON_STATUS.MISS);
   assert.equal(comparison.language.status, COMPARISON_STATUS.MATCH);
   assert.equal(comparison.credits.status, COMPARISON_STATUS.PARTIAL);
+
+  const noParticipation = compareSongs(
+    song({ curleyCredits: { lyrics: false, composition: false } }),
+    song({ curleyCredits: { lyrics: true, composition: false } }),
+  );
+  assert.equal(noParticipation.credits.status, COMPARISON_STATUS.MISS);
+
+  const differentParticipation = compareSongs(
+    song({ curleyCredits: { lyrics: true, composition: false } }),
+    song({ curleyCredits: { lyrics: false, composition: true } }),
+  );
+  assert.equal(differentParticipation.credits.status, COMPARISON_STATUS.MISS);
+
+  const ostNear = compareSongs(
+    song({ project: { title: "游戏原声", type: "ost", category: "game" } }),
+    song({ project: { title: "影视原声", type: "ost", category: "film" } }),
+  );
+  assert.deepEqual(ostNear.project, {
+    value: "游戏",
+    status: COMPARISON_STATUS.PARTIAL,
+    direction: null,
+  });
 
   const misses = compareSongs(
     song({
@@ -287,6 +347,36 @@ test("independent singles share the same project value and match", () => {
   assert.deepEqual(compareSongs(guess, target).project, {
     value: "单曲",
     status: COMPARISON_STATUS.MATCH,
+    direction: null,
+  });
+});
+
+test("album names match exactly while shared project categories match", () => {
+  const sameAlbum = compareSongs(
+    song({ project: { title: "同一张专辑", type: "album" } }),
+    song({ project: { title: "同一张专辑", type: "album" } }),
+  );
+  assert.deepEqual(sameAlbum.project, {
+    value: "同一张专辑",
+    status: COMPARISON_STATUS.MATCH,
+    direction: null,
+  });
+
+  const differentAlbum = compareSongs(
+    song({ project: { title: "专辑 A", type: "album" } }),
+    song({ project: { title: "专辑 B", type: "album" } }),
+  );
+  assert.equal(differentAlbum.project.status, COMPARISON_STATUS.MISS);
+});
+
+test("EP and album projects are near", () => {
+  const comparison = compareSongs(
+    song({ project: { title: "某张 EP", type: "ep" } }),
+    song({ project: { title: "另一张专辑", type: "album" } }),
+  );
+  assert.deepEqual(comparison.project, {
+    value: "某张 EP",
+    status: COMPARISON_STATUS.PARTIAL,
     direction: null,
   });
 });

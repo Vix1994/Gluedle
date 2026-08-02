@@ -1,14 +1,16 @@
 [
   {
     "id": "qq-003TCbN13DCGnD",
-    "title": "造物",
+    "title": "造物 (Live)",
     "releaseDate": "2025-11-07",
     "releaseYear": 2025,
     "durationSec": 238,
     "project": {
-      "title": "单曲",
-      "type": "single"
+      "title": "音乐缘计划2 第3期",
+      "type": "live",
+      "category": "live"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -23,21 +25,28 @@
     "guessable": true,
     "sources": [
       {
-        "name": "QQ音乐 — 造物",
+        "name": "QQ音乐 — 造物 (Live)",
         "url": "https://y.qq.com/n/ryqq/song/003TCbN13DCGnD"
       }
+    ],
+    "hintLyrics": [
+      "披挂成 哀艳的光荣",
+      "替换进我 羞耻的疤口",
+      "你才不会 觉得寂寞"
     ]
   },
   {
     "id": "qq-002kYksn00tMvm",
-    "title": "慢冷",
+    "title": "慢冷 (Live)",
     "releaseDate": "2023-04-28",
     "releaseYear": 2023,
     "durationSec": 308,
     "project": {
-      "title": "单曲",
-      "type": "single"
+      "title": "天赐的声音第四季 第1期",
+      "type": "live",
+      "category": "live"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -54,21 +63,28 @@
     "guessable": true,
     "sources": [
       {
-        "name": "QQ音乐 — 慢冷",
+        "name": "QQ音乐 — 慢冷 (Live)",
         "url": "https://y.qq.com/n/ryqq/song/002kYksn00tMvm"
       }
+    ],
+    "hintLyrics": [
+      "说完了 好像话都说完了",
+      "硬要说裂缝不过 是皱褶",
+      "怎么先炽热的却先变冷了"
     ]
   },
   {
     "id": "qq-0006jdlP3fYT8Q",
-    "title": "负重一万斤长大",
+    "title": "负重一万斤长大 (Live)",
     "releaseDate": "2023-06-30",
     "releaseYear": 2023,
     "durationSec": 314,
     "project": {
-      "title": "单曲",
-      "type": "single"
+      "title": "天赐的声音第四季 第10期",
+      "type": "live",
+      "category": "live"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -85,21 +101,28 @@
     "guessable": true,
     "sources": [
       {
-        "name": "QQ音乐 — 负重一万斤长大",
+        "name": "QQ音乐 — 负重一万斤长大 (Live)",
         "url": "https://y.qq.com/n/ryqq/song/0006jdlP3fYT8Q"
       }
+    ],
+    "hintLyrics": [
+      "披头散发 很多疤 不认得我的话",
+      "然而发芽 笑着花 肚子越来越大",
+      "以为所见之人同自己刻意傻瓜"
     ]
   },
   {
     "id": "qq-002JtuDQ06bWRt",
-    "title": "夏至未至",
+    "title": "夏至未至 (Live)",
     "releaseDate": "2023-02-10",
     "releaseYear": 2023,
     "durationSec": 254,
     "project": {
-      "title": "单曲",
-      "type": "single"
+      "title": "时光音乐会第二季 第10期",
+      "type": "live",
+      "category": "live"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -114,21 +137,28 @@
     "guessable": true,
     "sources": [
       {
-        "name": "QQ音乐 — 夏至未至",
+        "name": "QQ音乐 — 夏至未至 (Live)",
         "url": "https://y.qq.com/n/ryqq/song/002JtuDQ06bWRt"
       }
+    ],
+    "hintLyrics": [
+      "时光雨洒落在你我心里",
+      "消失了感情在脸上留守",
+      "流年未亡香樟依旧"
     ]
   },
   {
     "id": "qq-0016VjCK4AtZ1G",
-    "title": "摩天动物园2023",
+    "title": "摩天动物园2023 (Live)",
     "releaseDate": "2023-07-22",
     "releaseYear": 2023,
     "durationSec": 323,
     "project": {
       "title": "中国说唱巅峰对决2023 总决赛 (上集)",
-      "type": "ost"
+      "type": "live",
+      "category": "live"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -146,21 +176,28 @@
     "guessable": true,
     "sources": [
       {
-        "name": "QQ音乐 — 摩天动物园2023",
+        "name": "QQ音乐 — 摩天动物园2023 (Live)",
         "url": "https://y.qq.com/n/ryqq/song/0016VjCK4AtZ1G"
       }
+    ],
+    "hintLyrics": [
+      "一张张变色就在一念间",
+      "人的心太莫测幻变",
+      "纠缠在爱与恨之间"
     ]
   },
   {
     "id": "qq-004JStVd1v7x99",
-    "title": "唯一",
+    "title": "唯一 (Live)",
     "releaseDate": "2022-03-19",
     "releaseYear": 2022,
     "durationSec": 291,
     "project": {
-      "title": "单曲",
-      "type": "single"
+      "title": "天赐的声音第三季 第2期",
+      "type": "live",
+      "category": "live"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -177,21 +214,28 @@
     "guessable": true,
     "sources": [
       {
-        "name": "QQ音乐 — 唯一",
+        "name": "QQ音乐 — 唯一 (Live)",
         "url": "https://y.qq.com/n/ryqq/song/004JStVd1v7x99"
       }
+    ],
+    "hintLyrics": [
+      "你真的懂唯一的定义",
+      "你真的希望你能厘清",
+      "若没交心怎么说明"
     ]
   },
   {
     "id": "qq-004b5l1y3WeLl3",
-    "title": "男孩",
+    "title": "男孩 (Live)",
     "releaseDate": "2017-09-22",
     "releaseYear": 2017,
     "durationSec": 279,
     "project": {
-      "title": "单曲",
-      "type": "single"
+      "title": "中国新歌声第二季 第11期",
+      "type": "live",
+      "category": "live"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -208,21 +252,28 @@
     "guessable": true,
     "sources": [
       {
-        "name": "QQ音乐 — 男孩",
+        "name": "QQ音乐 — 男孩 (Live)",
         "url": "https://y.qq.com/n/ryqq/song/004b5l1y3WeLl3"
       }
+    ],
+    "hintLyrics": [
+      "曾经意外他和她相爱",
+      "在不会犹豫的时代",
+      "以为明白所以爱的痛快"
     ]
   },
   {
     "id": "qq-000LPeSu4D2piP",
-    "title": "喜欢你",
+    "title": "喜欢你 (Live)",
     "releaseDate": "2020-05-02",
     "releaseYear": 2020,
     "durationSec": 76,
     "project": {
-      "title": "单曲",
-      "type": "single"
+      "title": "创造营2020 第1期",
+      "type": "live",
+      "category": "live"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -237,21 +288,28 @@
     "guessable": true,
     "sources": [
       {
-        "name": "QQ音乐 — 喜欢你",
+        "name": "QQ音乐 — 喜欢你 (Live)",
         "url": "https://y.qq.com/n/ryqq/song/000LPeSu4D2piP"
       }
+    ],
+    "hintLyrics": [
+      "连日落也看作唇印",
+      "我喜欢这样跟着你",
+      "随便你带我到哪里"
     ]
   },
   {
     "id": "qq-000vaFP23gG6fP",
-    "title": "Someone You Loved",
+    "title": "Someone You Loved (Live)",
     "releaseDate": "2020-05-02",
     "releaseYear": 2020,
     "durationSec": 78,
     "project": {
-      "title": "单曲",
-      "type": "single"
+      "title": "创造营2020 第1期",
+      "type": "live",
+      "category": "live"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -266,21 +324,28 @@
     "guessable": true,
     "sources": [
       {
-        "name": "QQ音乐 — Someone You Loved",
+        "name": "QQ音乐 — Someone You Loved (Live)",
         "url": "https://y.qq.com/n/ryqq/song/000vaFP23gG6fP"
       }
+    ],
+    "hintLyrics": [
+      "Now the day bleeds into nightfall",
+      "And you're not here",
+      "To get me through it all"
     ]
   },
   {
     "id": "qq-003Inmwn25vHfD",
-    "title": "母系社会",
+    "title": "母系社会 (Live)",
     "releaseDate": "2020-10-18",
     "releaseYear": 2020,
     "durationSec": 235,
     "project": {
-      "title": "单曲",
-      "type": "single"
+      "title": "中国梦之声·我们的歌第二季 第2期",
+      "type": "live",
+      "category": "live"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -297,21 +362,28 @@
     "guessable": true,
     "sources": [
       {
-        "name": "QQ音乐 — 母系社会",
+        "name": "QQ音乐 — 母系社会 (Live)",
         "url": "https://y.qq.com/n/ryqq/song/003Inmwn25vHfD"
       }
+    ],
+    "hintLyrics": [
+      "我不会耕田吃草让人下注",
+      "什么理由发明什么叫码子",
+      "难道是想让匹马为你生个儿子"
     ]
   },
   {
     "id": "qq-001RbEYQ4VeWvL",
-    "title": "为你我受冷风吹",
+    "title": "为你我受冷风吹 (Live)",
     "releaseDate": "2020-10-11",
     "releaseYear": 2020,
     "durationSec": 245,
     "project": {
-      "title": "单曲",
-      "type": "single"
+      "title": "中国梦之声·我们的歌第二季 第1期",
+      "type": "live",
+      "category": "live"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -328,14 +400,19 @@
     "guessable": true,
     "sources": [
       {
-        "name": "QQ音乐 — 为你我受冷风吹",
+        "name": "QQ音乐 — 为你我受冷风吹 (Live)",
         "url": "https://y.qq.com/n/ryqq/song/001RbEYQ4VeWvL"
       }
+    ],
+    "hintLyrics": [
+      "有人问我是与非 说是与非",
+      "可是谁又真的关心谁",
+      "你明白说吧无所谓"
     ]
   },
   {
     "id": "qq-0028JIq41Uo4ye",
-    "title": "Stay With Me",
+    "title": "Stay With Me (原创版)",
     "releaseDate": "2020-08-29",
     "releaseYear": 2020,
     "durationSec": 277,
@@ -343,6 +420,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -359,9 +437,14 @@
     "guessable": true,
     "sources": [
       {
-        "name": "QQ音乐 — Stay With Me",
+        "name": "QQ音乐 — Stay With Me (原创版)",
         "url": "https://y.qq.com/n/ryqq/song/0028JIq41Uo4ye"
       }
+    ],
+    "hintLyrics": [
+      "We going under",
+      "Somewhere you don't wanna take me there",
+      "But it doesn't mean nothing"
     ]
   },
   {
@@ -371,9 +454,10 @@
     "releaseYear": 2026,
     "durationSec": 262,
     "project": {
-      "title": "单曲",
-      "type": "single"
+      "title": "GLUE",
+      "type": "album"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -391,6 +475,11 @@
         "name": "QQ音乐 — Glue",
         "url": "https://y.qq.com/n/ryqq/song/000Q9lzD0ag0YJ"
       }
+    ],
+    "hintLyrics": [
+      "刚安抚好的心又被你触击",
+      "思绪带着我的视线",
+      "是你在我耳边演奏的乐器"
     ]
   },
   {
@@ -403,6 +492,7 @@
       "title": "她眼中的月亮",
       "type": "album"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -420,6 +510,11 @@
         "name": "QQ音乐 — Solar",
         "url": "https://y.qq.com/n/ryqq/song/004HArA10ptLOP"
       }
+    ],
+    "hintLyrics": [
+      "Wake up tonight and see your call",
+      "Losing composure still you marching on",
+      "I ain't tryna play yeah"
     ]
   },
   {
@@ -432,6 +527,7 @@
       "title": "她眼中的月亮",
       "type": "album"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -449,6 +545,11 @@
         "name": "QQ音乐 — 于是我这样生活",
         "url": "https://y.qq.com/n/ryqq/song/001MvEh53aAQSZ"
       }
+    ],
+    "hintLyrics": [
+      "冬眠后终于醒来 浑沌了那么久",
+      "让年轮刻印是否 是一种不朽",
+      "我挽着你的印记 翻越春夏秋冬"
     ]
   },
   {
@@ -461,6 +562,7 @@
       "title": "她眼中的月亮",
       "type": "album"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -478,6 +580,11 @@
         "name": "QQ音乐 — 來生之前",
         "url": "https://y.qq.com/n/ryqq/song/002V4Y5t0devs8"
       }
+    ],
+    "hintLyrics": [
+      "如常地看戲 留下票尾",
+      "如常在聖誕 擁抱知己",
+      "或你終於都 覺得孤單無處躲避"
     ]
   },
   {
@@ -490,6 +597,7 @@
       "title": "她眼中的月亮",
       "type": "album"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -507,6 +615,11 @@
         "name": "QQ音乐 — 我可以",
         "url": "https://y.qq.com/n/ryqq/song/003OehCA4SoVlt"
       }
+    ],
+    "hintLyrics": [
+      "时间推着我向前不再回头了",
+      "就像你和我爱着爱着就散了",
+      "没关系我能一个人转身"
     ]
   },
   {
@@ -519,6 +632,7 @@
       "title": "她眼中的月亮",
       "type": "album"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -536,6 +650,11 @@
         "name": "QQ音乐 — 颠倒",
         "url": "https://y.qq.com/n/ryqq/song/000HV1kr2KONky"
       }
+    ],
+    "hintLyrics": [
+      "听时间滴答滴答的在少",
+      "看窗外的风景乱七八糟",
+      "破碎的喧嚣 将我围绕"
     ]
   },
   {
@@ -548,6 +667,7 @@
       "title": "她眼中的月亮",
       "type": "album"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -565,6 +685,11 @@
         "name": "QQ音乐 — 少有人走的路",
         "url": "https://y.qq.com/n/ryqq/song/000ClGIz0D0cdd"
       }
+    ],
+    "hintLyrics": [
+      "I follow where you go",
+      "Oh Wicked dreams",
+      "Coming over me"
     ]
   },
   {
@@ -577,6 +702,7 @@
       "title": "永夜星河 影视原声大碟",
       "type": "ost"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -594,6 +720,11 @@
         "name": "QQ音乐 — 永夜之前",
         "url": "https://y.qq.com/n/ryqq/song/004Hfu3L32xFYf"
       }
+    ],
+    "hintLyrics": [
+      "在不确定虚实的世界",
+      "拼凑陌生灵魂 碎片",
+      "冲破预言轮回的时间"
     ]
   },
   {
@@ -606,6 +737,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -626,6 +758,11 @@
         "name": "QQ音乐 — Are You Happy Now",
         "url": "https://y.qq.com/n/ryqq/song/003AfMOL3WyLb4"
       }
+    ],
+    "hintLyrics": [
+      "There’s a million reasons why",
+      "But no answer left in sight",
+      "No one’s wrong and no one’s right"
     ]
   },
   {
@@ -638,6 +775,7 @@
       "title": "长乐曲 电视剧原声带",
       "type": "ost"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -655,6 +793,11 @@
         "name": "QQ音乐 — 浮华",
         "url": "https://y.qq.com/n/ryqq/song/0005UgmL3cg6OG"
       }
+    ],
+    "hintLyrics": [
+      "愿你也抬头见 璀璨星月",
+      "不管弱水三千 直到你的出现",
+      "时光中匆匆缘浅一面"
     ]
   },
   {
@@ -667,6 +810,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -686,6 +830,11 @@
         "name": "QQ音乐 — Things You Said",
         "url": "https://y.qq.com/n/ryqq/song/0028H53v4BWBDk"
       }
+    ],
+    "hintLyrics": [
+      "I was walking in the woods one day",
+      "Trying to keep the ghosts at bay",
+      "Then I thought I saw your face but it was just leaves"
     ]
   },
   {
@@ -698,6 +847,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -715,6 +865,11 @@
         "name": "QQ音乐 — 为什么乌鸦会像写字台",
         "url": "https://y.qq.com/n/ryqq/song/000TE1AY0iTTef"
       }
+    ],
+    "hintLyrics": [
+      "树允许叶子坠落下来",
+      "你没俯身替我系鞋带",
+      "而乌鸦会像写字台"
     ]
   },
   {
@@ -727,6 +882,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -744,6 +900,11 @@
         "name": "QQ音乐 — 白裙子黑童话",
         "url": "https://y.qq.com/n/ryqq/song/000ucvei2JGyp1"
       }
+    ],
+    "hintLyrics": [
+      "白色裙纱 黑色童话",
+      "她离开家 满路泥沙",
+      "舞会之上 嘘声嘈杂"
     ]
   },
   {
@@ -756,6 +917,7 @@
       "title": "度华年 电视剧原声带",
       "type": "ost"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -773,6 +935,11 @@
         "name": "QQ音乐 — 华年不负",
         "url": "https://y.qq.com/n/ryqq/song/002MeDz74craGP"
       }
+    ],
+    "hintLyrics": [
+      "大梦 恍惚间一春秋",
+      "只是压皱 两只衣袖",
+      "再然后 你会招一招手"
     ]
   },
   {
@@ -785,6 +952,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -802,6 +970,11 @@
         "name": "QQ音乐 — 爱丽希梦游仙境",
         "url": "https://y.qq.com/n/ryqq/song/003C4TNL2uOpJR"
       }
+    ],
+    "hintLyrics": [
+      "留在阁楼上 在壁炉旁 在游乐场",
+      "把头发留长 把声量放小",
+      "花园里的花 整齐微笑"
     ]
   },
   {
@@ -814,6 +987,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -831,6 +1005,11 @@
         "name": "QQ音乐 — 从我的世界消失吧",
         "url": "https://y.qq.com/n/ryqq/song/002LoqPd1j12es"
       }
+    ],
+    "hintLyrics": [
+      "彼此想象过的每个未来",
+      "终究化作摸不到的尘埃",
+      "你转身吧就趁现在"
     ]
   },
   {
@@ -843,6 +1022,7 @@
       "title": "玫瑰的故事 电视剧原声带",
       "type": "ost"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -860,6 +1040,11 @@
         "name": "QQ音乐 — Shine Brighter (愈加璀璨)",
         "url": "https://y.qq.com/n/ryqq/song/0025kNvo1LYO2G"
       }
+    ],
+    "hintLyrics": [
+      "In the dark night we find our way",
+      "Stars above they guide the play",
+      "No matter what we'll rise above"
     ]
   },
   {
@@ -872,6 +1057,7 @@
       "title": "透过墨镜直视太阳",
       "type": "ep"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -889,6 +1075,9 @@
         "name": "QQ音乐 — 放下你手中的那片花瓣",
         "url": "https://y.qq.com/n/ryqq/song/003niDyu4Lh4Aj"
       }
+    ],
+    "hintLyrics": [
+      "停下你耳机里的音乐吧"
     ]
   },
   {
@@ -901,6 +1090,7 @@
       "title": "透过墨镜直视太阳",
       "type": "ep"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -918,6 +1108,11 @@
         "name": "QQ音乐 — What If",
         "url": "https://y.qq.com/n/ryqq/song/003GCsAi0MhtVj"
       }
+    ],
+    "hintLyrics": [
+      "Why was it so easy",
+      "To make decisions like that",
+      "How much did it take"
     ]
   },
   {
@@ -930,6 +1125,7 @@
       "title": "透过墨镜直视太阳",
       "type": "ep"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -947,6 +1143,11 @@
         "name": "QQ音乐 — 净含量750毫升",
         "url": "https://y.qq.com/n/ryqq/song/00263skn3xPgR7"
       }
+    ],
+    "hintLyrics": [
+      "太久太久不能见你我的朋友",
+      "想念却又不敢厮守",
+      "写下最不安的旋律我的朋友"
     ]
   },
   {
@@ -959,6 +1160,7 @@
       "title": "透过墨镜直视太阳",
       "type": "ep"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -976,6 +1178,11 @@
         "name": "QQ音乐 — 分裂前的时刻",
         "url": "https://y.qq.com/n/ryqq/song/000bSkJV3mAq3m"
       }
+    ],
+    "hintLyrics": [
+      "走吧走吧走吧走吧",
+      "留下一个纪念的发卡",
+      "好的坏的忘了 为她"
     ]
   },
   {
@@ -988,6 +1195,7 @@
       "title": "原神-「烬火 Emberfire」游戏原声EP专辑",
       "type": "ost"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -1007,6 +1215,11 @@
         "name": "QQ音乐 — 烬火 Emberfire",
         "url": "https://y.qq.com/n/ryqq/song/002E0Xl92dNK1D"
       }
+    ],
+    "hintLyrics": [
+      "May the birds soar from their cage",
+      "Sunbeams filter through the foliage",
+      "Flames grow with immortal courage"
     ]
   },
   {
@@ -1019,6 +1232,7 @@
       "title": "又见逍遥 仙剑记忆OST原声带",
       "type": "ost"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1036,6 +1250,11 @@
         "name": "QQ音乐 — 一直很安静",
         "url": "https://y.qq.com/n/ryqq/song/002jdRv54XxDSm"
       }
+    ],
+    "hintLyrics": [
+      "空荡的街景 想找个人放感情",
+      "做这种决定 是寂寞与我为邻",
+      "我们的爱情 像你路过的风景"
     ]
   },
   {
@@ -1048,6 +1267,7 @@
       "title": "与凤行 电视剧原声带",
       "type": "ost"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1065,6 +1285,11 @@
         "name": "QQ音乐 — 炽心",
         "url": "https://y.qq.com/n/ryqq/song/002XiILV3rtslm"
       }
+    ],
+    "hintLyrics": [
+      "崎岖 凤鸣长啸 眼眸越明亮",
+      "唯 悸动光景 难抵抗",
+      "用我炽热 引一束光"
     ]
   },
   {
@@ -1077,6 +1302,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1094,6 +1320,11 @@
         "name": "QQ音乐 — 热辣滚烫",
         "url": "https://y.qq.com/n/ryqq/song/001eP3oj1wHFx0"
       }
+    ],
+    "hintLyrics": [
+      "小时候的梦想不是做科学家吗",
+      "后来为什么 没做成呢",
+      "还曾想过做老师 不仅受人尊重"
     ]
   },
   {
@@ -1106,6 +1337,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1123,6 +1355,11 @@
         "name": "QQ音乐 — 猜",
         "url": "https://y.qq.com/n/ryqq/song/00441TOY35Kzsy"
       }
+    ],
+    "hintLyrics": [
+      "猜猜你的心里会不会",
+      "不论天气炎热寒冷或者下雨结冰",
+      "当你吃饭睡觉工作休息或者旅行"
     ]
   },
   {
@@ -1135,6 +1372,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1152,6 +1390,11 @@
         "name": "QQ音乐 — 一眼",
         "url": "https://y.qq.com/n/ryqq/song/002sYeQk4Hbl9A"
       }
+    ],
+    "hintLyrics": [
+      "习惯了你总会在左边",
+      "你说这样才算最安全",
+      "唉我怎么怎么就害羞了"
     ]
   },
   {
@@ -1164,6 +1407,7 @@
       "title": "以爱为营 电视剧原声带",
       "type": "ost"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1181,6 +1425,11 @@
         "name": "QQ音乐 — 云的味道",
         "url": "https://y.qq.com/n/ryqq/song/004AzlnO2S0M9G"
       }
+    ],
+    "hintLyrics": [
+      "更不是为了听一句 听一句对不起",
+      "只是多了一点点 一点点占有欲",
+      "如果说爱情就像是云"
     ]
   },
   {
@@ -1193,6 +1442,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1210,6 +1460,11 @@
         "name": "QQ音乐 — 谁伴我闯荡",
         "url": "https://y.qq.com/n/ryqq/song/0013dvja3fXuzq"
       }
+    ],
+    "hintLyrics": [
+      "沿路没有指引 若我走上又是窄巷",
+      "寻梦像扑火 谁共我疯狂",
+      "长夜渐觉冰冻 但我只有尽量去躲"
     ]
   },
   {
@@ -1222,6 +1477,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1239,6 +1495,11 @@
         "name": "QQ音乐 — 等风吹来",
         "url": "https://y.qq.com/n/ryqq/song/000THwhw47P9MV"
       }
+    ],
+    "hintLyrics": [
+      "我向往着 你说的诗和远方",
+      "我向往着 每一次扬帆起航",
+      "去那些梦中的地方 将所有悲伤都遗忘"
     ]
   },
   {
@@ -1251,6 +1512,7 @@
       "title": "云之羽 影视原声带",
       "type": "ost"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1268,6 +1530,11 @@
         "name": "QQ音乐 — 云泥",
         "url": "https://y.qq.com/n/ryqq/song/003196290fNiR7"
       }
+    ],
+    "hintLyrics": [
+      "山脉被风 吹落 成沙",
+      "河流带我 回家 回家",
+      "云哭了 就变成晚霞"
     ]
   },
   {
@@ -1280,6 +1547,7 @@
       "title": "正好青春（比亚迪品牌青春主题曲）",
       "type": "ost"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -1299,6 +1567,11 @@
         "name": "QQ音乐 — 正好青春",
         "url": "https://y.qq.com/n/ryqq/song/001UBNsV338XOp"
       }
+    ],
+    "hintLyrics": [
+      "QQ音乐·你好大学声、腾讯音乐人",
+      "刘小旭/佘镇泳/陈智贤/番茄@QQ音乐市场中心",
+      "郭佳琳@腾讯音乐人、华少@QQ音乐内容宣推组"
     ]
   },
   {
@@ -1311,6 +1584,7 @@
       "title": "孤注一掷 电影原声带",
       "type": "ost"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1328,6 +1602,11 @@
         "name": "QQ音乐 — 别再怕",
         "url": "https://y.qq.com/n/ryqq/song/0026AEQp3rtUwy"
       }
+    ],
+    "hintLyrics": [
+      "再见却是 遥遥无期",
+      "悄悄拨弄命运的轮盘",
+      "独自走过时间里的灰暗"
     ]
   },
   {
@@ -1340,6 +1619,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1357,6 +1637,11 @@
         "name": "QQ音乐 — 这，就是爱",
         "url": "https://y.qq.com/n/ryqq/song/00225XRn38MAgW"
       }
+    ],
+    "hintLyrics": [
+      "可能回忆掉进了大海",
+      "可能有些往事回不来",
+      "可能岁月会偷走等待"
     ]
   },
   {
@@ -1369,6 +1654,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1386,6 +1672,11 @@
         "name": "QQ音乐 — 如火",
         "url": "https://y.qq.com/n/ryqq/song/000slRrC1UoO4J"
       }
+    ],
+    "hintLyrics": [
+      "余烬中重生漫天星火",
+      "是蛰伏已久的温热",
+      "累累伤痕正结痂脱落"
     ]
   },
   {
@@ -1398,6 +1689,7 @@
       "title": "追光的日子 影视原声专辑",
       "type": "ost"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1415,6 +1707,11 @@
         "name": "QQ音乐 — 我们终将到达",
         "url": "https://y.qq.com/n/ryqq/song/000OdJ5R172hHp"
       }
+    ],
+    "hintLyrics": [
+      "不惧怕代价上路 总会有疤",
+      "平凡的梦想 也闪耀 绚烂的光",
+      "茫茫人海里 迈着成长 的步伐"
     ]
   },
   {
@@ -1427,6 +1724,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1444,11 +1742,16 @@
         "name": "QQ音乐 — 明日序言",
         "url": "https://y.qq.com/n/ryqq/song/001EcYFr0AQmxg"
       }
+    ],
+    "hintLyrics": [
+      "向未来寄一封信件",
+      "站在海岸 眺望云边",
+      "远方灯塔邀我 穿梭 领略"
     ]
   },
   {
     "id": "qq-00386UvB2iq5w5",
-    "title": "BABYDOLL (Speed)",
+    "title": "BABYDOLL (Speed) (希林娜依·高 Remix|Explicit)",
     "releaseDate": "2023-06-09",
     "releaseYear": 2023,
     "durationSec": 161,
@@ -1456,6 +1759,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -1472,9 +1776,14 @@
     "guessable": true,
     "sources": [
       {
-        "name": "QQ音乐 — BABYDOLL (Speed)",
+        "name": "QQ音乐 — BABYDOLL (Speed) (希林娜依·高 Remix|Explicit)",
         "url": "https://y.qq.com/n/ryqq/song/00386UvB2iq5w5"
       }
+    ],
+    "hintLyrics": [
+      "Call me babydoll",
+      "Come break down these walls",
+      "Don't leave me alone"
     ]
   },
   {
@@ -1487,6 +1796,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -1506,6 +1816,11 @@
         "name": "QQ音乐 — 怎么会忘记你",
         "url": "https://y.qq.com/n/ryqq/song/000G2GwJ4ZZnQC"
       }
+    ],
+    "hintLyrics": [
+      "那些认认真真为你写的歌",
+      "你是不是早早就已经忘了",
+      "我还是一个人纠结着好的坏的"
     ]
   },
   {
@@ -1518,6 +1833,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1535,6 +1851,11 @@
         "name": "QQ音乐 — 我多想拥抱你",
         "url": "https://y.qq.com/n/ryqq/song/003BQz6j1BCxop"
       }
+    ],
+    "hintLyrics": [
+      "在山南水北的时光里",
+      "人潮似海是你我的距离",
+      "哪怕晚一点也没有关系"
     ]
   },
   {
@@ -1547,6 +1868,7 @@
       "title": "你给我的喜欢 影视原声带",
       "type": "ost"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1564,6 +1886,11 @@
         "name": "QQ音乐 — I Always Love You",
         "url": "https://y.qq.com/n/ryqq/song/001HrsLL06lS7T"
       }
+    ],
+    "hintLyrics": [
+      "那一刻 心都被湮没",
+      "是否就能够重拾以后",
+      "你给的喜欢在左右"
     ]
   },
   {
@@ -1576,6 +1903,7 @@
       "title": "0.25",
       "type": "album"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1593,6 +1921,11 @@
         "name": "QQ音乐 — 别为难星星",
         "url": "https://y.qq.com/n/ryqq/song/000do37P2yLE6X"
       }
+    ],
+    "hintLyrics": [
+      "有些失去 宇宙也无能为力",
+      "只能珍惜 晕开的模糊光景",
+      "迷信这宿命 别太贪心"
     ]
   },
   {
@@ -1605,6 +1938,7 @@
       "title": "0.25",
       "type": "album"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1622,6 +1956,11 @@
         "name": "QQ音乐 — 旧身份",
         "url": "https://y.qq.com/n/ryqq/song/002Nbkyj0rSVcE"
       }
+    ],
+    "hintLyrics": [
+      "断了联系 特别安静",
+      "我才听说 你没结果",
+      "从未就寂寞中附和"
     ]
   },
   {
@@ -1634,6 +1973,7 @@
       "title": "0.25",
       "type": "album"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1651,6 +1991,11 @@
         "name": "QQ音乐 — Don't Wanna Be Alone",
         "url": "https://y.qq.com/n/ryqq/song/0014siBo4HhLzd"
       }
+    ],
+    "hintLyrics": [
+      "从未想要独自去流浪",
+      "沉默镜中喧嚣的疮疤",
+      "寂寞不是爱的借口"
     ]
   },
   {
@@ -1663,6 +2008,7 @@
       "title": "0.25",
       "type": "album"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1680,6 +2026,11 @@
         "name": "QQ音乐 — 情场现形祭",
         "url": "https://y.qq.com/n/ryqq/song/000Y940D34i7tb"
       }
+    ],
+    "hintLyrics": [
+      "被灯光照得烟熏难堪",
+      "晦涩 灰色 你说的算",
+      "爱我 不爱 你说的算"
     ]
   },
   {
@@ -1692,6 +2043,7 @@
       "title": "0.25",
       "type": "album"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -1711,6 +2063,11 @@
         "name": "QQ音乐 — 倒霉遇上你",
         "url": "https://y.qq.com/n/ryqq/song/003wRpXN1ez61I"
       }
+    ],
+    "hintLyrics": [
+      "电话是块砖吗宝贝扔了吧也不用接",
+      "一句我在忙没看见勺子信了你的邪",
+      "别来烦我还要开会"
     ]
   },
   {
@@ -1723,6 +2080,7 @@
       "title": "0.25",
       "type": "album"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1740,6 +2098,11 @@
         "name": "QQ音乐 — Emerald City",
         "url": "https://y.qq.com/n/ryqq/song/002NBuVE0FfZnj"
       }
+    ],
+    "hintLyrics": [
+      "Take me down",
+      "That yellow brick road again",
+      "I hear my red heels knock three times I said"
     ]
   },
   {
@@ -1752,6 +2115,7 @@
       "title": "0.25",
       "type": "album"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1769,6 +2133,11 @@
         "name": "QQ音乐 — 美式去冰",
         "url": "https://y.qq.com/n/ryqq/song/00351fEJ3U0bPz"
       }
+    ],
+    "hintLyrics": [
+      "甜蜜蜜 你笑的甜蜜蜜",
+      "甜得让我出现了幻觉",
+      "看着你 默默的看着你"
     ]
   },
   {
@@ -1781,6 +2150,7 @@
       "title": "0.25",
       "type": "album"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1798,6 +2168,11 @@
         "name": "QQ音乐 — 鲸",
         "url": "https://y.qq.com/n/ryqq/song/0021S7Qs2IocXK"
       }
+    ],
+    "hintLyrics": [
+      "你和我憧憬的以后",
+      "沉寂的海底还有多少秘密",
+      "我用尽力气没有解开谜底"
     ]
   },
   {
@@ -1810,6 +2185,7 @@
       "title": "0.25",
       "type": "album"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1827,6 +2203,11 @@
         "name": "QQ音乐 — 回避型依恋者",
         "url": "https://y.qq.com/n/ryqq/song/000kpzDt25Wzo0"
       }
+    ],
+    "hintLyrics": [
+      "悄无声息原来屏住了",
+      "是你不会还是不愿呢",
+      "日复一日同样的附和"
     ]
   },
   {
@@ -1839,6 +2220,7 @@
       "title": "0.25",
       "type": "album"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1856,6 +2238,11 @@
         "name": "QQ音乐 — 师傅，什么是爱情",
         "url": "https://y.qq.com/n/ryqq/song/002AW6Ht1StruF"
       }
+    ],
+    "hintLyrics": [
+      "什么是爱我不明白",
+      "反正吐车上两百块",
+      "半年已过听过最多"
     ]
   },
   {
@@ -1868,6 +2255,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1885,6 +2273,11 @@
         "name": "QQ音乐 — 人间好时节",
         "url": "https://y.qq.com/n/ryqq/song/001XehbA16uF3C"
       }
+    ],
+    "hintLyrics": [
+      "细雨落蒙蒙 彩蝶舞翩翩",
+      "有情有梦生生不息敬流年",
+      "有情有梦生生不息皆如愿"
     ]
   },
   {
@@ -1897,6 +2290,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -1916,6 +2310,11 @@
         "name": "QQ音乐 — 是妈妈是女儿",
         "url": "https://y.qq.com/n/ryqq/song/000ibXct1bVSxh"
       }
+    ],
+    "hintLyrics": [
+      "我不知道自己做得够好吗",
+      "我是第一次做妈妈",
+      "尽管 岁月已吹白我的头发"
     ]
   },
   {
@@ -1928,6 +2327,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1945,6 +2345,11 @@
         "name": "QQ音乐 — 微光",
         "url": "https://y.qq.com/n/ryqq/song/002wpvV10XCePg"
       }
+    ],
+    "hintLyrics": [
+      "荒凉的沙漠 残存的篝火",
+      "沿途风景一路斑驳",
+      "城墙的落寞 淹没了花朵"
     ]
   },
   {
@@ -1957,6 +2362,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -1974,6 +2380,11 @@
         "name": "QQ音乐 — 危爱",
         "url": "https://y.qq.com/n/ryqq/song/0039MkLS11GJ0k"
       }
+    ],
+    "hintLyrics": [
+      "雨后的天空会收获",
+      "奋不顾身的守护着",
+      "昏暗的天空笼罩孤独的我"
     ]
   },
   {
@@ -1986,6 +2397,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -2003,6 +2415,11 @@
         "name": "QQ音乐 — 寻人启事",
         "url": "https://y.qq.com/n/ryqq/song/002Keyuw38eOWb"
       }
+    ],
+    "hintLyrics": [
+      "已通过「腾讯音乐·启明星」获得官方翻唱授权",
+      "让我看看 你的照片",
+      "又清楚地浮现你的脸"
     ]
   },
   {
@@ -2015,6 +2432,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -2032,6 +2450,11 @@
         "name": "QQ音乐 — 年轻的战场",
         "url": "https://y.qq.com/n/ryqq/song/0042K8Ek2qv9Kd"
       }
+    ],
+    "hintLyrics": [
+      "请你给我一束爱的光芒",
+      "今天我将要走向这胜利的远方",
+      "我要把这世界为你点亮"
     ]
   },
   {
@@ -2044,6 +2467,7 @@
       "title": "吾",
       "type": "ep"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -2061,6 +2485,11 @@
         "name": "QQ音乐 — FLiGHT",
         "url": "https://y.qq.com/n/ryqq/song/001ykB4T29ymSR"
       }
+    ],
+    "hintLyrics": [
+      "Tapes around my mouth",
+      "Thoughts filling up my brain",
+      "Words ain't coming out"
     ]
   },
   {
@@ -2073,6 +2502,7 @@
       "title": "吾",
       "type": "ep"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -2090,6 +2520,11 @@
         "name": "QQ音乐 — 来，你说",
         "url": "https://y.qq.com/n/ryqq/song/003r8njn3ZfVYy"
       }
+    ],
+    "hintLyrics": [
+      "别听我说 听我说 听我说 Oh Oh",
+      "真的不是我 那种语气",
+      "新的版本又 如何编辑"
     ]
   },
   {
@@ -2102,6 +2537,7 @@
       "title": "吾",
       "type": "ep"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -2119,6 +2555,11 @@
         "name": "QQ音乐 — 04:16",
         "url": "https://y.qq.com/n/ryqq/song/000rC4LD0OrcA8"
       }
+    ],
+    "hintLyrics": [
+      "下一首该不会是STAY",
+      "才能看到熟悉的模样",
+      "微光到达分叉路方向"
     ]
   },
   {
@@ -2131,6 +2572,7 @@
       "title": "吾",
       "type": "ep"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -2148,6 +2590,11 @@
         "name": "QQ音乐 — 幻想写照",
         "url": "https://y.qq.com/n/ryqq/song/001Wgarc24DjIN"
       }
+    ],
+    "hintLyrics": [
+      "也许是我们太相似",
+      "让我猜到你的下一句感叹词",
+      "背后和我一样不只是字面意思"
     ]
   },
   {
@@ -2160,6 +2607,7 @@
       "title": "吾",
       "type": "ep"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -2177,6 +2625,11 @@
         "name": "QQ音乐 — 瑕面舞会",
         "url": "https://y.qq.com/n/ryqq/song/000TjPLx1E7QqX"
       }
+    ],
+    "hintLyrics": [
+      "那曾是我最害怕的模样",
+      "成为现实沦为奢望",
+      "暴风雨后没有彩虹的形状"
     ]
   },
   {
@@ -2189,6 +2642,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -2206,6 +2660,11 @@
         "name": "QQ音乐 — 完美日",
         "url": "https://y.qq.com/n/ryqq/song/002RCilC2aziKi"
       }
+    ],
+    "hintLyrics": [
+      "那答案肤浅或深邃",
+      "敢不敢就去无所谓",
+      "好好看清自己身体"
     ]
   },
   {
@@ -2218,6 +2677,7 @@
       "title": "请叫我总监 电视剧原声大碟",
       "type": "ost"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -2235,6 +2695,11 @@
         "name": "QQ音乐 — 寓言",
         "url": "https://y.qq.com/n/ryqq/song/000OuJ8d0ErAW6"
       }
+    ],
+    "hintLyrics": [
+      "能够预言我们遇见",
+      "我们都走在时间面前",
+      "拒绝被定义被偏见"
     ]
   },
   {
@@ -2247,6 +2712,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -2264,6 +2730,11 @@
         "name": "QQ音乐 — 那年星辰",
         "url": "https://y.qq.com/n/ryqq/song/000kMSk10uTlHB"
       }
+    ],
+    "hintLyrics": [
+      "谁的呼唤划破了天际",
+      "光芒璀璨热烈回应",
+      "像初次遇见时我和你"
     ]
   },
   {
@@ -2276,6 +2747,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -2295,6 +2767,11 @@
         "name": "QQ音乐 — 精英不凡",
         "url": "https://y.qq.com/n/ryqq/song/001qA9mX41cA3m"
       }
+    ],
+    "hintLyrics": [
+      "我们举起勇气 难道说",
+      "向不甘心狙击 不算是种魅力",
+      "我们固执前进 去追寻"
     ]
   },
   {
@@ -2307,6 +2784,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -2324,6 +2802,11 @@
         "name": "QQ音乐 — 芳华如愿",
         "url": "https://y.qq.com/n/ryqq/song/003t5fAP3jmFGf"
       }
+    ],
+    "hintLyrics": [
+      "烟火贺新岁 元旦庆团圆",
+      "烛燃起星满窗 离人归乡思眷",
+      "红红火火不灭 画彩描金日月"
     ]
   },
   {
@@ -2336,6 +2819,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -2356,6 +2840,11 @@
         "name": "QQ音乐 — 顺着风的方向",
         "url": "https://y.qq.com/n/ryqq/song/002d3Wul3kP3x9"
       }
+    ],
+    "hintLyrics": [
+      "我把爱全部放在行囊 一路听风",
+      "把沿途故事全都收藏 遍布行踪",
+      "将月光撕碎揣进怀里"
     ]
   },
   {
@@ -2368,6 +2857,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -2385,6 +2875,11 @@
         "name": "QQ音乐 — 为我们失去的",
         "url": "https://y.qq.com/n/ryqq/song/000N4H0E32kmEK"
       }
+    ],
+    "hintLyrics": [
+      "过去的时光 缓慢而悠扬",
+      "日子温柔 却很坚硬",
+      "从前孩子会怕天黑呀"
     ]
   },
   {
@@ -2397,6 +2892,7 @@
       "title": "良言写意 电视原声音乐专辑",
       "type": "ost"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -2414,6 +2910,11 @@
         "name": "QQ音乐 — 寂静之忆",
         "url": "https://y.qq.com/n/ryqq/song/003RsPxp4J3EbQ"
       }
+    ],
+    "hintLyrics": [
+      "Memory of us in the last life",
+      "Still haunts now and then in quiet nights",
+      "Shivering waiting for the light"
     ]
   },
   {
@@ -2426,6 +2927,7 @@
       "title": "关于我妈的一切 电影原声大碟",
       "type": "ost"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -2443,6 +2945,11 @@
         "name": "QQ音乐 — 牵一双手",
         "url": "https://y.qq.com/n/ryqq/song/002Fm8jb449qm4"
       }
+    ],
+    "hintLyrics": [
+      "快乐吗 为了遇见我啊",
+      "你落入凡尘 厨房没有 星光",
+      "你有过 怎样绚烂的梦"
     ]
   },
   {
@@ -2455,6 +2962,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -2474,6 +2982,11 @@
         "name": "QQ音乐 — 陷入爱情",
         "url": "https://y.qq.com/n/ryqq/song/004KLUlR3FeLTz"
       }
+    ],
+    "hintLyrics": [
+      "那刻期许 hu 那刻甜蜜",
+      "是可以一颗心放在你这里 hu",
+      "贪心某刻 hu 贪恋某个"
     ]
   },
   {
@@ -2486,6 +2999,7 @@
       "title": "阿莫希林",
       "type": "ep"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -2503,6 +3017,11 @@
         "name": "QQ音乐 — Mirror",
         "url": "https://y.qq.com/n/ryqq/song/004L4ekk4Ne4VR"
       }
+    ],
+    "hintLyrics": [
+      "看啊树上是我在枯萎",
+      "凋谢一刹那画面才最凄美",
+      "偶尔也会学着掉眼泪"
     ]
   },
   {
@@ -2515,6 +3034,7 @@
       "title": "阿莫希林",
       "type": "ep"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -2532,6 +3052,11 @@
         "name": "QQ音乐 — 阿莫希林",
         "url": "https://y.qq.com/n/ryqq/song/002k3ZZe3iBuXf"
       }
+    ],
+    "hintLyrics": [
+      "拥挤的车 流穿梭运送着单调冷漠",
+      "透支着身体在找寻快乐",
+      "对的错的 每个人都装了如簧巧舌"
     ]
   },
   {
@@ -2544,6 +3069,7 @@
       "title": "有翡 电视剧原声带",
       "type": "ost"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -2561,11 +3087,16 @@
         "name": "QQ音乐 — 红尘莫欺我年少",
         "url": "https://y.qq.com/n/ryqq/song/0003ZHjP3p6oKn"
       }
+    ],
+    "hintLyrics": [
+      "也许踏上的是羁旅",
+      "却不能将这日月独枉",
+      "也曾怕迷失在远方"
     ]
   },
   {
     "id": "qq-0028ujyY4FIjI9",
-    "title": "Fight of Your Life",
+    "title": "Fight of Your Life (特别版)",
     "releaseDate": "2020-08-26",
     "releaseYear": 2020,
     "durationSec": 233,
@@ -2573,13 +3104,14 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
     "featuredArtistGender": "none",
     "favoriteCount": 100001,
     "favoriteCountDisplay": "25w+",
-    "language": "zh",
+    "language": "en",
     "curleyCredits": {
       "lyrics": false,
       "composition": false
@@ -2587,9 +3119,14 @@
     "guessable": true,
     "sources": [
       {
-        "name": "QQ音乐 — Fight of Your Life",
+        "name": "QQ音乐 — Fight of Your Life (特别版)",
         "url": "https://y.qq.com/n/ryqq/song/0028ujyY4FIjI9"
       }
+    ],
+    "hintLyrics": [
+      "朱旭光@腾讯CROS音频团队",
+      "张敉尔@腾讯LOL-IP团队",
+      "Vivita Zheng@Unisonar"
     ]
   },
   {
@@ -2602,6 +3139,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -2621,6 +3159,11 @@
         "name": "QQ音乐 — 夜昼",
         "url": "https://y.qq.com/n/ryqq/song/001Bym1j1xKyqk"
       }
+    ],
+    "hintLyrics": [
+      "放任我一个人在疯癫",
+      "又是一场梦 何时能兑现",
+      "或许只有文字的敷衍"
     ]
   },
   {
@@ -2633,6 +3176,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -2652,6 +3196,11 @@
         "name": "QQ音乐 — Love Me Slowly",
         "url": "https://y.qq.com/n/ryqq/song/000gEsf53CFmYa"
       }
+    ],
+    "hintLyrics": [
+      "Finally it's what I wanna see",
+      "Stars igniting just for me",
+      "Wouldn't be here without a dream"
     ]
   },
   {
@@ -2664,6 +3213,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -2683,6 +3233,11 @@
         "name": "QQ音乐 — U",
         "url": "https://y.qq.com/n/ryqq/song/004e7cYM35Y8xF"
       }
+    ],
+    "hintLyrics": [
+      "街边的人哼着《遇见》",
+      "一闪而过是你的脸",
+      "这电影看过 好几遍"
     ]
   },
   {
@@ -2695,6 +3250,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "collaboration",
     "featuredArtists": [
@@ -2714,6 +3270,11 @@
         "name": "QQ音乐 — Do You Think About Me",
         "url": "https://y.qq.com/n/ryqq/song/00065u833WmxC8"
       }
+    ],
+    "hintLyrics": [
+      "When you breathe in ocean air",
+      "Facing west in California",
+      "Am I standing with you there"
     ]
   },
   {
@@ -2726,6 +3287,7 @@
       "title": "单曲",
       "type": "single"
     },
+    "originType": null,
     "version": null,
     "performanceType": "solo",
     "featuredArtists": [],
@@ -2743,6 +3305,11 @@
         "name": "QQ音乐 — 颗粒季",
         "url": "https://y.qq.com/n/ryqq/song/002W0pz41Z6M32"
       }
+    ],
+    "hintLyrics": [
+      "还记得那个炎热的夏天",
+      "改变了我一生的七月",
+      "头顶泡面毫不胆怯"
     ]
   }
 ]

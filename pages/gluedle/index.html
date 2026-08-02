@@ -65,21 +65,31 @@
               <p class="meta-label">DEDUCTION LEDGER</p>
               <h2 id="ledger-title">推理记录</h2>
             </div>
-            <p>每个字段都在当前页面完整显示</p>
+            <div class="ledger-head-tools">
+              <p>每个字段都在当前页面完整显示</p>
+              <button
+                id="hint-button"
+                class="hint-button"
+                type="button"
+                disabled
+                aria-controls="hint-stack"
+              >歌词提示 · 读取中</button>
+            </div>
           </header>
+
+          <div id="hint-stack" class="hint-stack" data-hint-stack aria-live="polite" hidden></div>
 
           <div class="board-frame">
             <table id="guess-board">
               <caption class="sr-only">歌曲推理反馈</caption>
               <thead>
                 <tr>
-                  <th scope="col">歌曲</th><th scope="col">发行日</th><th scope="col">时长</th>
-                  <th scope="col">收藏数</th><th scope="col">语言</th><th scope="col">专辑</th>
+                  <th scope="col">歌曲</th><th scope="col">收藏数</th><th scope="col">语言</th><th scope="col">专辑</th>
                   <th scope="col">演唱</th><th scope="col">合作对象</th><th scope="col">创作</th>
                 </tr>
               </thead>
               <tbody data-guess-rows>
-                <tr class="empty-row"><td colspan="9">输入歌名，第一条推理会出现在这里</td></tr>
+                <tr class="empty-row"><td colspan="7">输入歌名，第一条推理会出现在这里</td></tr>
               </tbody>
             </table>
           </div>
@@ -94,7 +104,7 @@
           <div class="desk-head">
             <p class="meta-label">GUESS DESK</p>
             <h2 id="guess-desk-title">输入歌名</h2>
-            <p>搜索只显示歌名，不会遮挡左侧的推理记录。</p>
+            <p>搜索结果显示歌名、日期和时长，方便快速确认。</p>
           </div>
 
           <form id="guess-form" class="guess-form" novalidate>
@@ -117,8 +127,8 @@
           <h2 id="help-title">沿着差异，找到随机答案。</h2>
           <ol>
             <li>每轮从题库随机生成一个答案。</li>
-            <li>比较年份、时长、收藏数、语言、专辑、演唱、合作对象与创作资料。</li>
-            <li>独立发行统一显示为“单曲”，两首单曲会判定专辑匹配。</li>
+            <li>比较歌曲格里的日期与时长、收藏数、语言、专辑分类、演唱、合作对象与创作资料。</li>
+            <li>专辑分类包括影视、游戏、Live、单曲和实际专辑名；影视与游戏会判定为接近。</li>
             <li>绿色为匹配，米色为接近，深灰为不同；箭头提示答案方向。</li>
           </ol>
           <button class="primary-button" type="button" data-close-dialog>开始推理</button>
@@ -141,7 +151,6 @@
               <button class="secondary-button" type="button" data-share-download>保存图片</button>
             </div>
           </div>
-          <button class="primary-button" type="button" data-result-share>生成分享图片</button>
           <button class="secondary-button" type="button" data-result-reset>重新开始</button>
           <button class="secondary-button" type="button" data-close-dialog>返回记录台</button>
         </div>

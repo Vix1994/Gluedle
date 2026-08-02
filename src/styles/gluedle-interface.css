@@ -13,15 +13,13 @@
   text-align: center;
   vertical-align: middle;
 }
-#guess-board th:nth-child(1) { width: 26%; }
-#guess-board th:nth-child(2) { width: 8%; }
-#guess-board th:nth-child(3) { width: 8%; }
-#guess-board th:nth-child(4) { width: 8%; }
-#guess-board th:nth-child(5) { width: 8%; }
+#guess-board th:nth-child(1) { width: 34%; }
+#guess-board th:nth-child(2) { width: 10%; }
+#guess-board th:nth-child(3) { width: 10%; }
+#guess-board th:nth-child(4) { width: 14%; }
+#guess-board th:nth-child(5) { width: 10%; }
 #guess-board th:nth-child(6) { width: 12%; }
-#guess-board th:nth-child(7) { width: 8%; }
-#guess-board th:nth-child(8) { width: 12%; }
-#guess-board th:nth-child(9) { width: 10%; }
+#guess-board th:nth-child(7) { width: 10%; }
 
 .guess-row {
   border-bottom: 6px solid var(--black);
@@ -50,6 +48,32 @@
 .comparison-cell[data-field="song"] {
   color: var(--black);
   background: var(--white);
+}
+.song-comparison-cell { padding-inline: clamp(6px, 1vw, 14px); }
+.song-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 8px;
+}
+.song-meta-item {
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  padding: 3px 5px;
+  color: var(--black);
+  background: var(--locked);
+  font: 600 clamp(0.48rem, 0.58vw, 0.57rem)/1 var(--font-mono);
+  white-space: nowrap;
+}
+.song-meta-item[data-status="match"] { background: var(--correct); }
+.song-meta-item[data-status="near"],
+.song-meta-item[data-status="partial"] { background: var(--near); }
+.song-meta-item[data-status="miss"] { background: var(--wrong); }
+.song-meta-item[data-status="unknown"] {
+  color: #a2a8a8;
+  background: var(--locked);
 }
 .cell-value {
   display: block;
@@ -109,6 +133,67 @@
 }
 .ledger-actions .secondary-button { color: var(--white); border-color: var(--line-dark); }
 .ledger-actions .secondary-button:hover:not(:disabled) { color: var(--black); background: var(--white); }
+
+.ledger-head-tools {
+  display: grid;
+  justify-items: end;
+  gap: 10px;
+}
+.ledger-head-tools > p {
+  max-width: 20ch;
+  margin: 0;
+  color: var(--grey);
+  font: 0.62rem/1.5 var(--font-mono);
+  text-align: right;
+}
+.hint-button {
+  min-height: 36px;
+  padding: 0 12px;
+  color: var(--lake);
+  border: 1px solid var(--lake-dark);
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+  font: 500 0.58rem/1 var(--font-mono);
+  transition: color 180ms ease, background 180ms ease, border-color 180ms ease, transform 180ms var(--ease-out);
+}
+.hint-button.is-available { color: var(--black); border-color: var(--lake); background: var(--lake); }
+.hint-button:hover:not(:disabled) { color: var(--white); border-color: var(--white); background: var(--black); transform: translateY(-1px); }
+.hint-button:focus-visible { outline-offset: 2px; }
+.hint-stack {
+  display: grid;
+  gap: 0;
+  padding: 0 clamp(18px, 2.2vw, 30px);
+  border-bottom: 1px solid var(--line-dark);
+  background: rgb(5 5 5 / 28%);
+}
+.hint-stack[hidden] { display: none; }
+.hint-card {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  align-items: baseline;
+  gap: 18px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line-dark);
+  animation: hint-enter 320ms var(--ease-out) both;
+}
+.hint-card:last-child { border-bottom: 0; }
+.hint-card-label {
+  margin: 0;
+  color: var(--lake);
+  font: 500 0.55rem/1.2 var(--font-mono);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+.hint-card-quote {
+  min-width: 0;
+  max-width: 72ch;
+  margin: 0;
+  color: var(--white-cool);
+  font-size: clamp(0.74rem, 1vw, 0.92rem);
+  line-height: 1.45;
+  text-wrap: pretty;
+}
 
 .primary-button,
 .secondary-button,
@@ -180,13 +265,21 @@ button:disabled { cursor: not-allowed; opacity: 0.38; }
 }
 .suggestions[hidden] { display: none; }
 .suggestion-option {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
+  gap: 12px;
   min-height: 44px;
   padding: 9px 12px;
   border-bottom: 1px solid var(--line-light);
   cursor: pointer;
   font-size: 0.76rem;
+}
+.suggestion-title { min-width: 0; overflow-wrap: anywhere; }
+.suggestion-meta {
+  color: var(--grey-dark);
+  font: 500 0.52rem/1.2 var(--font-mono);
+  white-space: nowrap;
 }
 .suggestion-option:last-child { border-bottom: 0; }
 .suggestion-option:hover,
@@ -194,6 +287,28 @@ button:disabled { cursor: not-allowed; opacity: 0.38; }
 .suggestion-option[aria-selected="true"] { background: var(--lake); }
 .form-feedback { min-height: 3em; margin: 10px 0 0; color: var(--grey); font: 0.58rem/1.5 var(--font-mono); }
 .form-feedback.is-error { color: var(--white); text-decoration: underline var(--near) 2px; text-underline-offset: 3px; }
+
+@media (min-width: 721px) {
+  .comparison-cell {
+    --cell-value-size: clamp(0.88rem, 1.05vw, 1.08rem);
+  }
+  .song-meta-item {
+    min-height: 24px;
+    padding: 4px 7px;
+    font-size: clamp(0.62rem, 0.7vw, 0.78rem);
+    line-height: 1.1;
+  }
+  .suggestion-option {
+    min-height: 58px;
+    padding: 12px 14px;
+    font-size: clamp(0.95rem, 0.9vw, 1.08rem);
+    line-height: 1.35;
+  }
+  .suggestion-meta {
+    font-size: clamp(0.68rem, 0.65vw, 0.78rem);
+    line-height: 1.35;
+  }
+}
 
 .site-dialog {
   width: min(calc(100% - 24px), 580px);
@@ -243,6 +358,7 @@ button:disabled { cursor: not-allowed; opacity: 0.38; }
 .share-preview-actions { display: grid; gap: 8px; margin-top: 12px; }
 
 @keyframes row-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes hint-enter { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
 @media (max-width: 1240px) {
   .guess-desk { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 0 14px; }
@@ -256,16 +372,21 @@ button:disabled { cursor: not-allowed; opacity: 0.38; }
 @media (max-width: 720px) {
   #guess-board { table-layout: fixed; }
   #guess-board th { height: 25px; padding: 3px 2px; font-size: 0.42rem; text-align: center; }
-  #guess-board th:nth-child(1) { width: 26%; }
-  #guess-board th:nth-child(2) { width: 10%; }
-  #guess-board th:nth-child(3) { width: 8%; }
-  #guess-board th:nth-child(4) { width: 8%; }
-  #guess-board th:nth-child(5) { width: 8%; }
-  #guess-board th:nth-child(6) { width: 11%; }
-  #guess-board th:nth-child(7) { width: 8%; }
-  #guess-board th:nth-child(8) { width: 10%; }
-  #guess-board th:nth-child(9) { width: 12%; }
+  #guess-board th:nth-child(1) { width: 31%; }
+  #guess-board th:nth-child(2) { width: 11%; }
+  #guess-board th:nth-child(3) { width: 10%; }
+  #guess-board th:nth-child(4) { width: 14%; }
+  #guess-board th:nth-child(5) { width: 10%; }
+  #guess-board th:nth-child(6) { width: 12%; }
+  #guess-board th:nth-child(7) { width: 12%; }
   #guess-board .guess-row { border-bottom: 4px solid var(--black); }
+  .ledger-head-tools { gap: 0; }
+  .ledger-head-tools > p { display: none; }
+  .hint-button { min-height: 34px; padding-inline: 9px; font-size: 0.52rem; }
+  .hint-stack { padding-inline: 10px; }
+  .hint-card { gap: 10px; padding: 9px 0; }
+  .hint-card-label { font-size: 0.48rem; }
+  .hint-card-quote { font-size: 0.67rem; line-height: 1.35; }
   .comparison-cell {
     --cell-value-size: 0.58rem;
     height: 48px;
@@ -306,7 +427,11 @@ button:disabled { cursor: not-allowed; opacity: 0.38; }
 }
 
 @media (max-width: 480px) {
-  .comparison-cell { height: 44px; }
+  .comparison-cell { height: 52px; }
+  .song-meta { gap: 3px; margin-top: 6px; }
+  .song-meta-item { min-height: 18px; padding: 2px 4px; font-size: 0.45rem; }
+  .suggestion-option { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .suggestion-meta { font-size: 0.48rem; }
   .ledger-actions .secondary-button { min-height: 40px; padding: 0 12px; }
   .ledger-actions .text-button { min-height: 40px; }
 }

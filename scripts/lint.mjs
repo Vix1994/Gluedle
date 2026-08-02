@@ -130,12 +130,13 @@ if (homeHtml.includes("data-track-list") || homeMain.includes("function renderCa
 const suggestionsSource = extractFunction(gameMain, "showSuggestions");
 if (
   !suggestionsSource
-  || /releaseYear|durationSec|formatDuration|\.project\b|\.languages?\b/.test(suggestionsSource)
-  || !/option\.textContent\s*=\s*song\.title\s*;/.test(suggestionsSource)
-  || /option\.(?:innerHTML|outerHTML|insertAdjacentHTML|append|prepend|replaceChildren)\b/
+  || /releaseYear|\.project\b|\.languages?\b/.test(suggestionsSource)
+  || !/title\.textContent\s*=\s*song\.title\s*;/.test(suggestionsSource)
+  || !/metadata\.textContent\s*=\s*`\$\{formatDuration\(song\.durationSec\)\}/.test(suggestionsSource)
+  || /(?:option|title|metadata)\.(?:innerHTML|outerHTML|insertAdjacentHTML)\b/
     .test(suggestionsSource)
 ) {
-  errors.push("src/gluedle.js: search suggestions must reveal song titles only");
+  errors.push("src/gluedle.js: search suggestions must reveal song titles and metadata safely");
 }
 
 if (
@@ -343,8 +344,12 @@ if (
     !song.curleyCredits
     || typeof song.curleyCredits.lyrics !== "boolean"
     || typeof song.curleyCredits.composition !== "boolean")
+  || parsedSongCatalog.some((song) =>
+    !Array.isArray(song.hintLyrics)
+    || song.hintLyrics.length > 3
+    || song.hintLyrics.some((hint) => typeof hint !== "string" || !hint.trim()))
 ) {
-  errors.push("Gluedle must load a lyric-classified catalog without Live metadata and with boolean creation credits");
+  errors.push("Gluedle must load a lyric-classified catalog with boolean creation credits and up to three lyric hints");
 }
 
 const inputTag = /<input\b[^>]*\bid="song-input"[^>]*>/i.exec(gameHtml)?.[0] ?? "";

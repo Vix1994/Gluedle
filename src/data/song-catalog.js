@@ -2,6 +2,12 @@ import {
   FEATURED_ARTIST_GENDER_VALUES,
   getFeaturedArtistGender,
 } from "./collaborator-genders.js";
+import {
+  getProjectDisplay,
+  getSongProject,
+  getSongProjectCategory,
+} from "./project-categories.js";
+import { getSongOriginType, SONG_ORIGIN_VALUES } from "./song-provenance.js";
 
 export const SONG_CATALOG_URL = "/data/gluedle-songs.json";
 export const SONG_LANGUAGES = Object.freeze(["zh", "en"]);
@@ -40,6 +46,10 @@ export function validateSongCatalog(value) {
     if (!SONG_LANGUAGES.includes(song.language)) {
       throw new TypeError(`Catalog entry ${song.id} must declare a supported language.`);
     }
+    if (song.originType !== undefined && song.originType !== null
+      && !SONG_ORIGIN_VALUES.includes(song.originType)) {
+      throw new TypeError(`Catalog entry ${song.id} must declare a valid origin type.`);
+    }
     if (
       !song.curleyCredits
       || typeof song.curleyCredits !== "object"
@@ -47,6 +57,14 @@ export function validateSongCatalog(value) {
       || typeof song.curleyCredits.composition !== "boolean"
     ) {
       throw new TypeError(`Catalog entry ${song.id} must declare boolean creation credits.`);
+    }
+    if (
+      song.hintLyrics !== undefined
+      && (!Array.isArray(song.hintLyrics)
+        || song.hintLyrics.length > 3
+        || song.hintLyrics.some((hint) => typeof hint !== "string" || !hint.trim()))
+    ) {
+      throw new TypeError(`Catalog entry ${song.id} must declare up to three lyric hints.`);
     }
     if (!Array.isArray(song.featuredArtists) || song.featuredArtists.some((artist) => (
       typeof artist !== "string" || !artist.trim()
@@ -80,22 +98,57 @@ export function validateSongCatalog(value) {
 
   return value.map((song) => ({
     ...song,
-    project: normalizeProject(song.project),
+    project: normalizeProject(song.project, song.title),
+    originType: getSongOriginType(song.title) ?? song.originType ?? null,
     featuredArtistGender: song.featuredArtistGender
       ?? getFeaturedArtistGender(song.featuredArtists),
     favoriteCount: song.favoriteCount ?? null,
     favoriteCountDisplay: song.favoriteCountDisplay?.trim() || null,
+    hintLyrics: [...new Set((song.hintLyrics ?? [])
+      .map((hint) => hint.trim())
+      .filter(Boolean))].slice(0, 3),
   }));
 }
 
-export function normalizeProject(project) {
-  const type = typeof project?.type === "string" ? project.type.trim().toLowerCase() : "";
-  const collectionTypes = new Set(["album", "ep", "ost", "soundtrack", "soundtrack album"]);
+export function normalizeProject(project, songTitle = "") {
+  const sourceProject = getSongProject({ title: songTitle, project });
+  const type = typeof sourceProject?.type === "string"
+    ? sourceProject.type.trim().toLowerCase()
+    : "";
+  const collectionTypes = new Set(["album", "ep", "ost", "live", "soundtrack", "soundtrack album"]);
+  const rawTitle = typeof sourceProject?.title === "string" && sourceProject.title.trim()
+    ? sourceProject.title.trim()
+    : "单曲";
   if (!collectionTypes.has(type)) {
-    return { title: "单曲", type: "single" };
+    const inferredCategory = getSongProjectCategory({
+      title: songTitle,
+      project: {
+        ...sourceProject,
+        title: rawTitle,
+        type,
+      },
+    });
+    const category = inferredCategory === "album" ? "single" : inferredCategory;
+    return {
+      title: category === "single" ? "单曲" : rawTitle,
+      type: "single",
+      category,
+      display: getProjectDisplay({ title: rawTitle, type: "single", category }),
+    };
   }
-  const title = typeof project?.title === "string" && project.title.trim()
-    ? project.title.trim()
-    : "待核验";
-  return { title, type };
+  const title = rawTitle === "单曲" ? "待核验" : rawTitle;
+  const category = getSongProjectCategory({
+    title: songTitle,
+    project: {
+      ...sourceProject,
+      title,
+      type,
+    },
+  });
+  return {
+    title: category === "single" ? "单曲" : title,
+    type,
+    category,
+    display: getProjectDisplay({ title, type, category }),
+  };
 }
