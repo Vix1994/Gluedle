@@ -265,6 +265,17 @@ body.is-booting .app-boot.is-error { border-color: var(--wrong); }
   body[data-game-state] .app-listen-action { display: none; }
   body[data-game-state] .app-header-actions { grid-column: 2; grid-row: 1; }
   body[data-game-state] .app-header-action { min-width: 40px; min-height: 38px; padding: 0 9px; }
+  body[data-game-state][data-mobile-banner="closed"] {
+    --header-height: 0px;
+  }
+  body[data-game-state][data-mobile-banner="closed"] .app-header {
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-100%);
+    transition:
+      transform 220ms var(--ease-out),
+      visibility 0s linear 220ms;
+  }
   .game-shell {
     display: grid;
     grid-template-columns: 1fr;
@@ -303,6 +314,7 @@ body.is-booting .app-boot.is-error { border-color: var(--wrong); }
     border-top: 1px solid var(--line-dark);
     background: rgb(5 5 5 / 96%);
   }
+  body[data-game-state][data-mobile-banner="closed"] .game-shell { margin-top: 6px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

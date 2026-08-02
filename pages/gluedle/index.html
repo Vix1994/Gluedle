@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/src/styles/transitions.css" />
     <script type="module" src="/src/app.js"></script>
   </head>
-  <body class="is-booting" data-game-state="loading" data-attempts="0">
+  <body class="is-booting" data-game-state="loading" data-attempts="0" data-mobile-banner="open">
     <div data-app-header></div>
     <div class="route-view" data-route-view>
       <a class="skip-link" href="#deduction-ledger">跳至推理记录</a>
@@ -139,6 +139,7 @@
         <div class="dialog-inner">
           <button class="dialog-close" type="button" data-close-dialog aria-label="关闭结果">×</button>
           <p class="meta-label">ROUND RESULT</p>
+          <p class="result-outcome" data-result-outcome role="status" aria-live="polite">推理进行中</p>
           <h2 id="result-title">连接完成。</h2>
           <div data-result-summary></div>
           <div class="share-preview" data-share-preview hidden>

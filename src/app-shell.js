@@ -192,7 +192,7 @@ function headerMarkup() {
 function syncDocument(parsed) {
   document.title = parsed.title;
   document.body.className = parsed.body.className;
-  for (const name of ["data-page", "data-game-state", "data-attempts"]) {
+  for (const name of ["data-page", "data-game-state", "data-attempts", "data-mobile-banner"]) {
     const value = parsed.body.getAttribute(name);
     if (value === null) document.body.removeAttribute(name);
     else document.body.setAttribute(name, value);

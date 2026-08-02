@@ -85,6 +85,7 @@ export function mountGluedle() {
       selectedSong = null;
       activeSuggestion = -1;
       elements.submit.disabled = true;
+      if (elements.input.value.trim()) document.body.dataset.mobileBanner = "closed";
       showSuggestions(elements.input.value);
     }, { signal });
     elements.input.addEventListener("focus", () => showSuggestions(elements.input.value), { signal });
@@ -463,6 +464,13 @@ export function mountGluedle() {
 
   function openResultDialog() {
     resetSharePreview();
+    const outcomeState = state.status === "won"
+      ? "won"
+      : state.status === "lost" ? "lost" : "playing";
+    elements.resultOutcome.dataset.state = outcomeState;
+    elements.resultOutcome.textContent = outcomeState === "won"
+      ? "答对了"
+      : outcomeState === "lost" ? "这次没答对" : "推理进行中";
     elements.resultTitle.textContent = state.status === "won"
       ? siteContent.game.successTitle
       : state.status === "lost" ? siteContent.game.failureTitle : "当前推理";
@@ -644,6 +652,7 @@ function collectElements() {
     reset: document.querySelector("#reset-button"),
     helpDialog: document.querySelector("#help-dialog"),
     resultDialog: document.querySelector("#result-dialog"),
+    resultOutcome: document.querySelector("[data-result-outcome]"),
     resultTitle: document.querySelector("#result-title"),
     resultSummary: document.querySelector("[data-result-summary]"),
     resultReset: document.querySelector("[data-result-reset]"),

@@ -391,6 +391,16 @@ test("responsive game ledger exposes every field without horizontal scrolling", 
   assert.match(gameStyles, /\.comparison-cell\[data-direction="down"\]::after/);
   assert.match(gameStyles, /\.song-meta-item\[data-status="near"\]/);
   assert.match(gameStyles, /@media\s*\(max-width:\s*480px\)[\s\S]*?\.comparison-cell\s*\{ height: 52px; \}/);
+  assert.match(gameHtml, /data-result-outcome/);
+  assert.match(gameMain, /resultOutcome\.dataset\.state/);
+  assert.match(gameStyles, /\.result-outcome\[data-state="won"\]/);
+  assert.match(gameStyles, /\.result-outcome\[data-state="lost"\]/);
+  assert.match(gameHtml, /data-mobile-banner="open"/);
+  assert.match(gameMain, /dataset\.mobileBanner\s*=\s*"closed"/);
+  assert.match(
+    gameStyles,
+    /body\[data-game-state="won"\] \.guess-desk,[\s\S]*?body\[data-game-state="lost"\] \.guess-desk \{ display: none; \}/,
+  );
   assert.doesNotMatch(gameStyles, /answer-reveal|answer-details/);
   assert.doesNotMatch(gameMain, /, "live",/);
 });
