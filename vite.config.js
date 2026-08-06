@@ -42,6 +42,7 @@ export default defineConfig({
     fs: { allow: [projectDirectory] },
   },
   build: {
+    cssTarget: "ios15",
     outDir: distDirectory,
     emptyOutDir: true,
     rollupOptions: {
