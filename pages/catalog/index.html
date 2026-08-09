@@ -22,11 +22,21 @@
 
       <main class="catalog-shell" id="catalog-content" tabindex="-1">
         <header class="catalog-hero">
-          <div>
-            <p class="catalog-kicker">GLUEDLE / CATALOG / QQ MUSIC</p>
-            <h1>曲库<span>/</span>索引</h1>
+          <div class="catalog-register-strip" aria-hidden="true">
+            <span>APPENDIX / 06</span>
+            <span>GLUEDLE DATA</span>
+            <span><b data-catalog-total>—</b> ENTRIES</span>
+            <span>CURLEY G / INDEX</span>
           </div>
-          <p class="catalog-intro">把每一首歌放回它的项目分类、语言和创作关系里。<br />搜索、筛选，直接查看当前 JSON 题库。</p>
+          <div class="catalog-title-block">
+            <p class="catalog-kicker">GLUEDLE / CATALOG / QQ MUSIC</p>
+            <h1><span>曲库</span><span aria-hidden="true">/</span><span>索引</span></h1>
+          </div>
+          <div class="catalog-intro-block">
+            <span class="catalog-current-mark" aria-hidden="true"></span>
+            <p class="catalog-intro">把每一首歌放回它的项目分类、语言和创作关系里。搜索、筛选，直接查看当前 JSON 题库。</p>
+            <p class="catalog-boundary">NO AUDIO / METADATA ONLY</p>
+          </div>
         </header>
 
         <section class="catalog-stats" aria-label="曲库统计">
@@ -36,42 +46,48 @@
           <div><span>英文歌曲</span><strong data-catalog-english>—</strong></div>
         </section>
 
-        <section class="catalog-workbench" aria-label="曲库筛选工具">
-          <div class="catalog-search-wrap">
-            <label for="catalog-search">搜索曲名 / 别名 / 专辑</label>
-            <input id="catalog-search" type="search" placeholder="输入关键词" autocomplete="off" />
+        <section class="catalog-workbench" aria-labelledby="catalog-filter-title">
+          <header class="catalog-workbench-head">
+            <p id="catalog-filter-title">FILTER REGISTER</p>
+            <p>01—04 / SEARCH &amp; SORT</p>
+          </header>
+          <div class="catalog-workbench-controls">
+            <div class="catalog-search-wrap">
+              <label for="catalog-search">搜索曲名 / 别名 / 专辑</label>
+              <input id="catalog-search" type="search" placeholder="输入关键词" autocomplete="off" aria-controls="catalog-results" />
+            </div>
+            <label>
+              <span>项目分类</span>
+              <select id="catalog-project" aria-controls="catalog-results">
+                <option value="all">全部分类</option>
+                <option value="single">单曲</option>
+                <option value="film">影视</option>
+                <option value="game">游戏</option>
+                <option value="live">Live</option>
+                <option value="album">实际专辑</option>
+              </select>
+            </label>
+            <label>
+              <span>语言</span>
+              <select id="catalog-language" aria-controls="catalog-results">
+                <option value="all">全部语言</option>
+                <option value="zh">中文</option>
+                <option value="en">英文</option>
+              </select>
+            </label>
+            <label>
+              <span>创作</span>
+              <select id="catalog-credit" aria-controls="catalog-results">
+                <option value="all">全部创作</option>
+                <option value="writing">创作参与</option>
+                <option value="both">词·曲参与</option>
+                <option value="lyrics">词参与</option>
+                <option value="composition">曲参与</option>
+                <option value="none">非创作</option>
+              </select>
+            </label>
+            <button id="catalog-clear" class="catalog-clear" type="button" hidden>清除筛选 ×</button>
           </div>
-          <label>
-            <span>项目分类</span>
-            <select id="catalog-project">
-              <option value="all">全部分类</option>
-              <option value="single">单曲</option>
-              <option value="film">影视</option>
-              <option value="game">游戏</option>
-              <option value="live">Live</option>
-              <option value="album">实际专辑</option>
-            </select>
-          </label>
-          <label>
-            <span>语言</span>
-            <select id="catalog-language">
-              <option value="all">全部语言</option>
-              <option value="zh">中文</option>
-              <option value="en">英文</option>
-            </select>
-          </label>
-          <label>
-            <span>创作</span>
-            <select id="catalog-credit">
-              <option value="all">全部创作</option>
-              <option value="writing">创作参与</option>
-              <option value="both">词·曲参与</option>
-              <option value="lyrics">词参与</option>
-              <option value="composition">曲参与</option>
-              <option value="none">非创作</option>
-            </select>
-          </label>
-          <button id="catalog-clear" class="catalog-clear" type="button" hidden>清除筛选 ×</button>
         </section>
 
         <div class="catalog-list-head">
@@ -80,7 +96,7 @@
         </div>
 
         <p class="catalog-loading" data-catalog-loading role="status">正在读取曲库……</p>
-        <section class="catalog-results" data-catalog-results aria-live="polite" aria-label="曲目列表"></section>
+        <section class="catalog-results" id="catalog-results" data-catalog-results aria-live="polite" aria-label="曲目列表"></section>
         <section class="catalog-empty" data-catalog-empty hidden aria-live="polite">
           <span>NO MATCH</span>
           <h2>没有符合条件的歌曲。</h2>

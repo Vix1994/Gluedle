@@ -1,0 +1,318 @@
+/* CONCEPT / echo orbit */
+body[data-page="concept"] .orbit-hero {
+  position: relative;
+  display: grid;
+  min-height: max(100svh, 820px);
+  place-items: center;
+  padding: calc(var(--header-height) + 56px) var(--page-pad) 76px;
+  overflow: hidden;
+  background: var(--black);
+}
+
+body[data-page="concept"] .orbit-register {
+  position: absolute;
+  top: calc(var(--header-height) + 22px);
+  right: var(--page-pad);
+  left: var(--page-pad);
+  z-index: 8;
+  color: var(--lake);
+}
+
+body[data-page="concept"] .orbit-field {
+  position: absolute;
+  top: 47%;
+  left: 50%;
+  z-index: 1;
+  width: min(114vw, 1540px);
+  aspect-ratio: 2.18;
+  translate: calc(-50% + var(--motion-x)) calc(-50% + var(--motion-y));
+}
+
+body[data-page="concept"] .orbit-field span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(38% + var(--ring, 0) * 16%);
+  aspect-ratio: 2.18;
+  border: 1px solid rgb(135 168 190 / calc(52% - var(--ring, 0) * 7%));
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: orbit-breathe 7s ease-in-out infinite alternate;
+  animation-delay: calc(var(--ring, 0) * -0.75s);
+}
+
+body[data-page="concept"] .orbit-field span:nth-child(2) { --ring: 1; }
+body[data-page="concept"] .orbit-field span:nth-child(3) { --ring: 2; }
+body[data-page="concept"] .orbit-field span:nth-child(4) { --ring: 3; }
+body[data-page="concept"] .orbit-field span:nth-child(5) { --ring: 4; }
+
+body[data-page="concept"] .orbit-image {
+  position: relative;
+  z-index: 2;
+  width: min(44vw, 620px);
+  aspect-ratio: 1.08;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgb(135 168 190 / 44%);
+  background: var(--black);
+  translate: var(--motion-x) var(--motion-y);
+}
+
+body[data-page="concept"] .orbit-image::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    linear-gradient(90deg, rgb(244 243 237 / 15%), transparent 28% 72%, rgb(5 5 5 / 22%)),
+    url("/assets/glue/blue-noise-texture.webp") center / cover;
+  opacity: 0.28;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+body[data-page="concept"] .orbit-image img {
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.66) brightness(1.28);
+  transform: scale(1.08);
+}
+
+body[data-page="concept"] .orbit-title {
+  position: absolute;
+  top: 49%;
+  right: var(--page-pad);
+  left: var(--page-pad);
+  z-index: 5;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+body[data-page="concept"] .orbit-title .page-kicker {
+  color: rgb(244 243 237 / 68%);
+}
+
+body[data-page="concept"] .orbit-title h1 {
+  margin: 18px 0 0;
+  font-size: clamp(5rem, 13vw, 13rem);
+  font-stretch: condensed;
+  font-weight: 620;
+  line-height: 0.67;
+  letter-spacing: -0.098em;
+}
+
+body[data-page="concept"] .orbit-title h1 span {
+  display: block;
+}
+
+body[data-page="concept"] .orbit-title h1 span:last-child {
+  margin-left: 47%;
+  color: var(--lake);
+}
+
+body[data-page="concept"] .orbit-caption {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  z-index: 6;
+  margin: 0;
+  color: rgb(244 243 237 / 55%);
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+body[data-page="concept"] .down-link {
+  position: absolute;
+  right: var(--page-pad);
+  bottom: 34px;
+  z-index: 7;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+  min-width: 210px;
+  min-height: 48px;
+  padding: 10px 0;
+  border-bottom: 1px solid currentColor;
+  text-decoration: none;
+}
+
+body[data-page="concept"] .orbit-type-field,
+body[data-page="glue"] .track-type-field,
+body[data-page="glue"] .game-bridge-type,
+body[data-page="visuals"] .visual-type-field {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  color: var(--lake);
+  font-family: var(--font-display);
+  font-size: clamp(0.62rem, 0.82vw, 0.86rem);
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+}
+
+body[data-page="concept"] .orbit-type-field span,
+body[data-page="glue"] .track-type-field span,
+body[data-page="glue"] .game-bridge-type span {
+  position: absolute;
+  opacity: 0.78;
+  animation: type-drift 8s ease-in-out infinite alternate;
+}
+
+body[data-page="concept"] .orbit-type-field span:nth-child(1) { top: 25%; left: 7%; }
+body[data-page="concept"] .orbit-type-field span:nth-child(2) { top: 31%; left: 31%; }
+body[data-page="concept"] .orbit-type-field span:nth-child(3) { top: 23%; right: 24%; }
+body[data-page="concept"] .orbit-type-field span:nth-child(4) { top: 34%; right: 7%; }
+body[data-page="concept"] .orbit-type-field span:nth-child(5) { top: 54%; left: 4%; }
+body[data-page="concept"] .orbit-type-field span:nth-child(6) { top: 62%; left: 30%; }
+body[data-page="concept"] .orbit-type-field span:nth-child(7) { top: 58%; right: 29%; }
+body[data-page="concept"] .orbit-type-field span:nth-child(8) { top: 67%; right: 5%; }
+
+body[data-page="concept"] .orbit-drops span:nth-child(1) { top: 18%; left: 18%; }
+body[data-page="concept"] .orbit-drops span:nth-child(2) { top: 22%; right: 13%; }
+body[data-page="concept"] .orbit-drops span:nth-child(3) { top: 44%; left: 8%; }
+body[data-page="concept"] .orbit-drops span:nth-child(4) { top: 48%; right: 8%; }
+body[data-page="concept"] .orbit-drops span:nth-child(5) { bottom: 17%; left: 23%; }
+body[data-page="concept"] .orbit-drops span:nth-child(6) { right: 24%; bottom: 14%; }
+
+body[data-page="concept"] .concept-statement {
+  position: relative;
+  display: grid;
+  grid-template-columns: 0.24fr minmax(0, 1.25fr) minmax(270px, 0.62fr);
+  align-items: end;
+  gap: 5vw;
+  min-height: max(100svh, 820px);
+  padding: clamp(140px, 18vw, 240px) var(--page-pad) clamp(90px, 10vw, 150px);
+  overflow: hidden;
+  color: var(--black);
+  background: var(--white-cool);
+}
+
+body[data-page="concept"] .statement-title,
+body[data-page="concept"] .statement-copy,
+body[data-page="concept"] .concept-statement > .page-index {
+  position: relative;
+  z-index: 3;
+}
+
+body[data-page="concept"] .statement-copy {
+  padding: 22px 0 1.2vw 24px;
+  border-top: 1px solid var(--line-light);
+}
+
+body[data-page="concept"] .statement-copy p {
+  margin: 0 0 22px;
+  color: rgb(5 5 5 / 64%);
+  font-size: clamp(1rem, 1.35vw, 1.24rem);
+  line-height: 1.8;
+}
+
+body[data-page="concept"] .statement-mark {
+  position: absolute;
+  right: -0.08em;
+  bottom: -0.24em;
+  z-index: 1;
+  color: rgb(135 168 190 / 24%);
+  font-size: min(48vw, 620px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.14em;
+  pointer-events: none;
+}
+
+body[data-page="concept"] .statement-drops span:nth-child(1) { top: 18%; left: 47%; }
+body[data-page="concept"] .statement-drops span:nth-child(2) { top: 28%; right: 8%; }
+body[data-page="concept"] .statement-drops span:nth-child(3) { bottom: 18%; left: 12%; }
+body[data-page="concept"] .statement-drops span:nth-child(4) { right: 36%; bottom: 10%; }
+
+body[data-page="concept"] .contact-field {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.14fr) minmax(360px, 0.86fr);
+  min-height: max(100svh, 820px);
+  overflow: hidden;
+  background: var(--black);
+}
+
+body[data-page="concept"] .contact-image {
+  position: relative;
+  min-height: max(100svh, 820px);
+  margin: 0;
+  overflow: hidden;
+  background: var(--black);
+}
+
+body[data-page="concept"] .contact-image::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    linear-gradient(90deg, transparent 62%, var(--black)),
+    linear-gradient(180deg, rgb(244 243 237 / 12%), transparent 42%);
+  pointer-events: none;
+}
+
+body[data-page="concept"] .contact-image img {
+  height: 100%;
+  object-fit: cover;
+  object-position: 52% center;
+  filter: grayscale(1) contrast(1.72) brightness(1.22);
+  transform: scale(1.1);
+}
+
+body[data-page="concept"] .contact-copy {
+  position: relative;
+  z-index: 4;
+  align-self: center;
+  padding: clamp(100px, 10vw, 160px) var(--page-pad) clamp(80px, 8vw, 130px) 0;
+}
+
+body[data-page="concept"] .contact-copy h2 {
+  font-size: clamp(3rem, 5.2vw, 6.2rem);
+}
+
+body[data-page="concept"] .motif-list {
+  padding: 0;
+  margin: clamp(54px, 7vw, 96px) 0 0;
+  list-style: none;
+  border-top: 1px solid var(--line-dark);
+}
+
+body[data-page="concept"] .motif-list li {
+  display: grid;
+  grid-template-columns: 42px 1fr auto;
+  align-items: center;
+  gap: 20px;
+  min-height: 78px;
+  border-bottom: 1px solid var(--line-dark);
+}
+
+body[data-page="concept"] .motif-list span,
+body[data-page="concept"] .motif-list small {
+  color: rgb(244 243 237 / 52%);
+  font-family: var(--font-mono);
+  font-size: 0.63rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+}
+
+body[data-page="concept"] .motif-list strong {
+  font-size: clamp(1.15rem, 1.8vw, 1.8rem);
+  font-weight: 560;
+}
+
+body[data-page="concept"] .contact-type-field {
+  position: absolute;
+  top: 12%;
+  right: 2%;
+  left: 47%;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: clamp(14px, 2vw, 34px);
+  color: var(--lake);
+  font-size: clamp(0.6rem, 0.78vw, 0.82rem);
+  font-weight: 700;
+  transform: rotate(-8deg);
+  pointer-events: none;
+}

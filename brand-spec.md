@@ -6,6 +6,27 @@
 
 The runtime images listed below are original AI-generated replacements created for this repository. They are not official artist, label, album, or campaign assets, and their presence does not imply endorsement by any artist, label, or platform.
 
+## Approved visual direction — CONTACT LAKE / 湖面内页
+
+The August 2026 redesign treats the site as an unfolded album booklet rather than a conventional portfolio or card-based product page. The user-supplied campaign images are visual references only; their pixels, watermarks, and social-media marks are not shipped.
+
+### Positioning
+
+- Narrative role: the album story leads; Gluedle is a functional extension of the same visual world.
+- Viewing distance: the desktop composition uses oversized crops and negative space, while mobile keeps body copy and controls readable at close range.
+- Visual temperature: cold, quiet, damp, and experimental rather than glossy or futuristic.
+- Capacity: each editorial viewport carries one primary visual idea; the game may remain information-dense where comparison requires it.
+
+### Confirmed system rules
+
+- Black and cool white occupy roughly 90% of each composition; lake blue is reserved for droplets, orbits, indices, focus, and active states.
+- Sharp cuts and flat image planes replace generic rounded cards, glass surfaces, and decorative elevation.
+- Micro typography behaves like registration marks or dot-matrix metadata. Long Chinese copy remains in a highly legible sans-serif stack.
+- Motion is slow and surface-like: exposure, drift, reveal, and ripple. Reduced-motion users receive the same hierarchy without continuous movement.
+- Existing anonymous, watermark-free runtime artwork remains the only imagery used by the application.
+
+The user approved the v0 direction for full-site implementation. The system applies to the home page, Concept, Visuals, Glue, Catalog, every Gluedle interaction state, and the exported share card; semantic game colors remain confined to feedback marks and result cells.
+
 ## Asset provenance and manifest
 
 - Source status: newly generated project artwork; no pixels copied from the untracked reference material.
@@ -13,7 +34,7 @@ The runtime images listed below are original AI-generated replacements created f
 - Untracked references: `visual-previews-v2/` remains untouched and is not consumed at runtime.
 - Runtime directory: `public/assets/glue/`
 - Output constraints: anonymous subjects; no celebrity likeness; no text, letters, numbers, logos, watermark, signature, social-media mark, brand mark, or readable symbols.
-- File format: JPEG, resized to the existing runtime dimensions so layout contracts remain stable.
+- File format: WebP, resized to the existing runtime dimensions so layout contracts remain stable.
 
 | Runtime asset | Dimensions | Intended prototype role |
 | --- | --- | --- |
@@ -61,8 +82,8 @@ Font names are direction tokens, not bundled font licenses. Any production build
 ### Layout, surface, and motion
 
 - Base spacing: `8px`
-- Compact radius: `12px`
-- Panel radius: `28px`
+- Structural radius: `0px`; panels, controls, images, and sheets use sharp cuts
+- Circular geometry is reserved for orbit lines, ripple marks, registration dots, and status seals
 - Reading measure: `62ch`
 - Grain opacity: `0.08–0.16`
 - Image treatment: hard crops, overexposed whites, dark negative space, and restrained editorial overlap

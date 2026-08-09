@@ -179,6 +179,7 @@ export function renderShareCard(canvas, model) {
       answerY + 88,
       answerWidth,
       22,
+      2,
     );
     context.fillStyle = "#a7aaa8";
     drawWrappedText(
@@ -188,14 +189,15 @@ export function renderShareCard(canvas, model) {
       answerY + 134,
       answerWidth,
       22,
+      2,
     );
-    context.fillText(`创作：${model.song.credits}`, answerX, answerY + 180);
+    drawWrappedText(context, `创作：${model.song.credits}`, answerX, answerY + 180, answerWidth, 22, 1);
     setFont(context, 700, 20);
     context.fillStyle = "#87a8be";
     context.fillText("SCAN TO PLAY", answerX, answerY + 222);
     setFont(context, 500, 17);
     context.fillStyle = "#a7aaa8";
-    drawWrappedText(context, displayUrl(model.canonicalUrl), answerX, answerY + 250, answerWidth, 23);
+    drawWrappedText(context, displayUrl(model.canonicalUrl), answerX, answerY + 250, answerWidth, 23, 2);
   } else {
     setFont(context, 700, 30);
     context.fillStyle = "#87a8be";
@@ -206,12 +208,12 @@ export function renderShareCard(canvas, model) {
     context.fillText("也能猜到吗？", copyX, copyY + 124);
     setFont(context, 500, 22);
     context.fillStyle = "#a7aaa8";
-    drawWrappedText(context, displayUrl(model.canonicalUrl), copyX, copyY + 178, 470, 31);
+    drawWrappedText(context, displayUrl(model.canonicalUrl), copyX, copyY + 178, 470, 31, 2);
   }
 
   const { legendY } = layout;
   let legendX = 72;
-  for (const status of ["match", "near", "miss"]) {
+  for (const status of ["match", "near", "miss", "unknown"]) {
     const style = STATUS_STYLE[status];
     context.fillStyle = style.fill;
     context.fillRect(legendX, legendY - 20, 28, 28);
@@ -270,32 +272,51 @@ function formatCredits(credits) {
 }
 
 function setFont(context, weight, size) {
-  context.font = `${weight} ${size}px Archivo, "Noto Sans SC", sans-serif`;
+  context.font = `${weight} ${size}px Archivo, "Noto Sans SC", "Microsoft YaHei", sans-serif`;
 }
 
-function drawWrappedText(context, text, x, y, maxWidth, lineHeight) {
-  const words = text.split(/(?=[/.])/u);
-  let line = "";
-  let lineY = y;
-  for (const word of words) {
-    const candidate = line + word;
-    if (line && context.measureText(candidate).width > maxWidth) {
-      context.fillText(line, x, lineY);
-      line = word;
-      lineY += lineHeight;
-    } else line = candidate;
+function drawWrappedText(context, text, x, y, maxWidth, lineHeight, maxLines = 3) {
+  const glyphs = [...String(text).trim()];
+  const lines = [];
+  let cursor = 0;
+  while (cursor < glyphs.length && lines.length < maxLines) {
+    let line = "";
+    while (cursor < glyphs.length) {
+      const candidate = line + glyphs[cursor];
+      if (line && context.measureText(candidate).width > maxWidth) break;
+      line = candidate;
+      cursor += 1;
+    }
+    const isLastLine = lines.length === maxLines - 1;
+    const hasOverflow = cursor < glyphs.length;
+    if (isLastLine && hasOverflow) {
+      line = fitWithEllipsis(context, `${line}${glyphs.slice(cursor).join("")}`, maxWidth);
+      cursor = glyphs.length;
+    }
+    lines.push(line.trimEnd());
   }
-  if (line) context.fillText(line, x, lineY);
+  lines.forEach((value, index) => context.fillText(value, x, y + index * lineHeight));
+}
+
+function fitWithEllipsis(context, text, maxWidth) {
+  const source = text.trim();
+  if (context.measureText(source).width <= maxWidth) return source;
+  const glyphs = [...source];
+  while (glyphs.length > 1 && context.measureText(`${glyphs.join("")}…`).width > maxWidth) glyphs.pop();
+  return `${glyphs.join("").trimEnd()}…`;
 }
 
 function drawFittedText(context, text, x, y, maxWidth, size, minSize) {
   let fontSize = size;
-  while (fontSize > minSize) {
+  setFont(context, 700, fontSize);
+  while (fontSize > minSize && context.measureText(text).width > maxWidth) {
+    fontSize = Math.max(minSize, fontSize - 2);
     setFont(context, 700, fontSize);
-    if (context.measureText(text).width <= maxWidth) break;
-    fontSize -= 2;
   }
-  context.fillText(text, x, y);
+  const fittedText = context.measureText(text).width <= maxWidth
+    ? text
+    : fitWithEllipsis(context, text, maxWidth);
+  context.fillText(fittedText, x, y);
 }
 
 function displayUrl(url) {

@@ -1,0 +1,353 @@
+/* VISUALS / contact-sheet booklet */
+body[data-page="visuals"] .visual-collage {
+  position: relative;
+  min-height: 1240px;
+  padding: calc(var(--header-height) + 58px) var(--page-pad) 90px;
+  overflow: hidden;
+  color: var(--black);
+  background: var(--white-cool);
+}
+
+body[data-page="visuals"] .visual-collage::before {
+  position: absolute;
+  inset: 38% 0 0;
+  z-index: 0;
+  content: "";
+  background: var(--black);
+}
+
+body[data-page="visuals"] .visual-register {
+  position: absolute;
+  top: calc(var(--header-height) + 20px);
+  right: var(--page-pad);
+  left: var(--page-pad);
+  z-index: 9;
+  color: var(--lake-ink);
+}
+
+body[data-page="visuals"] .visual-heading {
+  position: relative;
+  z-index: 9;
+  display: grid;
+  grid-template-columns: 1fr minmax(260px, 0.44fr);
+  align-items: end;
+  gap: 8vw;
+}
+
+body[data-page="visuals"] .visual-heading h1 {
+  grid-column: 1;
+  margin: 24px 0 0;
+  font-size: clamp(5rem, 13vw, 13rem);
+  font-stretch: condensed;
+  font-weight: 640;
+  line-height: 0.68;
+  letter-spacing: -0.098em;
+}
+
+body[data-page="visuals"] .visual-heading > p:last-child {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  margin: 0;
+  padding-top: 22px;
+  border-top: 1px solid var(--line-light);
+  color: rgb(5 5 5 / 62%);
+  font-size: clamp(1rem, 1.3vw, 1.18rem);
+  line-height: 1.8;
+}
+
+body[data-page="visuals"] .visual-frame {
+  position: absolute;
+  z-index: 4;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgb(135 168 190 / 46%);
+  background: var(--black);
+  translate: var(--motion-x) var(--motion-y);
+}
+
+body[data-page="visuals"] .visual-frame img {
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.54) brightness(1.2);
+  transition: filter 750ms ease, transform 1100ms var(--ease-out);
+}
+
+body[data-page="visuals"] .visual-frame:hover img {
+  filter: grayscale(1) contrast(1.7) brightness(1.38);
+  transform: scale(1.018);
+}
+
+body[data-page="visuals"] .visual-frame figcaption {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  padding: 7px 9px;
+  color: var(--white);
+  border: 1px solid rgb(244 243 237 / 38%);
+  background: rgb(5 5 5 / 84%);
+  font-family: var(--font-mono);
+  font-size: 0.59rem;
+  letter-spacing: 0.07em;
+}
+
+body[data-page="visuals"] .visual-frame--detail {
+  top: 36%;
+  left: var(--page-pad);
+  width: 31%;
+  height: 37%;
+}
+
+body[data-page="visuals"] .visual-frame--detail img {
+  object-position: center 47%;
+}
+
+body[data-page="visuals"] .visual-frame--portrait {
+  top: 27%;
+  right: 0;
+  width: 49%;
+  height: 54%;
+}
+
+body[data-page="visuals"] .visual-frame--portrait img {
+  object-position: center 19%;
+}
+
+body[data-page="visuals"] .visual-frame--orbit {
+  right: 7%;
+  bottom: 4%;
+  width: 27%;
+  aspect-ratio: 1;
+}
+
+body[data-page="visuals"] .visual-type {
+  position: absolute;
+  bottom: 7%;
+  left: var(--page-pad);
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  color: var(--white);
+  font-size: clamp(4.3rem, 9vw, 9rem);
+  font-stretch: condensed;
+  font-weight: 650;
+  line-height: 0.68;
+  letter-spacing: -0.09em;
+}
+
+body[data-page="visuals"] .visual-type span:nth-child(2) {
+  color: var(--lake);
+}
+
+body[data-page="visuals"] .visual-type-field {
+  top: 33%;
+  right: -4%;
+  bottom: auto;
+  left: 35%;
+  z-index: 7;
+  display: grid;
+  grid-template-columns: repeat(8, auto);
+  gap: clamp(12px, 2vw, 32px);
+  transform: rotate(-9deg);
+  transform-origin: right center;
+}
+
+body[data-page="visuals"] .visual-type-field span {
+  white-space: nowrap;
+}
+
+body[data-page="visuals"] .lake-shape {
+  position: absolute;
+  bottom: -2%;
+  left: 25%;
+  z-index: 2;
+  width: 40%;
+  height: 34%;
+}
+
+body[data-page="visuals"] .lake-shape span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 54%;
+  border-radius: 50%;
+  background: var(--lake);
+}
+
+body[data-page="visuals"] .lake-shape span:nth-child(1) { top: 0; }
+body[data-page="visuals"] .lake-shape span:nth-child(2) { top: 24%; left: 8%; width: 84%; }
+body[data-page="visuals"] .lake-shape span:nth-child(3) { top: 47%; left: 2%; width: 96%; }
+
+body[data-page="visuals"] .collage-note {
+  position: absolute;
+  right: 34%;
+  bottom: 8%;
+  z-index: 8;
+  margin: 0;
+  color: rgb(5 5 5 / 66%);
+}
+
+body[data-page="visuals"] .image-sequence {
+  padding: clamp(120px, 15vw, 210px) var(--page-pad) clamp(80px, 10vw, 150px);
+  color: var(--white);
+  background: var(--black);
+  overflow: hidden;
+}
+
+body[data-page="visuals"] .sequence-head {
+  display: grid;
+  grid-template-columns: 0.26fr minmax(0, 1.2fr) minmax(250px, 0.5fr);
+  align-items: end;
+  gap: 4vw;
+  min-height: 56svh;
+}
+
+body[data-page="visuals"] .sequence-head h2 {
+  font-size: clamp(3rem, 5.6vw, 6.8rem);
+}
+
+body[data-page="visuals"] .sequence-head > p:last-child {
+  margin: 0;
+  padding-top: 22px;
+  border-top: 1px solid var(--line-dark);
+  color: rgb(244 243 237 / 60%);
+  line-height: 1.8;
+}
+
+body[data-page="visuals"] .sequence-grid {
+  display: block;
+  margin-top: clamp(80px, 10vw, 140px);
+}
+
+body[data-page="visuals"] .sequence-item {
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-height: max(82svh, 680px);
+  margin: 0;
+  padding: clamp(64px, 8vw, 120px) 0;
+  overflow: hidden;
+}
+
+body[data-page="visuals"] .sequence-item::before {
+  position: absolute;
+  top: 7%;
+  left: 0;
+  z-index: 0;
+  content: attr(data-sequence-index);
+  color: rgb(135 168 190 / 14%);
+  font-size: clamp(12rem, 34vw, 34rem);
+  font-weight: 760;
+  line-height: 0.72;
+  letter-spacing: -0.12em;
+  pointer-events: none;
+}
+
+body[data-page="visuals"] .sequence-item img {
+  position: relative;
+  z-index: 1;
+  width: 84%;
+  height: min(68svh, 760px);
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.52) brightness(1.16);
+  transition: filter 700ms ease, transform 1100ms var(--ease-out);
+}
+
+body[data-page="visuals"] .sequence-item:hover img {
+  filter: grayscale(1) contrast(1.7) brightness(1.32);
+  transform: scale(1.012);
+}
+
+body[data-page="visuals"] .sequence-item figcaption {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  width: 84%;
+  padding-top: 12px;
+  border-top: 1px solid var(--line-dark);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.07em;
+}
+
+body[data-page="visuals"] .sequence-item:nth-child(2n) img,
+body[data-page="visuals"] .sequence-item:nth-child(2n) figcaption {
+  width: 62%;
+  margin-left: auto;
+}
+
+body[data-page="visuals"] .sequence-item:nth-child(2) img {
+  height: min(78svh, 860px);
+  object-position: 45% 78%;
+}
+
+body[data-page="visuals"] .sequence-item:nth-child(3) img {
+  width: 72%;
+  height: min(70svh, 760px);
+  margin-left: 9%;
+  object-position: 54% center;
+}
+
+body[data-page="visuals"] .sequence-item:nth-child(3) figcaption {
+  width: 72%;
+  margin-left: 9%;
+}
+
+body[data-page="visuals"] .sequence-item:nth-child(4) img,
+body[data-page="visuals"] .sequence-item:nth-child(4) figcaption {
+  width: 44%;
+  margin-right: 12%;
+}
+
+body[data-page="visuals"] .sequence-item:nth-child(4) img {
+  height: min(56svh, 620px);
+  filter: saturate(0.35) contrast(1.34) brightness(0.72);
+}
+
+body[data-page="visuals"] .sequence-item:nth-child(5) img,
+body[data-page="visuals"] .sequence-item:nth-child(5) figcaption {
+  width: 76%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+body[data-page="visuals"] .sequence-item:nth-child(5) img {
+  height: min(76svh, 850px);
+  object-fit: contain;
+}
+
+body[data-page="visuals"] .sequence-item:nth-child(6)::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 0;
+  width: 92%;
+  aspect-ratio: 2.1;
+  border: 1px solid rgb(135 168 190 / 55%);
+  border-radius: 50%;
+  content: "";
+  transform: translate(-50%, -50%);
+}
+
+body[data-page="visuals"] .sequence-item:nth-child(6) img,
+body[data-page="visuals"] .sequence-item:nth-child(6) figcaption {
+  width: 48%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+body[data-page="visuals"] .sequence-item:nth-child(6) img {
+  height: min(66svh, 720px);
+  object-position: center;
+}
+
+body[data-page="visuals"] .next-page--blue::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  background: url("/assets/glue/blue-noise-texture.webp") center / cover;
+  opacity: 0.12;
+  mix-blend-mode: screen;
+}

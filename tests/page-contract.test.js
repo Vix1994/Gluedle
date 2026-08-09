@@ -98,6 +98,13 @@ test("all six routes keep a persistent tab path, including the direct catalog ro
   assert.match(appShell, /link\.setAttribute\("aria-current", "page"\)/);
 });
 
+test("popstate reloads during an active transition before same-route refresh handling", () => {
+  const popstateHandler = appShell.slice(appShell.indexOf('window.addEventListener("popstate"'));
+  assert.match(popstateHandler, /getPopstateAction\(\{/);
+  assert.ok(popstateHandler.indexOf('action === "reload"') < popstateHandler.indexOf('action === "refresh"'));
+  assert.match(popstateHandler, /window\.location\.reload\(\)/);
+});
+
 test("the dev and preview servers accept page routes without a trailing slash", () => {
   assert.match(viteConfig, /rewriteNoSlashRoute/);
   assert.match(viteConfig, /configureServer\(server\)/);
@@ -343,7 +350,7 @@ test("game entry synchronizes progress, reloads JSON data, and randomizes each r
   assert.match(gameMain, /activeSuggestion\s*=\s*0;[\s\S]*?updateActiveSuggestion\(\)/);
   assert.match(gameMain, /selectSuggestion\(song,\s*\{\s*submit:\s*true\s*\}\)/);
 const suggestionsSource = extractFunction(gameMain, "showSuggestions");
-assert.match(suggestionsSource, /if\s*\(\s*!query\.trim\(\)\s*\)\s*\{\s*closeSuggestions\(\);\s*return;\s*\}/);
+assert.match(suggestionsSource, /if\s*\(\s*!query\.trim\(\)\s*\)\s*\{[\s\S]*?closeSuggestions\(\);[\s\S]*?return;\s*\}/);
 assert.match(suggestionsSource, /songs\.filter\([\s\S]*?!guessedIds\.has\(song\.id\)/);
 
   const finishBootSource = extractFunction(gameMain, "finishBoot");
@@ -416,6 +423,28 @@ test("result states use high-contrast colors plus non-color marks", () => {
   assert.match(gameStyles, /font:\s*700 var\(--cell-value-size\)/);
   assert.doesNotMatch(gameStyles, /\.comparison-cell\[data-field="(?:song|year|language|featuredArtistGender|credits)"\]\s*\{\s*--cell-value-size/);
   assert.match(gameMain, /createSongMetaItem\(attempt\.comparison\.year, "year", "发行日"\)/);
+});
+
+test("game lifecycle exposes recovery, dialog cleanup, mobile navigation, and inline share status", () => {
+  for (const hook of [
+    "data-retry-game",
+    "data-mobile-banner-toggle",
+    "data-share-status",
+    "data-share-retry",
+    "data-help-close-label",
+  ]) assert.match(gameHtml, new RegExp(hook));
+  assert.match(gameHtml, /class="empty-row"><td colspan="8"/);
+  assert.match(gameMain, /dialog\.addEventListener\("close", \(\) => finalizeDialogClose\(dialog\)/);
+  assert.match(gameMain, /function finalizeDialogClose\(dialog\)/);
+  assert.match(gameMain, /document\.body\.dataset\.mobileBanner = "open"/);
+  assert.match(gameMain, /function comparisonStatusMark\(status\)/);
+  assert.match(gameMain, /setShareStatus\("busy"/);
+  assert.match(gameMain, /if \(elements\.feedback\.textContent === noResultsMessage\) \{\s*setFeedback\(defaultFeedbackMessage\)/);
+  assert.match(gameMain, /document\.fonts\.load\('500 22px "Noto Sans SC"'\)/);
+  assert.match(gameStyles, /\.suggestion-empty\s*\{/);
+  assert.match(gameStyles, /\.share-status\[data-state="error"\]/);
+  assert.match(gameStyles, /body\[data-game-state="won"\][\s\S]*?var\(--correct\)/);
+  assert.match(gameStyles, /@media \(max-width: 480px\)[\s\S]*?\.ledger-actions \.secondary-button \{ min-height: 44px/);
 });
 
 test("game visuals reuse the album image language and restrained home-page tokens", () => {

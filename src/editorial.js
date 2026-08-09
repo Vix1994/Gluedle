@@ -61,9 +61,19 @@ function setupPointerMotion() {
     const x = (event.clientX / window.innerWidth - 0.5) * 2;
     const y = (event.clientY / window.innerHeight - 0.5) * 2;
     fields.forEach((field, index) => {
-      const depth = index % 2 === 0 ? 1 : -0.65;
+      const configuredDepth = Number.parseFloat(field.dataset.motionDepth ?? "");
+      const depth = Number.isFinite(configuredDepth)
+        ? configuredDepth
+        : index % 2 === 0 ? 1 : -0.65;
       field.style.setProperty("--motion-x", `${x * 10 * depth}px`);
       field.style.setProperty("--motion-y", `${y * 8 * depth}px`);
+    });
+  }, { passive: true, signal: abortController.signal });
+
+  document.documentElement.addEventListener("pointerleave", () => {
+    fields.forEach((field) => {
+      field.style.setProperty("--motion-x", "0px");
+      field.style.setProperty("--motion-y", "0px");
     });
   }, { passive: true, signal: abortController.signal });
 }

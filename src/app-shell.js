@@ -11,6 +11,11 @@ const NAV_ITEMS = [...ROUTES]
   .filter(([, route]) => route.nav !== false)
   .map(([href, route]) => ({ href, label: route.label }));
 
+export function getPopstateAction({ navigating, destinationPath, activePath }) {
+  if (navigating) return "reload";
+  return destinationPath === activePath ? "refresh" : "swap";
+}
+
 export function createAppShell(mountController) {
   const host = document.querySelector("[data-app-header]");
   let routeView = document.querySelector("[data-route-view]");
@@ -21,22 +26,31 @@ export function createAppShell(mountController) {
   const header = host.querySelector("[data-app-header-element]");
   const action = host.querySelector("[data-app-action]");
   const progress = host.querySelector("[data-app-progress]");
+  const routeFolio = host.querySelector("[data-app-route-index]");
+  const routeLabel = host.querySelector("[data-app-route-label]");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   let currentCleanup = () => {};
   let navigating = false;
+  let activePath;
 
   const normalizePath = (pathname) => {
     if (pathname === "/") return "/";
     return pathname.endsWith("/") ? pathname : `${pathname}/`;
   };
 
+  activePath = normalizePath(window.location.pathname);
+
   const currentRoute = () => ROUTES.get(normalizePath(window.location.pathname)) ?? ROUTES.get("/");
 
   const updateHeader = () => {
     const pathname = normalizePath(window.location.pathname);
     const route = ROUTES.get(pathname) ?? ROUTES.get("/");
+    const routePath = ROUTES.has(pathname) ? pathname : "/";
+    const folio = [...ROUTES.keys()].indexOf(routePath) + 1;
     header.classList.toggle("is-paper", route.paper === true);
     header.classList.toggle("is-scrolled", window.scrollY > 20);
+    routeFolio.textContent = String(folio).padStart(2, "0");
+    routeLabel.textContent = route.label.toUpperCase();
     host.querySelectorAll(".app-nav a").forEach((link) => {
       const isCurrent = normalizePath(new URL(link.href).pathname) === pathname;
       if (isCurrent) link.setAttribute("aria-current", "page");
@@ -112,6 +126,7 @@ export function createAppShell(mountController) {
         routeView = nextView;
         syncDocument(parsed);
         if (push) history.pushState({}, "", destination.href);
+        activePath = pathname;
         window.scrollTo({ top: 0, left: 0, behavior: "auto" });
         activateController();
         document.querySelector("[data-route-view] main")?.focus({ preventScroll: true });
@@ -161,7 +176,24 @@ export function createAppShell(mountController) {
     navigate("/gluedle/");
   });
 
-  window.addEventListener("popstate", () => void swapRoute(new URL(window.location.href), false));
+  window.addEventListener("popstate", () => {
+    const destination = new URL(window.location.href);
+    const action = getPopstateAction({
+      navigating,
+      destinationPath: normalizePath(destination.pathname),
+      activePath,
+    });
+    if (action === "reload") {
+      window.location.reload();
+      return;
+    }
+    if (action === "refresh") {
+      updateHeader();
+      window.requestAnimationFrame(updateProgress);
+      return;
+    }
+    void swapRoute(destination, false);
+  });
   window.addEventListener("scroll", updateProgress, { passive: true });
   activateController();
 
@@ -169,10 +201,25 @@ export function createAppShell(mountController) {
 }
 
 function headerMarkup() {
-  const links = NAV_ITEMS.map(({ href, label }) => `<a href="${href}">${label}</a>`).join("");
+  const links = NAV_ITEMS.map(({ href, label }, index) => `
+    <a href="${href}" data-route-index="${String(index + 1).padStart(2, "0")}">
+      <span>${label}</span>
+    </a>
+  `).join("");
   return `
     <header class="app-header" data-app-header-element>
-      <a class="app-wordmark" href="/" aria-label="GLUE 首页">GLUE</a>
+      <div class="app-register">
+        <span class="app-register-number" aria-hidden="true">01</span>
+        <a class="app-wordmark" href="/" aria-label="GLUE 首页">GLUE</a>
+      </div>
+      <div class="app-route-status" aria-hidden="true">
+        <span class="app-route-status-kicker">CURLEY G / CURRENT</span>
+        <span class="app-route-status-value">
+          <span data-app-route-index>01</span>
+          <span class="app-route-status-slash">/</span>
+          <span data-app-route-label>GLUE</span>
+        </span>
+      </div>
       <nav class="app-nav" aria-label="专辑页面">${links}</nav>
       <div class="app-header-actions">
         <a

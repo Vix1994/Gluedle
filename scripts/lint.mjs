@@ -141,7 +141,7 @@ if (
 
 if (
   !suggestionsSource
-  || !/if\s*\(\s*!query\.trim\(\)\s*\)\s*\{\s*closeSuggestions\(\);\s*return;\s*\}/.test(suggestionsSource)
+  || !/if\s*\(\s*!query\.trim\(\)\s*\)\s*\{[\s\S]*?closeSuggestions\(\);[\s\S]*?return;\s*\}/.test(suggestionsSource)
   || !/songs\.filter\([\s\S]*?!guessedIds\.has\(song\.id\)[\s\S]*?\)/.test(suggestionsSource)
 ) {
   errors.push("src/gluedle.js: empty input must close suggestions and typed search must exclude guessed songs");

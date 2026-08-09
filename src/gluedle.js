@@ -21,6 +21,7 @@ export function mountGluedle() {
   const { signal } = abortController;
   const elements = collectElements();
   const noResultsMessage = "没有找到可选歌曲，请换一个关键词。";
+  const defaultFeedbackMessage = "输入歌名并从候选中选择，推理记录会一直保留在中间。";
   let songs = [];
   let answer = null;
   let state = null;
@@ -36,6 +37,8 @@ export function mountGluedle() {
   let shareBlob = null;
   let shareFilename = "";
 
+  bindDialogs();
+  bindPersistentActions();
   void initialize();
 
   async function initialize() {
@@ -46,7 +49,6 @@ export function mountGluedle() {
       bindSearch();
       bindMobileComposer();
       bindGameActions();
-      bindDialogs();
       startRound();
       finishBoot();
     } catch (error) {
@@ -65,6 +67,7 @@ export function mountGluedle() {
     revealedHintCount = 0;
     roundNumber += 1;
     selectedSong = null;
+    document.body.dataset.mobileBanner = "open";
     resetSharePreview();
     elements.input.value = "";
     elements.hintStack.replaceChildren();
@@ -72,7 +75,7 @@ export function mountGluedle() {
     closeSuggestions();
     hydrateContent();
     renderGame();
-    setFeedback("输入歌名并从候选中选择，推理记录会一直保留在中间。 ");
+    setFeedback(defaultFeedbackMessage);
   }
 
   function hydrateContent() {
@@ -85,6 +88,7 @@ export function mountGluedle() {
       selectedSong = null;
       activeSuggestion = -1;
       elements.submit.disabled = true;
+      elements.input.setAttribute("aria-invalid", "false");
       if (elements.input.value.trim()) document.body.dataset.mobileBanner = "closed";
       showSuggestions(elements.input.value);
     }, { signal });
@@ -128,6 +132,9 @@ export function mountGluedle() {
 
     if (!query.trim()) {
       closeSuggestions();
+      if (elements.feedback.textContent === noResultsMessage) {
+        setFeedback(defaultFeedbackMessage);
+      }
       return;
     }
 
@@ -138,8 +145,16 @@ export function mountGluedle() {
     elements.suggestions.replaceChildren();
 
     if (!suggestionSongs.length) {
-      closeSuggestions();
-      if (query.trim()) setFeedback(noResultsMessage, true);
+      const empty = document.createElement("li");
+      empty.className = "suggestion-empty";
+      empty.role = "option";
+      empty.ariaDisabled = "true";
+      empty.textContent = noResultsMessage;
+      elements.suggestions.append(empty);
+      elements.suggestions.hidden = false;
+      elements.input.setAttribute("aria-expanded", "true");
+      elements.input.removeAttribute("aria-activedescendant");
+      setFeedback(noResultsMessage, true);
       return;
     }
     if (elements.feedback.textContent === noResultsMessage) {
@@ -220,6 +235,16 @@ export function mountGluedle() {
     activeSuggestion = -1;
   }
 
+  function bindPersistentActions() {
+    elements.retry.addEventListener("click", () => window.location.reload(), { signal });
+    elements.mobileBannerToggle.addEventListener("click", () => {
+      document.body.dataset.mobileBanner = "open";
+      window.requestAnimationFrame(() => {
+        document.querySelector(".app-wordmark")?.focus({ preventScroll: true });
+      });
+    }, { signal });
+  }
+
   function bindGameActions() {
     elements.form.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -256,6 +281,7 @@ export function mountGluedle() {
     }, { signal });
     elements.shareConfirm.addEventListener("click", () => void sharePreparedImage(), { signal });
     elements.shareDownload.addEventListener("click", downloadPreparedImage, { signal });
+    elements.shareRetry.addEventListener("click", () => void prepareSharePreview(), { signal });
     elements.hintButton.addEventListener("click", revealNextHint, { signal });
     const resetRound = () => {
       closeDialog(elements.resultDialog);
@@ -326,6 +352,7 @@ export function mountGluedle() {
 
   function appendSongComparisonCell(row, song, attempt, songStatus) {
     const cell = document.createElement("td");
+    const statusMark = document.createElement("span");
     const title = document.createElement("span");
     const metadata = document.createElement("div");
     const releaseDate = createSongMetaItem(attempt.comparison.year, "year", "发行日");
@@ -340,11 +367,14 @@ export function mountGluedle() {
       "aria-label",
       `歌曲：${song.title}，发行日：${releaseLabel}，时长：${durationLabel}`,
     );
+    statusMark.className = "cell-status-mark";
+    statusMark.setAttribute("aria-hidden", "true");
+    statusMark.textContent = comparisonStatusMark(songStatus);
     title.className = "cell-value song-title";
     title.textContent = song.title;
     metadata.className = "song-meta";
     metadata.append(releaseDate, duration);
-    cell.append(title, metadata);
+    cell.append(statusMark, title, metadata);
     row.append(cell);
   }
 
@@ -356,8 +386,16 @@ export function mountGluedle() {
     });
     const unavailable = hintOrder.length === 0;
     const disabled = unavailable || state?.status !== "playing" || !status.hasAvailableHint;
+    const hintState = unavailable
+      ? "unavailable"
+      : state?.status !== "playing"
+        ? "closed"
+        : status.hasAvailableHint
+          ? "available"
+          : status.hasMoreHints ? "locked" : "exhausted";
 
     elements.hintButton.disabled = disabled;
+    elements.hintButton.dataset.hintState = hintState;
     elements.hintButton.classList.toggle("is-available", !disabled && status.hasAvailableHint);
     if (unavailable) {
       elements.hintButton.textContent = "本题暂无歌词提示";
@@ -405,6 +443,7 @@ export function mountGluedle() {
     const directionMark = comparison.direction === "up"
       ? "▲"
       : comparison.direction === "down" ? "▼" : "";
+    const statusMark = comparisonStatusMark(comparison.status);
     item.className = "song-meta-item";
     item.dataset.field = field;
     item.dataset.status = comparison.status;
@@ -413,7 +452,7 @@ export function mountGluedle() {
       "aria-label",
       `${label}：${formattedValue}${directionMark ? ` ${directionMark}` : ""}，${comparisonAccessibilityHelper(comparison)}`,
     );
-    item.textContent = directionMark ? `${formattedValue} ${directionMark}` : formattedValue;
+    item.textContent = `${statusMark} ${formattedValue}${directionMark ? ` ${directionMark}` : ""}`;
     return item;
   }
 
@@ -456,6 +495,7 @@ export function mountGluedle() {
     );
     value.className = "cell-value";
     helper.className = "cell-direction";
+    helper.setAttribute("aria-hidden", "true");
     value.textContent = formattedValue;
     helper.textContent = helperText;
     cell.append(value, helper);
@@ -468,6 +508,7 @@ export function mountGluedle() {
       ? "won"
       : state.status === "lost" ? "lost" : "playing";
     elements.resultOutcome.dataset.state = outcomeState;
+    elements.resultDialog.dataset.outcome = outcomeState;
     elements.resultOutcome.textContent = outcomeState === "won"
       ? "答对了"
       : outcomeState === "lost" ? "这次没答对" : "推理进行中";
@@ -476,6 +517,7 @@ export function mountGluedle() {
       : state.status === "lost" ? siteContent.game.failureTitle : "当前推理";
     elements.resultSummary.replaceChildren();
     const outcome = document.createElement("p");
+    outcome.className = "result-summary-copy";
     outcome.textContent = state.status === "won"
       ? `你用 ${state.attempts.length} / ${MAX_ATTEMPTS} 次找到了「${answer.title}」。`
       : state.status === "lost"
@@ -488,8 +530,14 @@ export function mountGluedle() {
   async function prepareSharePreview() {
     if (!state.attempts.length || isSharing) return;
     isSharing = true;
+    shareBlob = null;
+    shareFilename = "";
+    elements.sharePreview.hidden = true;
+    setShareStatus("busy", "正在把本轮推理排成一张 1080 × 1350 的分享内页。");
     setShareButtonsBusy(true);
     try {
+      await ensureShareFonts();
+      if (signal.aborted) return;
       const model = buildShareCardModel({
         roundLabel: `ROUND ${String(roundNumber).padStart(2, "0")}`,
         state,
@@ -500,10 +548,12 @@ export function mountGluedle() {
       shareBlob = await canvasToBlob(elements.shareCanvas);
       shareFilename = `gluedle-round-${roundNumber}.png`;
       elements.sharePreview.hidden = false;
-      showToast("结果图片已生成，可选择分享或保存");
+      setShareStatus("ready", "结果图片已生成，可以分享或保存。");
     } catch (error) {
-      setFeedback("结果图片生成失败，请稍后再试。", true);
-      showToast("图片生成失败，请稍后再试");
+      if (signal.aborted) return;
+      setShareStatus("error", "图片生成失败。请重试，或稍后重新打开结果页。");
+      setFeedback("结果图片生成失败，请稍后再试。", true, { inputError: false });
+      showToast("图片生成失败，请重试", "error");
     } finally {
       isSharing = false;
       setShareButtonsBusy(false);
@@ -529,15 +579,21 @@ export function mountGluedle() {
       }
       if (canShareFiles) {
         await navigator.share({ files: [file], title: "GLUEDLE 随机歌曲推理" });
-        showToast("分享面板已打开");
+        setShareStatus("shared", "分享操作已完成；图片仍可继续保存。");
+        showToast("分享操作已完成");
       } else {
         downloadBlob(shareBlob, shareFilename);
-        showToast("当前设备不支持直接分享，已自动保存图片");
+        setShareStatus("downloaded", "当前设备不支持直接分享，已自动保存图片。");
+        showToast("图片已自动保存");
       }
     } catch (error) {
-      if (error?.name === "AbortError") return;
+      if (error?.name === "AbortError") {
+        setShareStatus("ready", "已取消分享；图片仍可继续保存。");
+        return;
+      }
       downloadBlob(shareBlob, shareFilename);
-      showToast("分享面板不可用，已自动保存图片");
+      setShareStatus("downloaded", "分享面板不可用，已自动保存图片。");
+      showToast("分享面板不可用，图片已自动保存");
     } finally {
       isSharing = false;
       setShareButtonsBusy(false);
@@ -547,22 +603,52 @@ export function mountGluedle() {
   function downloadPreparedImage() {
     if (!shareBlob || isSharing) return;
     downloadBlob(shareBlob, shareFilename);
-    showToast("结果图片已下载");
+    setShareStatus("downloaded", "结果图片已保存到当前设备。");
+    showToast("结果图片已保存");
   }
 
   function resetSharePreview() {
     shareBlob = null;
     shareFilename = "";
     elements.sharePreview.hidden = true;
+    setShareStatus("idle", "");
   }
 
   function setShareButtonsBusy(busy) {
     elements.share.disabled = busy || !state.attempts.length;
     elements.shareConfirm.disabled = busy || !shareBlob;
     elements.shareDownload.disabled = busy || !shareBlob;
+    elements.shareRetry.disabled = busy;
     elements.reset.disabled = busy;
     elements.resultReset.disabled = busy;
     elements.share.textContent = busy ? "正在生成…" : "分享结果";
+    elements.shareConfirm.textContent = busy ? "正在生成…" : "分享图片";
+  }
+
+  function setShareStatus(status, message) {
+    const labels = {
+      busy: "SHARE / PROCESSING",
+      ready: "SHARE / READY",
+      shared: "SHARE / COMPLETE",
+      downloaded: "SHARE / SAVED",
+      error: "SHARE / ERROR",
+    };
+    const isIdle = status === "idle";
+    elements.shareStatus.hidden = isIdle;
+    elements.shareStatus.dataset.state = status;
+    elements.shareStatusIndex.textContent = labels[status] ?? "SHARE / 00";
+    elements.shareStatusCopy.textContent = message;
+    elements.shareRetry.hidden = status !== "error";
+    elements.resultDialog.setAttribute("aria-busy", String(status === "busy"));
+  }
+
+  async function ensureShareFonts() {
+    if (!document.fonts) return;
+    await Promise.allSettled([
+      document.fonts.ready,
+      document.fonts.load('700 44px "Archivo"'),
+      document.fonts.load('500 22px "Noto Sans SC"'),
+    ]);
   }
 
   function bindDialogs() {
@@ -577,12 +663,16 @@ export function mountGluedle() {
       dialog.addEventListener("click", (event) => {
         if (event.target === dialog) closeDialog(dialog);
       }, { signal });
+      dialog.addEventListener("close", () => finalizeDialogClose(dialog), { signal });
     });
   }
 
   function openDialog(dialog) {
     if (!dialog) return;
     lastDialogTrigger = document.activeElement;
+    if (dialog === elements.helpDialog) {
+      elements.helpCloseLabel.textContent = state?.attempts.length ? "返回推理" : "开始推理";
+    }
     document.body.classList.add("dialog-open");
     if (typeof dialog.showModal === "function") dialog.showModal();
     else dialog.setAttribute("open", "");
@@ -590,18 +680,45 @@ export function mountGluedle() {
 
   function closeDialog(dialog) {
     if (!dialog) return;
-    if (typeof dialog.close === "function" && dialog.open) dialog.close();
-    else dialog.removeAttribute("open");
-    document.body.classList.remove("dialog-open");
-    if (lastDialogTrigger instanceof HTMLElement && lastDialogTrigger.isConnected) {
-      lastDialogTrigger.focus({ preventScroll: true });
+    if (typeof dialog.close === "function" && dialog.open) {
+      dialog.close();
+      return;
     }
+    dialog.removeAttribute("open");
+    finalizeDialogClose(dialog);
+  }
+
+  function finalizeDialogClose(dialog) {
+    if (dialog?.open || document.querySelector("dialog[open]")) return;
+    document.body.classList.remove("dialog-open");
+    const triggerCanFocus = Boolean(
+      lastDialogTrigger?.isConnected
+        && !lastDialogTrigger.matches?.(":disabled")
+        && typeof lastDialogTrigger.focus === "function",
+    );
+    const focusTarget = triggerCanFocus
+      ? lastDialogTrigger
+      : document.querySelector(".ledger-actions button:not(:disabled), .help-button:not(:disabled), .app-header-action");
     lastDialogTrigger = null;
+
+    window.setTimeout(() => {
+      if (
+        typeof focusTarget?.focus === "function"
+        && focusTarget.isConnected !== false
+        && !document.querySelector("dialog[open]")
+      ) {
+        focusTarget.focus({ preventScroll: true });
+      }
+    }, 0);
   }
 
   function showLoadError() {
     document.body.dataset.gameState = "error";
+    document.body.dataset.mobileBanner = "open";
     elements.appBoot?.classList.add("is-error");
+    elements.appBoot?.setAttribute("role", "alert");
+    elements.appBoot?.setAttribute("aria-live", "assertive");
+    elements.appBoot?.setAttribute("aria-busy", "false");
     const title = elements.appBoot?.querySelector("strong");
     const copy = elements.appBoot?.querySelector("p");
     if (title) title.textContent = "歌曲数据读取失败";
@@ -611,26 +728,35 @@ export function mountGluedle() {
   function finishBoot() {
     document.documentElement.classList.remove("is-booting");
     document.body.classList.remove("is-booting");
+    elements.appBoot?.setAttribute("aria-busy", "false");
     elements.appBoot?.remove();
   }
 
-  function setFeedback(message, isError = false) {
+  function setFeedback(message, isError = false, { inputError = isError } = {}) {
     elements.feedback.textContent = message;
     elements.feedback.classList.toggle("is-error", isError);
+    elements.input.setAttribute("aria-invalid", String(inputError));
   }
 
-  function showToast(message) {
+  function showToast(message, tone = "info") {
     window.clearTimeout(toastTimer);
     elements.toast.textContent = message;
+    elements.toast.dataset.tone = tone;
+    elements.toast.setAttribute("role", tone === "error" ? "alert" : "status");
     elements.toast.classList.add("is-visible");
-    toastTimer = window.setTimeout(() => elements.toast.classList.remove("is-visible"), 2400);
+    toastTimer = window.setTimeout(() => {
+      elements.toast.classList.remove("is-visible");
+      elements.toast.removeAttribute("data-tone");
+    }, 2800);
   }
 
   return () => {
+    document.querySelectorAll("dialog[open]").forEach((dialog) => closeDialog(dialog));
     abortController.abort();
     window.clearTimeout(toastTimer);
     document.body.classList.remove("dialog-open", "is-booting");
     document.body.style.removeProperty("--attempt-progress");
+    document.documentElement.style.removeProperty("--mobile-keyboard-offset");
   };
 }
 
@@ -659,9 +785,16 @@ function collectElements() {
     sharePreview: document.querySelector("[data-share-preview]"),
     shareConfirm: document.querySelector("[data-share-confirm]"),
     shareDownload: document.querySelector("[data-share-download]"),
+    shareRetry: document.querySelector("[data-share-retry]"),
+    shareStatus: document.querySelector("[data-share-status]"),
+    shareStatusIndex: document.querySelector("[data-share-status-index]"),
+    shareStatusCopy: document.querySelector("[data-share-status-copy]"),
     shareCanvas: document.querySelector("[data-share-canvas]"),
     toast: document.querySelector("[data-toast]"),
     appBoot: document.querySelector("[data-app-boot]"),
+    retry: document.querySelector("[data-retry-game]"),
+    mobileBannerToggle: document.querySelector("[data-mobile-banner-toggle]"),
+    helpCloseLabel: document.querySelector("[data-help-close-label]"),
   };
 }
 
@@ -707,8 +840,18 @@ function formatCellValue(value, field) {
   return String(value ?? "待核验");
 }
 
-function comparisonHelper() {
-  return "";
+function comparisonHelper(comparison) {
+  return comparisonStatusMark(comparison?.status);
+}
+
+function comparisonStatusMark(status) {
+  return {
+    match: "✓",
+    near: "≈",
+    partial: "≈",
+    miss: "×",
+    unknown: "?",
+  }[status] ?? "?";
 }
 
 function comparisonAccessibilityHelper(comparison) {

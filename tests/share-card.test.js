@@ -6,6 +6,7 @@ import {
   SHARE_CARD_WIDTH,
   SHARE_FIELDS,
   buildShareCardModel,
+  renderShareCard,
   shareCardLayout,
 } from "../src/share/share-card.js";
 
@@ -86,4 +87,42 @@ test("eight result rows stay clear of the legend and QR region", () => {
   assert.ok(layout.gridBottom <= layout.legendY - 20);
   assert.ok(layout.legendY < layout.qrY);
   assert.ok(layout.qrY + layout.qrOuterSize <= SHARE_CARD_HEIGHT - 24);
+});
+
+test("share renderer explains unknown values and safely truncates extreme metadata", () => {
+  const drawnText = [];
+  const extremeTitle = "超长答案标题".repeat(20);
+  const context = {
+    arc() {}, beginPath() {}, fillRect() {}, restore() {}, save() {}, stroke() {}, strokeRect() {},
+    fillText(value) { drawnText.push(String(value)); },
+    measureText(value) { return { width: [...String(value)].length * 18 }; },
+  };
+  const canvas = { getContext: () => context, height: 0, width: 0 };
+  const model = buildShareCardModel({
+    roundLabel: "ROUND 08",
+    canonicalUrl: "https://example.com/gluedle/a-very-long-canonical-address/",
+    answer: {
+      title: extremeTitle,
+      project: { title: "极长项目名称".repeat(14), type: "album" },
+      releaseDate: "2024-03-18",
+      durationSec: 198,
+      favoriteCountDisplay: "5w+",
+      language: "zh",
+      performanceType: "collaboration",
+      originType: "cover",
+      featuredArtists: ["合作歌手".repeat(18)],
+      curleyCredits: { lyrics: true, composition: true },
+    },
+    state: {
+      status: "lost",
+      attempts: [{ comparison: Object.fromEntries(SHARE_FIELDS.map((field) => [field, { status: "unknown" }])) }],
+    },
+  });
+  assert.doesNotThrow(() => renderShareCard(canvas, model));
+  assert.ok(drawnText.includes("? 待核验"));
+  const renderedTitle = drawnText.find((value) => value.startsWith("超长答案标题"));
+  assert.ok(renderedTitle?.endsWith("…"), "the answer title should be truncated with an ellipsis");
+  assert.notEqual(renderedTitle, extremeTitle);
+  assert.equal(canvas.width, SHARE_CARD_WIDTH);
+  assert.equal(canvas.height, SHARE_CARD_HEIGHT);
 });

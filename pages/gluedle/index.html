@@ -8,7 +8,7 @@
     <title>GLUEDLE — 随机歌曲资料推理</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,300..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,300..900&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/src/styles/app-shell.css" />
     <link rel="stylesheet" href="/src/styles/gluedle.css" data-route-style />
     <link rel="stylesheet" href="/src/styles/transitions.css" />
@@ -19,10 +19,11 @@
     <div class="route-view" data-route-view>
       <a class="skip-link" href="#deduction-ledger">跳至推理记录</a>
 
-      <div class="app-boot" data-app-boot role="status" aria-live="polite">
+      <div class="app-boot" data-app-boot role="status" aria-live="polite" aria-atomic="true" aria-busy="true">
         <span>GLUEDLE / LOADING JSON</span>
         <strong>正在读取歌曲数据</strong>
         <p>正在连接 /data/gluedle-songs.json</p>
+        <button class="boot-retry" type="button" data-retry-game>重新读取数据 ↗</button>
         <noscript><p>Gluedle 需要启用 JavaScript。</p></noscript>
       </div>
 
@@ -33,6 +34,10 @@
             <h1>GLUEDLE</h1>
             <p>歌曲资料推理</p>
           </div>
+
+          <button class="mobile-banner-toggle" type="button" data-mobile-banner-toggle aria-label="展开 GLUE 页面导航">
+            <span>GLUE / MENU</span><span aria-hidden="true">↑</span>
+          </button>
 
           <div class="round-state">
             <p class="meta-label" id="game-round">ROUND / —</p>
@@ -89,7 +94,7 @@
                 </tr>
               </thead>
               <tbody data-guess-rows>
-                <tr class="empty-row"><td colspan="7">输入歌名，第一条推理会出现在这里</td></tr>
+                <tr class="empty-row"><td colspan="8">输入歌名，第一条推理会出现在这里</td></tr>
               </tbody>
             </table>
           </div>
@@ -120,28 +125,39 @@
         </aside>
       </main>
 
-      <dialog id="help-dialog" class="site-dialog" aria-labelledby="help-title">
+      <dialog id="help-dialog" class="site-dialog site-dialog--help" aria-labelledby="help-title">
         <div class="dialog-inner">
           <button class="dialog-close" type="button" data-close-dialog aria-label="关闭玩法说明">×</button>
           <p class="meta-label">HOW TO PLAY</p>
           <h2 id="help-title">沿着差异，找到随机答案。</h2>
-          <ol>
-            <li>每轮从题库随机生成一个答案。</li>
-            <li>比较歌曲格里的日期与时长、收藏数、语言、专辑分类、演唱、原唱/翻唱、合作对象与创作资料。</li>
-            <li>专辑分类包括影视、游戏、Live、单曲和实际专辑名；影视与游戏会判定为接近。</li>
-            <li>绿色为匹配，米色为接近，深灰为不同；箭头提示答案方向。</li>
+          <ol class="help-steps">
+            <li><span>01</span><p>每轮从题库随机生成一个答案。</p></li>
+            <li><span>02</span><p>比较歌曲格里的日期与时长、收藏数、语言、专辑分类、演唱、原唱/翻唱、合作对象与创作资料。</p></li>
+            <li><span>03</span><p>专辑分类包括影视、游戏、Live、单曲和实际专辑名；影视与游戏会判定为接近。</p></li>
+            <li><span>04</span><p>格内符号与颜色共同反馈结果；箭头只表示答案方向。</p></li>
           </ol>
-          <button class="primary-button" type="button" data-close-dialog>开始推理</button>
+          <div class="help-state-key" aria-label="反馈状态说明">
+            <span data-status="match"><b>✓</b>匹配</span>
+            <span data-status="near"><b>≈</b>接近</span>
+            <span data-status="miss"><b>×</b>不同</span>
+            <span data-status="unknown"><b>?</b>待核验</span>
+          </div>
+          <button class="primary-button" type="button" data-close-dialog data-help-close-label>开始推理</button>
         </div>
       </dialog>
 
-      <dialog id="result-dialog" class="site-dialog" aria-labelledby="result-title">
+      <dialog id="result-dialog" class="site-dialog site-dialog--result" aria-labelledby="result-title">
         <div class="dialog-inner">
           <button class="dialog-close" type="button" data-close-dialog aria-label="关闭结果">×</button>
           <p class="meta-label">ROUND RESULT</p>
           <p class="result-outcome" data-result-outcome role="status" aria-live="polite">推理进行中</p>
           <h2 id="result-title">连接完成。</h2>
-          <div data-result-summary></div>
+          <div class="result-summary" data-result-summary></div>
+          <div class="share-status" data-share-status role="status" aria-live="polite" aria-atomic="true" hidden>
+            <span data-share-status-index>SHARE / 00</span>
+            <p data-share-status-copy></p>
+            <button class="text-button" type="button" data-share-retry hidden>重新生成图片 ↗</button>
+          </div>
           <div class="share-preview" data-share-preview hidden>
             <p class="meta-label">SHARE PREVIEW</p>
             <div class="share-preview-frame">
@@ -157,7 +173,7 @@
         </div>
       </dialog>
 
-      <div class="toast" data-toast role="status" aria-live="polite"></div>
+      <div class="toast" data-toast role="status" aria-live="polite" aria-atomic="true"></div>
     </div>
   </body>
 </html>
