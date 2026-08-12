@@ -8,6 +8,7 @@ import {
   findSongMatches,
   formatDuration,
   formatReleaseDate,
+  formatSongTitleLength,
   getHintStatus,
   normalizeSearchText,
   selectRandomAnswer,
@@ -280,6 +281,7 @@ export function mountGluedle() {
     elements.share.disabled = attemptTotal === 0 || isSharing;
     elements.reset.disabled = isSharing;
     if (finished) closeSuggestions();
+    renderTitleLengthHint();
     renderHintControl();
 
     if (state.status === "won") {
@@ -322,6 +324,26 @@ export function mountGluedle() {
       appendComparisonCell(row, attempt.comparison.credits, "credits", "创作");
       elements.board.append(row);
     });
+  }
+
+  function renderTitleLengthHint() {
+    const wrongGuessCount = state.attempts.filter((attempt) => attempt.songId !== answer.id).length;
+    const existingHint = elements.hintStack.querySelector("[data-title-length-hint]");
+
+    if (wrongGuessCount >= 2 && !existingHint) {
+      const card = document.createElement("article");
+      const value = document.createElement("p");
+      card.className = "hint-card title-length-hint";
+      card.dataset.titleLengthHint = "";
+      value.className = "hint-card-quote";
+      value.textContent = formatSongTitleLength(answer.title);
+      card.append(value);
+      elements.hintStack.prepend(card);
+    } else if (wrongGuessCount < 2) {
+      existingHint?.remove();
+    }
+
+    elements.hintStack.hidden = elements.hintStack.childElementCount === 0;
   }
 
   function appendSongComparisonCell(row, song, attempt, songStatus) {

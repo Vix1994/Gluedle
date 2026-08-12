@@ -105,6 +105,10 @@ test("the guessing catalog uses QQ Music sources and has resolved creation credi
     songs.find((song) => song.title === "于是我这样生活")?.curleyCredits,
     { lyrics: false, composition: false },
   );
+  assert.deepEqual(
+    songs.find((song) => song.title === "Emerald City")?.curleyCredits,
+    { lyrics: true, composition: true },
+  );
 });
 
 test("the song origin config is initialized for every catalog title", () => {
@@ -131,6 +135,7 @@ test("the catalog sync starts from the maintained QQ Music playlist", () => {
   assert.match(syncSource, /songname: songInfo\?\.title \?\? songInfo\?\.name/);
   assert.match(syncSource, /getSongProjectOverride\(title\)/);
   assert.match(syncSource, /originType: getSongOriginType\(title\)/);
+  assert.match(syncSource, /extractCurleyCredits\(lyric\)/);
   assert.match(syncSource, /extractHintLyrics/);
   assert.match(syncSource, /--refresh-hints/);
   assert.doesNotMatch(syncSource, /GetSingerSongList|blockedTitlePattern|candidateByTitle/);

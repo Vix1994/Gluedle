@@ -137,14 +137,6 @@
 .ledger-head-tools {
   display: grid;
   justify-items: end;
-  gap: 10px;
-}
-.ledger-head-tools > p {
-  max-width: 20ch;
-  margin: 0;
-  color: var(--grey);
-  font: 0.62rem/1.5 var(--font-mono);
-  text-align: right;
 }
 .hint-button {
   min-height: 36px;
@@ -178,6 +170,12 @@
   animation: hint-enter 320ms var(--ease-out) both;
 }
 .hint-card:last-child { border-bottom: 0; }
+.title-length-hint { grid-template-columns: minmax(0, 1fr); }
+.title-length-hint .hint-card-quote {
+  color: var(--lake);
+  font: 500 0.62rem/1.2 var(--font-mono);
+  letter-spacing: 0.04em;
+}
 .hint-card-label {
   margin: 0;
   color: var(--lake);
@@ -401,8 +399,6 @@ button:disabled { cursor: not-allowed; opacity: 0.38; }
   #guess-board th:nth-child(7) { width: 9%; }
   #guess-board th:nth-child(8) { width: 10%; }
   #guess-board .guess-row { border-bottom: 4px solid var(--black); }
-  .ledger-head-tools { gap: 0; }
-  .ledger-head-tools > p { display: none; }
   .hint-button { min-height: 34px; padding-inline: 9px; font-size: 0.52rem; }
   .hint-stack { padding-inline: 10px; }
   .hint-card { gap: 10px; padding: 9px 0; }

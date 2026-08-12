@@ -11,8 +11,10 @@ import {
   formatDuration,
   formatFavoriteCount,
   formatReleaseDate,
+  formatSongTitleLength,
   getHintStatus,
   getHintUnlockCount,
+  getSongTitleLength,
   normalizeSearchText,
   restoreGameState,
   selectRandomAnswer,
@@ -74,38 +76,50 @@ test("normalizeSearchText normalizes case, width, whitespace, and Chinese/Englis
 });
 
 test("lyric hints unlock in three deliberate steps without changing game attempts", () => {
-  assert.deepEqual(HINT_UNLOCK_ATTEMPTS, [2, 4, 6]);
+  assert.deepEqual(HINT_UNLOCK_ATTEMPTS, [3, 5, 7]);
   assert.equal(getHintUnlockCount(0), 0);
-  assert.equal(getHintUnlockCount(1), 0);
-  assert.equal(getHintUnlockCount(2), 1);
-  assert.equal(getHintUnlockCount(4), 2);
-  assert.equal(getHintUnlockCount(6), 3);
+  assert.equal(getHintUnlockCount(2), 0);
+  assert.equal(getHintUnlockCount(3), 1);
+  assert.equal(getHintUnlockCount(5), 2);
+  assert.equal(getHintUnlockCount(7), 3);
 
   assert.deepEqual(getHintStatus({ attemptCount: 1, hintCount: 3 }), {
     unlockedCount: 0,
     nextHintIndex: -1,
-    nextUnlockAttempt: 2,
-    attemptsUntilNext: 1,
+    nextUnlockAttempt: 3,
+    attemptsUntilNext: 2,
     hasAvailableHint: false,
     hasMoreHints: true,
   });
-  assert.deepEqual(getHintStatus({ attemptCount: 2, hintCount: 3 }), {
+  assert.deepEqual(getHintStatus({ attemptCount: 3, hintCount: 3 }), {
     unlockedCount: 1,
     nextHintIndex: 0,
-    nextUnlockAttempt: 2,
+    nextUnlockAttempt: 3,
     attemptsUntilNext: 0,
     hasAvailableHint: true,
     hasMoreHints: true,
   });
-  assert.deepEqual(getHintStatus({ attemptCount: 6, revealedHintCount: 2, hintCount: 3 }), {
+  assert.deepEqual(getHintStatus({ attemptCount: 7, revealedHintCount: 2, hintCount: 3 }), {
     unlockedCount: 3,
     nextHintIndex: 2,
-    nextUnlockAttempt: 6,
+    nextUnlockAttempt: 7,
     attemptsUntilNext: 0,
     hasAvailableHint: true,
     hasMoreHints: true,
   });
   assert.equal(getHintStatus({ attemptCount: 8, revealedHintCount: 3, hintCount: 3 }).hasMoreHints, false);
+});
+
+test("song title length uses one neutral unit and ignores trailing annotations", () => {
+  assert.equal(getSongTitleLength("这，就是爱"), 4);
+  assert.equal(getSongTitleLength("Don't Wanna Be Alone"), 4);
+  assert.equal(getSongTitleLength("烬火 Emberfire"), 3);
+  assert.equal(getSongTitleLength("04:16"), 4);
+  assert.equal(getSongTitleLength("造物 (Live)"), 2);
+  assert.equal(getSongTitleLength("Someone You Loved (Live)"), 3);
+  assert.equal(getSongTitleLength("Shine Brighter (愈加璀璨)"), 2);
+  assert.equal(getSongTitleLength("BABYDOLL (Speed) (希林娜依·高 Remix|Explicit)"), 1);
+  assert.equal(formatSongTitleLength("造物 (Live)"), "歌名长度 · 02");
 });
 
 test("formatDuration renders minutes and zero-padded seconds", () => {

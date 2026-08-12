@@ -4,7 +4,7 @@ import {
 } from "../data/project-categories.js";
 
 export const MAX_ATTEMPTS = 8;
-export const HINT_UNLOCK_ATTEMPTS = Object.freeze([2, 4, 6]);
+export const HINT_UNLOCK_ATTEMPTS = Object.freeze([3, 5, 7]);
 
 export const COMPARISON_STATUS = Object.freeze({
   MATCH: "match",
@@ -68,6 +68,27 @@ export function normalizeSearchText(value) {
     .normalize("NFKC")
     .toLocaleLowerCase("und")
     .replace(/[\p{P}\p{S}\s]+/gu, "");
+}
+
+export function getSongTitleLength(value) {
+  let title = String(value ?? "").normalize("NFKC").trim();
+  const trailingAnnotation = /\s*(?:\([^()]*\)|（[^（）]*）)\s*$/u;
+
+  while (trailingAnnotation.test(title)) {
+    title = title.replace(trailingAnnotation, "").trim();
+  }
+
+  const characterUnits = [...title].filter((character) => (
+    /\p{Script=Han}|\p{N}/u.test(character)
+  )).length;
+  const wordSource = title.replace(/[\p{Script=Han}\p{N}]+/gu, " ");
+  const wordUnits = wordSource.match(/[\p{L}\p{M}]+(?:['’][\p{L}\p{M}]+)*/gu)?.length ?? 0;
+
+  return characterUnits + wordUnits;
+}
+
+export function formatSongTitleLength(value) {
+  return `歌名长度 · ${String(getSongTitleLength(value)).padStart(2, "0")}`;
 }
 
 export function formatDuration(seconds) {

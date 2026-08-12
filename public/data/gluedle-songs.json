@@ -2089,7 +2089,7 @@
     "favoriteCountDisplay": "2w+",
     "language": "en",
     "curleyCredits": {
-      "lyrics": false,
+      "lyrics": true,
       "composition": true
     },
     "guessable": true,

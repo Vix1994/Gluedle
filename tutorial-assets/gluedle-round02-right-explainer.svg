@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1874" height="1920" viewBox="0 0 1874 1920">
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#12191b"/>
+      <stop offset="1" stop-color="#071012"/>
+    </linearGradient>
+    <style>
+      .sans { font-family: Arial, "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; letter-spacing: .08em; }
+      .display { font-family: Arial, "Microsoft YaHei", sans-serif; font-weight: 800; }
+      .white { fill: #f3f1eb; }
+      .muted { fill: #aeb8b8; }
+      .blueText { fill: #9fc6dc; }
+      .green { fill: #43df9a; }
+      .yellow { fill: #f2d55c; }
+      .red { fill: #ff5663; }
+      .dark { fill: #071113; }
+      .card { fill: #0b1416; stroke: #344348; stroke-width: 1; }
+      .greenInk { fill: #082016; }
+      .yellowInk { fill: #261f05; }
+      .redInk { fill: #29080c; }
+    </style>
+  </defs>
+
+  <image x="0" y="0" width="874" height="1920" preserveAspectRatio="none" xlink:href="gluedle-round02-original.jpg"/>
+  <rect x="874" y="0" width="1000" height="1920" fill="url(#panel)"/>
+  <rect x="874" y="0" width="1" height="1920" fill="#7794a2"/>
+
+  <g transform="translate(928 54)">
+    <text class="mono blueText" font-size="15">GLUEDLE / ROUND 02 / EXPLAINER</text>
+    <text class="display white" font-size="46" y="64">推理过程解析</text>
+    <text class="sans muted" font-size="20" y="101">如何从第一首歌逐步锁定答案</text>
+    <rect y="132" width="892" height="1" fill="#4d626b"/>
+  </g>
+
+  <g transform="translate(928 222)">
+    <text class="mono blueText" font-size="14">READ THE SIGNALS FIRST</text>
+    <text class="display white" font-size="27" y="42">颜色是筛选，箭头是方向</text>
+    <rect y="68" width="182" height="48" rx="2" class="green"/>
+    <text class="display greenInk" x="18" y="100" font-size="18">绿色：吻合</text>
+    <rect x="198" y="68" width="182" height="48" rx="2" class="yellow"/>
+    <text class="display yellowInk" x="216" y="100" font-size="18">黄色：接近</text>
+    <rect x="396" y="68" width="182" height="48" rx="2" class="red"/>
+    <text class="display redInk" x="414" y="100" font-size="18">红色：不符</text>
+    <rect x="594" y="68" width="298" height="48" rx="2" fill="#16292f" stroke="#49646d"/>
+    <text class="display white" x="612" y="100" font-size="18">▲ 目标更大　▼ 目标更小</text>
+  </g>
+
+  <g transform="translate(928 365)">
+    <rect class="card" width="892" height="214" rx="3"/>
+    <rect class="blueText" width="6" height="214"/>
+    <circle cx="42" cy="42" r="23" fill="#9fc6dc"/><text class="display dark" x="42" y="50" text-anchor="middle" font-size="20">01</text>
+    <text class="display white" x="82" y="42" font-size="27">Things You Said</text>
+    <text class="mono blueText" x="82" y="70" font-size="13">先建立大范围画像</text>
+    <g transform="translate(82 94)">
+      <rect class="green" width="75" height="37" rx="2"/><text class="display greenInk" x="37" y="25" text-anchor="middle" font-size="16">中文</text>
+      <rect class="green" x="85" width="75" height="37" rx="2"/><text class="display greenInk" x="122" y="25" text-anchor="middle" font-size="16">单曲</text>
+      <rect class="green" x="170" width="75" height="37" rx="2"/><text class="display greenInk" x="207" y="25" text-anchor="middle" font-size="16">合作</text>
+      <rect class="green" x="255" width="125" height="37" rx="2"/><text class="display greenInk" x="317" y="25" text-anchor="middle" font-size="16">未参与词曲</text>
+      <rect class="red" x="390" width="118" height="37" rx="2"/><text class="display redInk" x="449" y="25" text-anchor="middle" font-size="16">收藏更多 ▲</text>
+      <rect class="red" x="518" width="118" height="37" rx="2"/><text class="display redInk" x="577" y="25" text-anchor="middle" font-size="16">日期更早 ▼</text>
+      <rect class="red" x="646" width="118" height="37" rx="2"/><text class="display redInk" x="705" y="25" text-anchor="middle" font-size="16">时长更短 ▼</text>
+    </g>
+    <text class="sans muted" x="82" y="169" font-size="17">同时排除：翻唱、男性合作对象。</text>
+    <text class="sans white" x="82" y="194" font-size="17">候选画像：中文 / 单曲 / 合作 / 原唱 / 未参与创作。</text>
+  </g>
+
+  <g transform="translate(928 603)">
+    <rect class="card" width="892" height="214" rx="3"/>
+    <rect class="green" width="6" height="214"/>
+    <circle cx="42" cy="42" r="23" class="green"/><text class="display dark" x="42" y="50" text-anchor="middle" font-size="20">02</text>
+    <text class="display white" x="82" y="42" font-size="27">U</text>
+    <text class="mono blueText" x="82" y="70" font-size="13">确认关键离散字段</text>
+    <g transform="translate(82 94)">
+      <rect class="green" width="92" height="37" rx="2"/><text class="display greenInk" x="46" y="25" text-anchor="middle" font-size="16">20w+</text>
+      <rect class="green" x="102" width="82" height="37" rx="2"/><text class="display greenInk" x="143" y="25" text-anchor="middle" font-size="16">原唱</text>
+      <rect class="green" x="194" width="82" height="37" rx="2"/><text class="display greenInk" x="235" y="25" text-anchor="middle" font-size="16">其他</text>
+      <rect class="green" x="286" width="82" height="37" rx="2"/><text class="display greenInk" x="327" y="25" text-anchor="middle" font-size="16">合作</text>
+      <rect class="red" x="378" width="142" height="37" rx="2"/><text class="display redInk" x="449" y="25" text-anchor="middle" font-size="16">词·曲参与</text>
+      <rect class="red" x="530" width="234" height="37" rx="2"/><text class="display redInk" x="647" y="25" text-anchor="middle" font-size="16">目标日期晚于 2019-12-01 ▲</text>
+    </g>
+    <text class="sans muted" x="82" y="169" font-size="17">收藏数锁定为 20w+；目标不是“词·曲参与”。</text>
+    <text class="sans white" x="82" y="194" font-size="17">时间下界出现：目标日期在 2019-12-01 之后。</text>
+  </g>
+
+  <g transform="translate(928 841)">
+    <rect class="card" width="892" height="214" rx="3"/>
+    <rect class="yellow" width="6" height="214"/>
+    <circle cx="42" cy="42" r="23" class="yellow"/><text class="display dark" x="42" y="50" text-anchor="middle" font-size="20">03</text>
+    <text class="display white" x="82" y="42" font-size="27">夜昼</text>
+    <text class="mono blueText" x="82" y="70" font-size="13">继续压缩时间与收藏范围</text>
+    <g transform="translate(82 94)">
+      <rect class="red" width="180" height="37" rx="2"/><text class="display redInk" x="90" y="25" text-anchor="middle" font-size="16">2019-12-07 ▲</text>
+      <rect class="red" x="190" width="145" height="37" rx="2"/><text class="display redInk" x="262" y="25" text-anchor="middle" font-size="16">03:45 ▼</text>
+      <rect class="red" x="345" width="125" height="37" rx="2"/><text class="display redInk" x="407" y="25" text-anchor="middle" font-size="16">5w+ ▲</text>
+      <rect class="green" x="480" width="82" height="37" rx="2"/><text class="display greenInk" x="521" y="25" text-anchor="middle" font-size="16">单曲</text>
+      <rect class="green" x="572" width="82" height="37" rx="2"/><text class="display greenInk" x="613" y="25" text-anchor="middle" font-size="16">原唱</text>
+      <rect class="green" x="664" width="100" height="37" rx="2"/><text class="display greenInk" x="714" y="25" text-anchor="middle" font-size="16">未参与</text>
+    </g>
+    <text class="sans muted" x="82" y="169" font-size="17">目标日期继续晚于 2019-12-07，时长继续短于 03:45。</text>
+    <text class="sans white" x="82" y="194" font-size="17">收藏数高于 5w+，但仍保持 20w+ 这一档。</text>
+  </g>
+
+  <g transform="translate(928 1079)">
+    <rect class="card" width="892" height="214" rx="3"/>
+    <rect class="red" width="6" height="214"/>
+    <circle cx="42" cy="42" r="23" class="red"/><text class="display dark" x="42" y="50" text-anchor="middle" font-size="20">04</text>
+    <text class="display white" x="82" y="42" font-size="27">BABYDOLL (Speed)</text>
+    <text class="mono blueText" x="82" y="70" font-size="13">用接近值做最后确认</text>
+    <g transform="translate(82 94)">
+      <rect class="red" width="180" height="37" rx="2"/><text class="display redInk" x="90" y="25" text-anchor="middle" font-size="16">2023-06-09 ▼</text>
+      <rect class="yellow" x="190" width="145" height="37" rx="2"/><text class="display yellowInk" x="262" y="25" text-anchor="middle" font-size="16">02:41 ▲</text>
+      <rect class="green" x="345" width="125" height="37" rx="2"/><text class="display greenInk" x="407" y="25" text-anchor="middle" font-size="16">20w+</text>
+      <rect class="green" x="480" width="82" height="37" rx="2"/><text class="display greenInk" x="521" y="25" text-anchor="middle" font-size="16">中文</text>
+      <rect class="green" x="572" width="82" height="37" rx="2"/><text class="display greenInk" x="613" y="25" text-anchor="middle" font-size="16">单曲</text>
+      <rect class="green" x="664" width="100" height="37" rx="2"/><text class="display greenInk" x="714" y="25" text-anchor="middle" font-size="16">未参与</text>
+    </g>
+    <text class="sans muted" x="82" y="169" font-size="17">黄色表示时长在附近：目标大约是 02:54。</text>
+    <text class="sans white" x="82" y="194" font-size="17">此时基本只剩：20w+ / 原唱 / 其他 / 未参与。</text>
+  </g>
+
+  <g transform="translate(928 1317)">
+    <rect width="892" height="286" rx="3" fill="#0c2a20" stroke="#43df9a" stroke-width="2"/>
+    <text class="mono blueText" x="30" y="40" font-size="14">05 / CONNECTION SUCCESS</text>
+    <text class="display white" x="30" y="85" font-size="35">顺着风的方向</text>
+    <text class="sans muted" x="30" y="116" font-size="18">五条线索闭合，答案连接成功。</text>
+    <g transform="translate(30 145)">
+      <rect class="green" width="145" height="42" rx="2"/><text class="display greenInk" x="72" y="28" text-anchor="middle" font-size="17">2021-12-30</text>
+      <rect class="green" x="155" width="92" height="42" rx="2"/><text class="display greenInk" x="201" y="28" text-anchor="middle" font-size="17">02:54</text>
+      <rect class="green" x="257" width="98" height="42" rx="2"/><text class="display greenInk" x="306" y="28" text-anchor="middle" font-size="17">20w+</text>
+      <rect class="green" x="365" width="78" height="42" rx="2"/><text class="display greenInk" x="404" y="28" text-anchor="middle" font-size="17">中文</text>
+      <rect class="green" x="453" width="78" height="42" rx="2"/><text class="display greenInk" x="492" y="28" text-anchor="middle" font-size="17">单曲</text>
+      <rect class="green" x="541" width="78" height="42" rx="2"/><text class="display greenInk" x="580" y="28" text-anchor="middle" font-size="17">合作</text>
+      <rect class="green" x="629" width="78" height="42" rx="2"/><text class="display greenInk" x="668" y="28" text-anchor="middle" font-size="17">原唱</text>
+      <rect class="green" x="717" width="115" height="42" rx="2"/><text class="display greenInk" x="774" y="28" text-anchor="middle" font-size="17">其他 · 未参与</text>
+    </g>
+    <text class="sans white" x="30" y="238" font-size="17">结论：不是靠一首歌“猜中”，而是用每一格反馈不断删掉不可能。</text>
+  </g>
+
+  <g transform="translate(928 1660)">
+    <text class="mono blueText" font-size="14">REMEMBER</text>
+    <text class="sans white" y="35" font-size="19">绿色保留　·　红色排除　·　黄色接近　·　箭头看方向</text>
+    <text class="sans muted" y="72" font-size="17">新玩家先看“吻合字段”，再用日期、时长和收藏数做范围收敛。</text>
+  </g>
+</svg>
